@@ -27,38 +27,49 @@ Bog Ojeciec.
 
 
 
-FIX THIS
 
-// Writes bytes to fd from buff untill error on read or all bytes written.
-// Returns 0 on succes and -1 on fail.
-// If unable to write will end up in endless loop ( write returning all the time 0
-// When trying to write somethign still ).
+// Writes bytes to fd from buff untill
+// error on read or all bytes written.
+// Returns 0 on succes and -1 on fail
+// If unable to write - will end up in endless loop,
+// write returning all the time 0.
+// It can fail on write.
 // Restarts on EINTR
-// Tested, satisfied.
-ssize_t igf_write( const int fd, void *const passed_buff, size_t passed_buff_size )  {
+// At error we do not know how much we have written
+// On return success 0 - all bytes have been written
+ssize_t igf_write(
+    const int fd,
+    void *const buff,
+    size_t buffsize
+)  {
   
-  const uint8_t *buff_ptr = passed_buff;
-  ssize_t  write_return = 0;
+  const uint8_t *buffptr = buff;
+  ssize_t  writeret = 0;
   
   for(;;)  {
     
-    if( ( write_return = ( TEMP_FAILURE_RETRY( write( fd, buff_ptr, passed_buff_size ) ) ) ) <= 0 )  {
-      
-      if( write_return == 0 )  {
-        
-        if( passed_buff_size == 0 )  return 0;
-        continue;
-        
-      }
-      
-      return write_return;
-      
-    }
-    
-    buff_ptr += write_return;
-    passed_buff_size -= ( size_t )write_return;
+    writeret = write( fd, buffptr, buffsize );
+    switch( writeret )  {
 
-    if( passed_buff_size == 0 )  return 0;
+      case -1:
+        switch( errno )  {
+
+	  case EINTR:
+           continue;
+
+	  default:
+	   return -1;
+
+	}
+
+      default:
+	break;
+
+    }
+
+    buffptr += writeret;
+    buffsize -= ( size_t )writeret;
+    if( buffsize == 0 )  return 0;
     
   }
     

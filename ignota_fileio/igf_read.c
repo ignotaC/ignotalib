@@ -60,8 +60,8 @@ ssize_t igf_read(
       case 0:
        return readsum;
 
-
-
+      default:
+       break;
 
     }
     

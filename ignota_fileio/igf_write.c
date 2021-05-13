@@ -42,7 +42,11 @@ ssize_t igf_write(
     void *const buff,
     size_t buffsize
 )  {
-  
+ 
+  assert( fd >= 0 );
+  assert( buff != NULL );
+  assert( buffsize != 0 );
+
   const uint8_t *buffptr = buff;
   ssize_t  writeret = 0;
   

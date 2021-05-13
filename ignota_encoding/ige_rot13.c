@@ -25,16 +25,31 @@ Bog Ojeciec.
 
 */
 
-void* ige_rot13( void *const buff, const size_t buff_size )  {
+
+// rot 13 gets decoded using on it rgainot13 ;-)
+// This function does not fail
+// And it does not return anything
+void ige_rot13(
+    void *const buff,
+    const size_t buffsize
+)  {
   
-  uint8_t *const byte_ptr = buff;
+  assert( buff != NULL );
+  assert( buffsize != 0 );
+
+  uint8_t *const buffptr = buff;
   
-  for( size_t i = 0 ; i < buff_size; i++ )  {
+  int character = 0;
+  for( size_t i = 0; i < buffsize; i++ )  {
     
-    byte_ptr[i] = ig_rot13_table[ byte_ptr[i] ];
+    character = ( int )( buffptr[i] );
+    if( ! isalpha( character ) )  continue;
+
+    if( character <= 'M' ) character += 13;
+    else if( character <= 'Z' ) character -= 13;
+    else if( character <= 'm' ) character += 13;
+    else  character -= 13;
     
   }
-  
-  return buff;
   
 }

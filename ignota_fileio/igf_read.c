@@ -36,7 +36,11 @@ ssize_t igf_read(
   const int fd,
   void *const buff,
   size_t buffsize )  {
-  
+ 
+  assert( fd >= 0 );
+  assert( buff != NULL );
+  assert( buffsize != 0 );
+
   uint8_t *buffptr = buff;
   ssize_t  readret = 0;
   ssize_t  readsum = 0;

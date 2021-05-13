@@ -33,6 +33,8 @@ Bog Ojeciec.
 off_t igf_fdoffsetend(
     const int fd )  {
  
+  assert( fd >= 0 );
+
   off_t keep_offset = lseek( fd, 0, SEEK_CUR );
   if( keep_offset == -1 )  return -1;
 

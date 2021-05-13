@@ -30,9 +30,11 @@ Bog Ojeciec.
 // It can fail on open function
 // Tested, satisfied.
 int igf_openfd_rd(
-    const char *const file_name )  {
+    const char *const filename )  {
 
-  return   open( file_name, O_RDONLY );
+  assert( filename != NULL );
+
+  return   open( filename, O_RDONLY );
   
 }
 
@@ -41,9 +43,11 @@ int igf_openfd_rd(
 // If no file to append than creates it
 // Can fail on open function
 int igf_openfd_ap(
-    const char *const file_name )  {
+    const char *const filename )  {
 
-  return   open( file_name, O_WRONLY | O_APPEND
+  assert( filename != NULL );
+ 
+  return   open( filename, O_WRONLY | O_APPEND
     | O_CREAT, IGF_DEFAULT_FDMODE );
 
 }
@@ -53,9 +57,11 @@ int igf_openfd_ap(
 // If file exist it will be removed - overwritten
 // Can fail on open function
 int igf_openfd_wr(
-    const char *const file_name )  {
+    const char *const filename )  {
 
-  return   open( file_name, O_WRONLY | O_TRUNC
+  assert( filename != NULL );
+
+  return   open( filename, O_WRONLY | O_TRUNC
     | O_CREAT, IGF_DEFAULT_FDMODE );
 
 }

@@ -29,13 +29,15 @@ Bog Ojeciec.
 // All alpha characters are turned to upper case,
 // untill nul character met or passed_strlen passed.
 // Does not work for locales only pure ascii.
+// I use here igr suffix so no ub on
+// str nameing. Since str* reserved.
 // This function does not return anything.
 void igs_strtoupper(
     char *const igs_str,
     const size_t igs_strlen )  {
 
-// I use here igr suffix so no fucking ub on
-// str nameing.Since s* reserved.
+  assert( igs_str != NULL );
+  assert( igs_strlen != 0 );
 
   for( size_t i = 0; i < igs_strlen; i++ )  {
 
@@ -51,13 +53,15 @@ void igs_strtoupper(
 // All alpha characters are turned to upper case,
 // untill nul character met or passed_strlen passed.
 // Does not work for locales only pure ascii.
+// I use here igr suffix so no ub on
+// str nameing. Since str* reserved.
 // This function does not return anything.
 void igs_strtolower(
     char *const igs_str,
     const size_t igs_strlen )  {
 
-// I use here igr suffix so no fucking ub on
-// str nameing.Since s* reserved.
+  assert( igs_str != NULL );
+  assert( igs_strlen != 0 );
 
   for( size_t i = 0; i < igs_strlen; i++ )  {
 

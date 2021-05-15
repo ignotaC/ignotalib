@@ -37,6 +37,8 @@ void igc_init_dict(
     struct igc_dict *const dp
 )  {
 
+  assert( dp != NULL );
+
   dp->len = 0;
   dp->wp = NULL;
   dp->count = 0;
@@ -48,6 +50,8 @@ void igc_init_dict(
 void igc_init_word(
     struct igc_word *const wp 
 )  {
+
+  assert( wp != NULL );
 
   wp->word = NULL;
   wp->wordlen = 0;
@@ -70,6 +74,10 @@ struct igc_word *igc_addword_dict(
     const char *const word,
     const size_t wordlen
 )  {
+
+  assert( dp != NULL );
+  assert( word != NULL );
+  assert( wordlen != 0 );
 
   char *newword = malloc( wordlen );
   if( newword == NULL )  return NULL;
@@ -110,6 +118,10 @@ int igc_recvword_dict(
     const size_t wordlen
 )  {
 
+  assert( dp != NULL );
+  assert( word != NULL );
+  assert( wordlen != 0 );
+
   struct igc_word *wp = NULL;
   for( size_t i = 0; i < dp->len; i++ )  {
 
@@ -142,6 +154,8 @@ void igc_free_dict(
     struct igc_dict *const dp
 )  {
 
+  assert( dp != NULL );
+
   // First free all the contents of wp
   for( size_t i = 0; i < dp->len; i++ )  {
 
@@ -161,6 +175,8 @@ void igc_free_dict(
 int igc_print_dict( 
     const struct igc_dict *const dp
 )  {
+
+  assert( dp != NULL );
 
   if( printf( "Summary count: %" PRIu64 "\n",
      dp->count ) < 0 )
@@ -183,6 +199,8 @@ int igc_print_dict(
 int igc_print_word(
     const struct igc_word *const wp
 )  {
+
+  assert( wp != NULL );
 
   if( printf( "Word: %s\n", wp->word ) < 0 )
     return -1;
@@ -209,6 +227,8 @@ int igc_print_word(
 void igc_findprob_dict(
     struct igc_dict *const dp
 )  {
+
+  assert( dp != NULL );
 
   struct igc_word *wp = NULL;
   

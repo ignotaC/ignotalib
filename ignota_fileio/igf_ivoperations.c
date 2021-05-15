@@ -27,16 +27,33 @@ Bog Ojeciec.
 
 
 
-size_t igf_ivbuff_sumsize( const struct iovec *const iv, const int iv_len )  {
+size_t igf_ivbuff_sumsize(
+    const struct iovec *const iv,
+    const int iv_len
+)  {
+
+  assert( iv != NULL );
+  assert( iv_len > 0 );
 
   size_t ivbuff_sumsize = 0;
-  for( int i = 0; i < iv_len; i++ )  ivbuff_sumsize += iv[i].iov_len;
+  for( int i = 0; i < iv_len; i++ )
+    ivbuff_sumsize += iv[i].iov_len;
   return ivbuff_sumsize;
   
 }
 
 
-ssize_t igf_readv( const int fd, struct iovec *const iv, int iv_len, const size_t size_to_read )  {
+ssize_t igf_readv(
+    const int fd, 
+    struct iovec *const iv, 
+    int iv_len,
+    const size_t size_to_read
+)  {
+
+  assert( fd >= 0 );
+  assert( iv != NULL );
+  assert( iv_len > 0 );
+  assert( size_to_read != 0 );
 
   ssize_t readv_ret;
   size_t read_sum = 0;
@@ -104,7 +121,16 @@ ssize_t igf_readv( const int fd, struct iovec *const iv, int iv_len, const size_
 
 
 // if want to write less cheat with iv_summary_size and give smaller
-ssize_t igf_writev( const int fd, struct iovec *const iv, const int iv_len, const size_t write_size )  {
+ssize_t igf_writev( 
+    const int fd,
+    struct iovec *const iv, 
+    const int iv_len, 
+    const size_t write_size )  {
+
+  assert( fd >= 0 );
+  assert( iv != NULL );
+  assert( iv_len > 0 );
+  assert( write_size != 0 );
 
   int changed_pos = 0;
   void *changed_ptr = iv->iov_base;

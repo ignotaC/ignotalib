@@ -37,6 +37,12 @@ int igds_strarr_addent(
     const size_t memlen
 )  {
 
+  assert( sa != NULL );
+  assert( mem != NULL );
+  assert( memlen != 0 );
+  // little sens to make element that does
+  // not need memory
+
   // set up memory
   char *newstr = malloc( sizeof **( sa->list ) 
     * memlen + 1 );

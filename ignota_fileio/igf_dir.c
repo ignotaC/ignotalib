@@ -29,22 +29,56 @@ Bog Ojeciec.
 
 #include <dirent.h>
 
+// Function fills igds_chrarr struct with strings.
+// Each string is name of file in the directory.
+// This function on success will clear errno value
+// It can fail on realloc, malloc inside chrarr_add
+// and in opendir, readdir.
+// Closedir is not checked for error.
+// Returns -1 on fail and 0 on success.
+// On failure the opened dirname is closed but saved
+// names to igds_chrarr are not touched. So it end
+// up partialy filled.
 char *igf_getdirfiles(
     const char *const dirname,
-    igds_strbase ***entnames,
-    size_t entsize
+    struct igds_chrarr *const filenames
 )  {
 
   assert( dirname != NULL );
+  assert( filenames != NULL );
 
   DIR *dir = opendir( dirname );
   if( dir == NULL ) return -1;
 
+  size_t namelen = 0;
+  char *newname = NULL;
+  char **keep_filenames = NULL;
   for( struct dirent *dp == NULL ;;)  {
 
-    dir = opendir( dp
+    errno = 0;
+    dp = readdir( dir );
+    if( dp == NULL )  {
+
+      if( errno != 0 )  goto readdir_err;
+      closedir( dir );
+      return 0;
+
+    }
+
+    namelen = strnlen( dp->d_name, NAME_MAX );
+    keep_filenames = filenames->entry;
+    if( igds_strarr_addent( filenames, dp->d_name,
+       namesize ) == -1 )  goto addent_err;
+    // nul is added inside strarr_addent
 
   }
+
+ addent_err:
+ readdir_err:
+  int keep_err = errno;
+  closedir( dir );
+  errno = keep_err;
+  return -1;
 
 }
 

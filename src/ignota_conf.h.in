@@ -1,0 +1,10 @@
+
+#ifndef IGNOTA_CONF_H
+#define IGNOTA_CONF_H
+
+
+#define IGNOTALIB_VERSION @IgnotaLib_VERSION_MAJOR@.\
+@IgnotaLib_VERSION_MINOR@.\
+@IgnotaLib_VERSION_PATCH@
+
+#endif

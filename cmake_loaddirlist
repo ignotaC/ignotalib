@@ -1,0 +1,31 @@
+set( cm_src "src" )
+	set( cm_ignota_compress "src/ignota_compress" )
+	set( cm_ignota_datastructure "src/ignota_datastructure" )
+	set( cm_ignota_encoding "src/ignota_encoding" )
+	set( cm_ignota_memory "src/ignota_memory" )
+	set( cm_ignota_fileio "src/ignota_fileio" )
+	set( cm_ignota_string "src/ignota_string" )
+	set( cm_ignota_net "src/ignota_net" )
+
+include_directories(
+	${cm_src}
+	${cm_ignota_compress}
+	${cm_ignota_datastructure}
+	${cm_ignota_encoding}
+	${cm_ignota_memory}
+	${cm_ignota_fileio}
+	${cm_ignota_string}
+	${cm_ignota_net}
+	)
+
+file( GLOB cm_allsource
+	${cm_src}\*.c
+	${cm_ignota_compress}\*.c
+	${cm_ignota_datastructure}\*.c
+	${cm_ignota_encoding}\*.c
+	${cm_ignota_memory}\*.c
+	${cm_ignota_fileio}\*.c
+	${cm_ignota_string}\*.c
+	${cm_ignota_net}\*.c
+	)
+add_library( ignotalib SHARED ${cm_allsource}

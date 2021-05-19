@@ -27,6 +27,7 @@ Bog Ojeciec.
 
 
 
+
 #ifndef IG_COMPRESS_H
 #define IG_COMPRESS_H
 

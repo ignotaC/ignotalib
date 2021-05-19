@@ -14,11 +14,14 @@ cm_source='\t${cm_src}\\*.c'"\n"
 while read -r line
 do
 
+	echo "$line"
+
 	cm_dir='cm_'"$line"
 	cm_dirs="$cm_dirs""\t"'${'$cm_dir'}'"\n"
 	cm_source="$cm_source""\t"'${'$cm_dir'}\\*.c'"\n"
 	setline='set( '"$cm_dir"' "src/'"$line"'" )'
 	printf "\t%s\n" "$setline" >> "$cmake_file"
+
 
 done < "$tempfile"
 

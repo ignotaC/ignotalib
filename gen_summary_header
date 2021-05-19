@@ -1,0 +1,43 @@
+#! /bin/ksh
+
+
+sumhead="$1""/""${1##*/}"'.h'
+sumsrc="$1""/""${1##*/}"'.c'
+
+rm -f "$sumhead"
+
+tempfile=$(mktemp)
+
+find "$1" -type f -iname '*.H' -maxdepth 1  > "$tempfile"
+
+cat "$tempfile"
+
+
+strupper="${1##*/}"
+strupper=$( echo "$strupper" | tr "[:lower:]" "[:upper:]" )
+
+if ! test -n "$strupper"
+then
+	echo "bad input"
+	exit
+fi
+
+cat 'IGNOTA_LICENSE' > "$sumsrc"
+printf "\n\n" >> "$sumsrc"
+printf "#include \"""${sumhead##*/}""\"\n" >> "$sumsrc"
+
+cat 'IGNOTA_LICENSE' > "$sumhead"
+printf "\n\n" >> "$sumhead"
+printf "#ifndef ""$strupper""_H\n" >> "$sumhead"
+printf "#define ""$strupper""_H\n\n" >> "$sumhead"
+
+while read -r line
+do
+	printf "#include \"""${line##*/}""\"\n" >> \
+		"$sumhead"
+
+done < "$tempfile"
+
+printf "\n#endif\n" >> "$sumhead"
+
+rm -f "$tempfile"

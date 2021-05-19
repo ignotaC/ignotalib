@@ -28,4 +28,5 @@ file( GLOB cm_allsource
 	${cm_ignota_string}\*.c
 	${cm_ignota_net}\*.c
 	)
+
 add_library( ignotalib SHARED ${cm_allsource}

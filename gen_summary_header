@@ -10,8 +10,6 @@ tempfile=$(mktemp)
 
 find "$1" -type f -iname '*.H' -maxdepth 1  > "$tempfile"
 
-cat "$tempfile"
-
 
 strupper="${1##*/}"
 strupper=$( echo "$strupper" | tr "[:lower:]" "[:upper:]" )

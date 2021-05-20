@@ -1,9 +1,11 @@
 #! /bin/ksh
 
 tempfile=$(mktemp)
-find src -type d | \
+tempfile2=$(mktemp)
+find src -type d -maxdepth 1 | \
 	awk  'BEGIN { FS="/" }  { print $2 }' | \
   	awk 'NF>0' > "$tempfile"
+
 
 cmake_file='cmake_loaddirlist'
 
@@ -11,9 +13,29 @@ printf "%s\n" 'set( cm_src "src" )' > "$cmake_file"
 cm_dirs='\t${cm_src}'"\n"
 cm_source='\t${cm_src}\\*.c'"\n"
 
+ignotah='src/ignota.h'
+ignotac='src/ignota.c'
+
+rm -f "$ignotah"
+rm -f "$ignotac"
+
+find src -type f -maxdepth 1 -iname '*.H' > "$tempfile2"
+cat "$tempfile2"
+
+
+cat IGNOTA_LICENSE > "$ignotah"
+cat IGNOTA_LICENSE > "$ignotac"
+
+printf "\n" >> "$ignotah"
+printf "\n" >> "$ignotac"
+
+printf "#include \"ignota.h\"\n" >> "$ignotac"
+
+printf "#ifndef IGNOTA_H\n" >> "$ignotah"
+printf "#define IGNOTA_H\n\n" >> "$ignotah"
+
 while read -r line
 do
-
 	echo "$line"
 
 	cm_dir='cm_'"$line"
@@ -22,8 +44,25 @@ do
 	setline='set( '"$cm_dir"' "src/'"$line"'" )'
 	printf "\t%s\n" "$setline" >> "$cmake_file"
 
+	#source header maker
+
+	./gen_summary_header 'src/'"$line"
+	printf "#include \"""$line""/""$line"".h\"\n" >> "$ignotah"
 
 done < "$tempfile"
+
+printf "\n" >> "$ignotah"
+
+while read -r line
+do
+
+	printf "#include \"""${line#*/}""\"\n" >> "$ignotah"
+
+done < "$tempfile2"
+
+#finish inside src sources
+
+printf "\n#endif \n" >> "$ignotah"
 
 printf "\n%s\n" 'include_directories(' >> "$cmake_file"
 printf "$cm_dirs" >> "$cmake_file"
@@ -35,3 +74,6 @@ printf "\t%s\n" ')' >> "$cmake_file"
 
 printf "\n"'add_library( ignotalib SHARED ${cm_allsource}'"\n" \
        	>> "$cmake_file"
+
+rm -f "$tempfile"
+rm -f "$tempfile2"

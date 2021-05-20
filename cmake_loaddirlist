@@ -1,32 +1,32 @@
 set( cm_src "src" )
-	set( cm_ignota_compress "src/ignota_compress" )
-	set( cm_ignota_datastructure "src/ignota_datastructure" )
-	set( cm_ignota_encoding "src/ignota_encoding" )
-	set( cm_ignota_memory "src/ignota_memory" )
-	set( cm_ignota_fileio "src/ignota_fileio" )
-	set( cm_ignota_string "src/ignota_string" )
-	set( cm_ignota_net "src/ignota_net" )
+	set( cm_ig_fileio "src/ig_fileio" )
+	set( cm_ig_string "src/ig_string" )
+	set( cm_ig_memory "src/ig_memory" )
+	set( cm_ig_net "src/ig_net" )
+	set( cm_ig_encoding "src/ig_encoding" )
+	set( cm_ig_compress "src/ig_compress" )
+	set( cm_ig_datastructure "src/ig_datastructure" )
 
 include_directories(
 	${cm_src}
-	${cm_ignota_compress}
-	${cm_ignota_datastructure}
-	${cm_ignota_encoding}
-	${cm_ignota_memory}
-	${cm_ignota_fileio}
-	${cm_ignota_string}
-	${cm_ignota_net}
+	${cm_ig_fileio}
+	${cm_ig_string}
+	${cm_ig_memory}
+	${cm_ig_net}
+	${cm_ig_encoding}
+	${cm_ig_compress}
+	${cm_ig_datastructure}
 	)
 
 file( GLOB cm_allsource
 	${cm_src}\*.c
-	${cm_ignota_compress}\*.c
-	${cm_ignota_datastructure}\*.c
-	${cm_ignota_encoding}\*.c
-	${cm_ignota_memory}\*.c
-	${cm_ignota_fileio}\*.c
-	${cm_ignota_string}\*.c
-	${cm_ignota_net}\*.c
+	${cm_ig_fileio}\*.c
+	${cm_ig_string}\*.c
+	${cm_ig_memory}\*.c
+	${cm_ig_net}\*.c
+	${cm_ig_encoding}\*.c
+	${cm_ig_compress}\*.c
+	${cm_ig_datastructure}\*.c
 	)
 
 add_library( ignotalib SHARED ${cm_allsource}

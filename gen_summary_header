@@ -16,7 +16,7 @@ strupper=$( echo "$strupper" | tr "[:lower:]" "[:upper:]" )
 
 if ! test -n "$strupper"
 then
-	echo "bad input"
+	echo "bad input - give src dir"
 	exit
 fi
 

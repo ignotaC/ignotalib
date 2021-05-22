@@ -25,29 +25,29 @@ Bog Ojeciec.
 
 */
 
-#include "igf_fdoffset.h"
+#ifndef IGF_IVOPERATIONS_H
+#define IGF_IVOPERATIONS_H
 
-// Function returns fd end and sets back
-// to current pos.
-// On error it's undefined whenever the offset
-// changed back to i
-off_t igf_fdoffset_end(
-    const int fd
-)  {
- 
-  assert( fd >= 0 );
+#include "sys/uio.h"
 
-  off_t keep_offset = lseek( fd, 0, SEEK_CUR );
-  if( keep_offset == -1 )  return -1;
+size_t igf_ivbuff_sumsize(
+    const struct iovec *const iv,
+    const int iv_len
+);
 
-  off_t end_offset = lseek( fd, 0, SEEK_END );
-  if( end_offset == -1 )  return -1;
+ssize_t igf_readv(
+    const int fd, 
+    struct iovec *const iv, 
+    int iv_len,
+    const size_t readsize
+);
 
-  if( lseek( fd, keep_offset, SEEK_SET ) == -1 )  return -1;
-
-  return end_offset;
-  
-}
-
+ssize_t igf_writev( 
+    const int fd,
+    struct iovec *const iv, 
+    const int iv_len, 
+    const size_t writesize
+);
 
 
+#endif

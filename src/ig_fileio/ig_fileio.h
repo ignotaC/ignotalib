@@ -31,5 +31,12 @@ Bog Ojeciec.
 #ifndef IG_FILEIO_H
 #define IG_FILEIO_H
 
+#include "igf_openfd.h"
+#include "igf_dir.h"
+#include "igf_fdoffset.h"
+#include "igf_ivoperations.h"
+#include "igf_read.h"
+#include "igf_search.h"
+#include "igf_write.h"
 
 #endif

@@ -25,7 +25,7 @@ Bog Ojeciec.
 
 */
 
-
+#include "igf_ivoperations.h"
 
 size_t igf_ivbuff_sumsize(
     const struct iovec *const iv,
@@ -47,13 +47,13 @@ ssize_t igf_readv(
     const int fd, 
     struct iovec *const iv, 
     int iv_len,
-    const size_t size_to_read
+    const size_t readsize
 )  {
 
   assert( fd >= 0 );
   assert( iv != NULL );
   assert( iv_len > 0 );
-  assert( size_to_read != 0 );
+  assert( readsize != 0 );
 
   ssize_t readv_ret;
   size_t read_sum = 0;
@@ -62,7 +62,7 @@ ssize_t igf_readv(
   size_t keep_len = iv_ptr->iov_len;
   void *keep_ptr = iv_ptr->iov_base;
   
-  while( size_to_read )  {
+  while( readsize )  {
 
     readv_ret = readv( fd, iv_ptr, iv_len );
 
@@ -85,7 +85,7 @@ ssize_t igf_readv(
 
     read_sum += readv_ret;
     
-    if( size_to_read == read_sum )  {
+    if( readsize == read_sum )  {
 
       iv_ptr->iov_len = keep_len;
       iv_ptr->iov_base = keep_ptr;
@@ -120,17 +120,19 @@ ssize_t igf_readv(
 }
 
 
-// if want to write less cheat with iv_summary_size and give smaller
+// This is broken - look for writesize in code doing something - non existant
+// There is bug here
 ssize_t igf_writev( 
     const int fd,
     struct iovec *const iv, 
     const int iv_len, 
-    const size_t write_size )  {
+    const size_t writesize
+)  {
 
   assert( fd >= 0 );
   assert( iv != NULL );
   assert( iv_len > 0 );
-  assert( write_size != 0 );
+  assert( writesize != 0 );
 
   int changed_pos = 0;
   void *changed_ptr = iv->iov_base;

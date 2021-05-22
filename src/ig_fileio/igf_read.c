@@ -25,7 +25,7 @@ Bog Ojeciec.
 
 */
 
-
+#include "igf_read.h"
 
 // Reads bytes from fd to buff untill error on read
 // EOF or buff is full.
@@ -35,7 +35,8 @@ Bog Ojeciec.
 ssize_t igf_read(
   const int fd,
   void *const buff,
-  size_t buffsize )  {
+  size_t buffsize
+)  {
  
   assert( fd >= 0 );
   assert( buff != NULL );

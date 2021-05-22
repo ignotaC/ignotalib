@@ -41,7 +41,7 @@ Bog Ojeciec.
 // up partialy filled.
 char *igf_getdirfiles(
     const char *const dirname,
-    struct igds_chrarr *const filenames
+    struct igds_strarr *const filenames
 )  {
 
   assert( dirname != NULL );

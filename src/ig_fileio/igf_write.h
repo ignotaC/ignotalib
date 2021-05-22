@@ -25,29 +25,13 @@ Bog Ojeciec.
 
 */
 
-#include "igf_fdoffset.h"
+#ifndef IGF_WRITE_H
+#define IGF_WRITE_H
 
-// Function returns fd end and sets back
-// to current pos.
-// On error it's undefined whenever the offset
-// changed back to i
-off_t igf_fdoffset_end(
-    const int fd
-)  {
- 
-  assert( fd >= 0 );
+ssize_t igf_write(
+    const int fd,
+    void *const buff,
+    size_t buffsize
+);
 
-  off_t keep_offset = lseek( fd, 0, SEEK_CUR );
-  if( keep_offset == -1 )  return -1;
-
-  off_t end_offset = lseek( fd, 0, SEEK_END );
-  if( end_offset == -1 )  return -1;
-
-  if( lseek( fd, keep_offset, SEEK_SET ) == -1 )  return -1;
-
-  return end_offset;
-  
-}
-
-
-
+#endif

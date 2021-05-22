@@ -27,9 +27,11 @@ Bog Ojeciec.
 
 */
 
+#include "igf_search.h"
+
 // Find character in file descriptor.
 // Function will set the fd offset
-// right on the characterif it was found
+// right on the character if it was found
 // you must provide buffor for this function
 // Returns -1 on fail.
 // Offset will not get reset to starting pos

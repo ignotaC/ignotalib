@@ -1,3 +1,4 @@
+
 /*
 
 Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
@@ -25,29 +26,14 @@ Bog Ojeciec.
 
 */
 
-#include "igf_fdoffset.h"
+#ifndef IGF_DIR_H
+#define IGF_DIR_H
 
-// Function returns fd end and sets back
-// to current pos.
-// On error it's undefined whenever the offset
-// changed back to i
-off_t igf_fdoffset_end(
-    const int fd
-)  {
- 
-  assert( fd >= 0 );
+#include "../ig_datastructure/igds_strarr.h"
 
-  off_t keep_offset = lseek( fd, 0, SEEK_CUR );
-  if( keep_offset == -1 )  return -1;
+char *igf_getdirfiles(
+    const char *const dirname,
+    struct igds_strarr *const filenames
+);
 
-  off_t end_offset = lseek( fd, 0, SEEK_END );
-  if( end_offset == -1 )  return -1;
-
-  if( lseek( fd, keep_offset, SEEK_SET ) == -1 )  return -1;
-
-  return end_offset;
-  
-}
-
-
-
+#endif

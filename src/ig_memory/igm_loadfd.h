@@ -25,32 +25,14 @@ Bog Ojeciec.
 
 */
 
-#include "ige_rot13.h"
+#ifndef IGM_LOADFD_H
+#define IGM_LOADFD_H
 
-// rot 13 gets decoded using on it again. Just as XOR
-// This function does not fail
-// And it does not return anything
-void ige_rot13(
+void* igm_fdtomem(
+    const int fd,
+    size_t *const memsize
     void *const buff,
     const size_t buffsize
-)  {
-  
-  assert( buff != NULL );
-  assert( buffsize != 0 );
+)
 
-  uint8_t *const buffptr = buff;
-  
-  int character = 0;
-  for( size_t i = 0; i < buffsize; i++ )  {
-    
-    character = ( int )( buffptr[i] );
-    if( ! isalpha( character ) )  continue;
-
-    if( character <= 'M' ) character += 13;
-    else if( character <= 'Z' ) character -= 13;
-    else if( character <= 'm' ) character += 13;
-    else  character -= 13;
-    
-  }
-  
-}
+#endif

@@ -31,5 +31,7 @@ Bog Ojeciec.
 #ifndef IG_ENCODING_H
 #define IG_ENCODING_H
 
+#include "ige_base64.h"
+#include "ige_rot13.h"
 
 #endif

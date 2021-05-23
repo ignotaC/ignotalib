@@ -25,52 +25,16 @@ Bog Ojeciec.
 
 */
 
-#include "igs_convert.h"
+#ifndef IGS_CONVERT_H
+#define IGS_CONVERT_H
 
-// All alpha characters are turned to upper case,
-// untill nul character met or passed_strlen passed.
-// Does not work for locales only pure ascii.
-// I use here igr suffix so no ub on
-// str nameing. Since str* reserved.
-// This function does not return anything.
 void igs_strtoupper(
     char *const igs_str,
     const size_t igs_strlen
-)  {
-
-  assert( igs_str != NULL );
-  assert( igs_strlen != 0 );
-
-  for( size_t i = 0; i < igs_strlen; i++ )  {
-
-    if( igs_str[i] == 0 )   return;
-    igs_str[i] = toupper( igs_str[i] );
-
-  }
-
-}
-
-// All alpha characters are turned to upper case,
-// untill nul character met or passed_strlen passed.
-// Does not work for locales only pure ascii.
-// I use here igr suffix so no ub on
-// str nameing. Since str* reserved.
-// This function does not return anything.
+);
 void igs_strtolower(
     char *const igs_str,
     const size_t igs_strlen
-)  {
+);
 
-  assert( igs_str != NULL );
-  assert( igs_strlen != 0 );
-
-  for( size_t i = 0; i < igs_strlen; i++ )  {
-
-    if( igs_str[i] == 0 )   return;
-    igs_str[i] = tolower( igs_str[i] );
-
-  }
-
-}
-
-
+#endif

@@ -25,57 +25,59 @@ Bog Ojeciec.
 
 */
 
+#include "ige_base64.h"
 
-static const char ige_base64_enctab[] = 
+static const char ige_base64_ctab[] = 
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
   "jklmnopqrstuvwxyz0123456789+/";
 
-// Encode base64
+// Code base64
 // Works only for small endian.
 // You must be sure that str_encoded is big enought or it will return error.
 // ( ( x / 3 ) * 4 ) + 5   |||  4 bytes more might be lost on /3 + place for nul = 5  or just use ig_getcoded_base64size  function
 // Never fails but can overflow.  
-void* ige_encbase64(
-    const void *const bytes, 
-    const size_t bytes_size,
-    void *const coded_buff )  {
+void* ige_cbase64(
+    const void *const mem, 
+    const size_t memsize,
+    void *const codedmem
+)  {
  
-  assert( bytes != NULL );
-  assert( bytes_size != 0 );
-  assert( coded_buff != NULL );
+  assert( mem != NULL );
+  assert( memsize != 0 );
+  assert( codedmem != NULL );
 
-  uint8_t *const coded_str = coded_buff;
-  const uint8_t *bytes_ptr = ( uint8_t* ) bytes;
+  uint8_t *const codedptr = codedmem;
+  const uint8_t *memptr = ( uint8_t* ) mem;
   uint16_t storage = 0;
-  uint8_t *storage_ptr = ( uint8_t* ) &storage;
+  uint8_t *storageptr = ( uint8_t* ) &storage;
     
-  size_t j = 0, i = 0, n = bytes_size;
+  size_t j = 0, i = 0, n = memsize;
   for(; n > 2; n -= 3 )  {
 
     // xx xx xx xx 00 00 00 00
-    storage_ptr[1] = bytes_ptr[i++];
+    storageptr[1] = memptr[i++];
     // 00 xx xx xx
-    coded_str[j++] = ig_encode_base64_tab[ ( storage_ptr[1] ) >> 2 ];
+    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
 
     // xx xx xx xx xx xx xx xx 
-    storage_ptr[0] = bytes_ptr[i++];
+    storageptr[0] = memptr[i++];
     // xx xx xx xx xx 00 00 00
     storage <<= 6;
     // 00 xx xx xx    
-    coded_str[j++] = ig_encode_base64_tab[ ( storage_ptr[1] ) >> 2 ];
+    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
  
     // xx xx xx xx 00 00 00 00
     storage <<= 2;
     // xx xx xx xx xx xx xx xx 
-    storage_ptr[0] = bytes_ptr[i++];
+    storageptr[0] = memptr[i++];
     // xx xx xx xx xx xx 00 00 
     storage <<= 4;
     // 00 xx xx xx    
-    coded_str[j++] = ig_encode_base64_tab[ ( storage_ptr[1] ) >> 2 ];    
+    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];    
     // xx xx xx 00 00 00 00 00
     storage <<= 6;
     // 00 xx xx xx    
-    coded_str[j++] = ig_encode_base64_tab[ ( storage_ptr[1] ) >> 2 ];
+    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
      
   }  
   
@@ -83,36 +85,36 @@ void* ige_encbase64(
   
   if( n == 2 )  {
     
-    storage_ptr[1] = bytes_ptr[i++];
-    coded_str[j++] = ig_encode_base64_tab[ ( storage_ptr[1] ) >> 2 ];
+    storageptr[1] = memptr[i++];
+    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
 
-    storage_ptr[0] = bytes_ptr[i++];
+    storageptr[0] = memptr[i++];
     storage <<= 6;
-    coded_str[j++] = ig_encode_base64_tab[ ( storage_ptr[1] ) >> 2 ];
+    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
  
     storage <<= 2;
-    storage_ptr[0] = 0;
+    storageptr[0] = 0;
     storage <<= 4;
-    coded_str[j++] = ig_encode_base64_tab[ ( storage_ptr[1] ) >> 2 ];
-    coded_str[j++] = '=';
+    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = '=';
     
   }
   
   if( n == 1 )  {
     
-    storage_ptr[1] = bytes_ptr[i++];
-    coded_str[j++] = ig_encode_base64_tab[ ( storage_ptr[1] ) >> 2 ];
+    storageptr[1] = memptr[i++];
+    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
 
-    storage_ptr[0] = 0;
+    storageptr[0] = 0;
     storage <<= 6;
-    coded_str[j++] = ig_encode_base64_tab[ ( storage_ptr[1] ) >> 2 ];
-    coded_str[j++] = '=';
-    coded_str[j++] = '=';
+    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = '=';
+    codedptr[j++] = '=';
     
   }
   
-  coded_str[j++] = 0;
-  return coded_str;
+  codedptr[j++] = 0;
+  return codedptr;
   
 }
 
@@ -121,9 +123,11 @@ void* ige_encbase64(
 // + 1 -> we need place for nul.
 // worst case we end up not using all bytes but this is a small memory lost.
 // We want here the safe size without getting into details.
-// 
-size_t ige_base64len( const size_t encoded_size )  {
+//  ige befor ename because of str reserved.
+size_t ige_base64size(
+    const size_t ige_strsize
+)  {
 
-  return encoded_size / 3 * 4 + 1;
+  return ige_strsize / 3 * 4 + 1;
 
 }

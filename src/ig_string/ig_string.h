@@ -31,5 +31,6 @@ Bog Ojeciec.
 #ifndef IG_STRING_H
 #define IG_STRING_H
 
+#include "igs_convert.h"
 
 #endif

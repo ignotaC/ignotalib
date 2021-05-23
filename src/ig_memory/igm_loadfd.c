@@ -25,6 +25,8 @@ Bog Ojeciec.
 
 */
 
+#include "igm_loadfd.h"
+
 // Loads fd to memory.
 // The fd_pos of file is set back on it's right place.
 // Which means if we read it a bit.
@@ -36,7 +38,7 @@ Bog Ojeciec.
 // On fail it's UNDEFINED the function managed to
 // set back the pointer back or not.
 // You must pass buffor and it's size for this function
-void* igc_fdtomem(
+void* igm_fdtomem(
     const int fd,
     size_t *const memsize
     void *const buff,

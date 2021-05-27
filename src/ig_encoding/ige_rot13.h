@@ -28,6 +28,8 @@ Bog Ojeciec.
 #ifndef IGE_ROT13_H
 #define IGE_ROT13_H
 
+#include <stddef.h>
+
 void ige_rot13(
     void *const buff,
     const size_t buffsize

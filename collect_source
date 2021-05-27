@@ -7,11 +7,11 @@ find src -type d -maxdepth 1 | \
   	awk 'NF>0' > "$tempfile"
 
 
-cmake_file='cmake_loaddirlist'
+cmake_file='cmake_loadinclude'
 
 printf "%s\n" 'set( cm_src "src" )' > "$cmake_file"
 cm_dirs='\t${cm_src}'"\n"
-cm_source='\t${cm_src}\\*.c'"\n"
+cm_source='\t"${cm_src}/*.c"'"\n"
 
 ignotah='src/ignota.h'
 ignotac='src/ignota.c'
@@ -40,7 +40,7 @@ do
 
 	cm_dir='cm_'"$line"
 	cm_dirs="$cm_dirs""\t"'${'$cm_dir'}'"\n"
-	cm_source="$cm_source""\t"'${'$cm_dir'}\\*.c'"\n"
+	cm_source="$cm_source""\t"'"${'$cm_dir'}/*.c"'"\n"
 	setline='set( '"$cm_dir"' "src/'"$line"'" )'
 	printf "\t%s\n" "$setline" >> "$cmake_file"
 
@@ -72,7 +72,7 @@ printf "\n%s\n" 'file( GLOB cm_allsource' >> "$cmake_file"
 printf "$cm_source" >> "$cmake_file"
 printf "\t%s\n" ')' >> "$cmake_file"
 
-printf "\n"'add_library( ignotalib SHARED ${cm_allsource}'"\n" \
+printf "\n"'add_library( ignotalib SHARED ${cm_allsource} )'"\n" \
        	>> "$cmake_file"
 
 rm -f "$tempfile"

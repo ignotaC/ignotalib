@@ -27,7 +27,10 @@ Bog Ojeciec.
 
 */
 
+#include <assert.h>
+#include <errno.h>
 #include <dirent.h>
+#include <string.h>
 
 // Function fills igds_chrarr struct with strings.
 // Each string is name of file in the directory.
@@ -39,7 +42,7 @@ Bog Ojeciec.
 // On failure the opened dirname is closed but saved
 // names to igds_chrarr are not touched. So it end
 // up partialy filled.
-char *igf_getdirfiles(
+int igf_getdirfiles(
     const char *const dirname,
     struct igds_strarr *const filenames
 )  {
@@ -53,7 +56,7 @@ char *igf_getdirfiles(
   size_t namelen = 0;
   char *newname = NULL;
   char **keep_filenames = NULL;
-  for( struct dirent *dp == NULL ;;)  {
+  for( struct dirent *dp = NULL ;;)  {
 
     errno = 0;
     dp = readdir( dir );

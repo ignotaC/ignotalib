@@ -33,7 +33,7 @@ Bog Ojeciec.
 #define IGC_PROBABILITY_H
 
 #include <stdlib.h>
-
+#include <stdint.h>
 
 // CHANGE NAMES TO SIMPLY WORD AND DICT
 struct igc_word  {

@@ -28,6 +28,8 @@ Bog Ojeciec.
 #ifndef IGDS_CHRARR_H
 #define IGDS_CHRARR_H
 
+#include <stddef.h>
+
 struct igds_strarr  {
 
   char **list;

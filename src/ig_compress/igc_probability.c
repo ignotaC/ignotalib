@@ -28,6 +28,8 @@ Bog Ojeciec.
 
 #include "igc_probability.h"
 
+#include <assert.h>
+#include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -180,6 +182,7 @@ int igc_print_dict(
 
   if( printf( "Summary count: %" PRIu64 "\n",
      dp->count ) < 0 )
+    return -1;
   
   for( size_t i = 0; i < dp->len; i++ )  {
 
@@ -219,6 +222,8 @@ int igc_print_word(
   
   if( printf( "Count: %" PRIu64 "\n", wp->count ) < 0 )
     return -1;
+
+  return 0;
 
 }
 

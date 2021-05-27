@@ -19,14 +19,14 @@ include_directories(
 	)
 
 file( GLOB cm_allsource
-	${cm_src}\*.c
-	${cm_ig_fileio}\*.c
-	${cm_ig_string}\*.c
-	${cm_ig_memory}\*.c
-	${cm_ig_net}\*.c
-	${cm_ig_encoding}\*.c
-	${cm_ig_compress}\*.c
-	${cm_ig_datastructure}\*.c
+	"${cm_src}/*.c"
+	"${cm_ig_fileio}/*.c"
+	"${cm_ig_string}/*.c"
+	"${cm_ig_memory}/*.c"
+	"${cm_ig_net}/*.c"
+	"${cm_ig_encoding}/*.c"
+	"${cm_ig_compress}/*.c"
+	"${cm_ig_datastructure}/*.c"
 	)
 
-add_library( ignotalib SHARED ${cm_allsource}
+add_library( ignotalib SHARED ${cm_allsource} )

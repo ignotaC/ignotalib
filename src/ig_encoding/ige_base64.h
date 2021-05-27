@@ -28,6 +28,8 @@ Bog Ojeciec.
 #ifndef IGE_BASE64_H
 #define IGE_BASE64_H
 
+#include <stddef.h>
+
 void* ige_cbase64(
     const void *const mem, 
     const size_t memsize,

@@ -27,6 +27,10 @@ Bog Ojeciec.
 
 #include "ige_rot13.h"
 
+#include <assert.h>
+#include <ctype.h>
+#include <stdint.h>
+
 // rot 13 gets decoded using on it again. Just as XOR
 // This function does not fail
 // And it does not return anything

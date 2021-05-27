@@ -27,6 +27,9 @@ Bog Ojeciec.
 
 #include "ige_base64.h"
 
+#include <assert.h>
+#include <stdint.h>
+
 static const char ige_base64_ctab[] = 
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
   "jklmnopqrstuvwxyz0123456789+/";
@@ -57,14 +60,14 @@ void* ige_cbase64(
     // xx xx xx xx 00 00 00 00
     storageptr[1] = memptr[i++];
     // 00 xx xx xx
-    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = ige_base64_ctab[ ( storageptr[1] ) >> 2 ];
 
     // xx xx xx xx xx xx xx xx 
     storageptr[0] = memptr[i++];
     // xx xx xx xx xx 00 00 00
     storage <<= 6;
     // 00 xx xx xx    
-    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = ige_base64_ctab[ ( storageptr[1] ) >> 2 ];
  
     // xx xx xx xx 00 00 00 00
     storage <<= 2;
@@ -73,11 +76,11 @@ void* ige_cbase64(
     // xx xx xx xx xx xx 00 00 
     storage <<= 4;
     // 00 xx xx xx    
-    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];    
+    codedptr[j++] = ige_base64_ctab[ ( storageptr[1] ) >> 2 ];    
     // xx xx xx 00 00 00 00 00
     storage <<= 6;
     // 00 xx xx xx    
-    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = ige_base64_ctab[ ( storageptr[1] ) >> 2 ];
      
   }  
   
@@ -86,16 +89,16 @@ void* ige_cbase64(
   if( n == 2 )  {
     
     storageptr[1] = memptr[i++];
-    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = ige_base64_ctab[ ( storageptr[1] ) >> 2 ];
 
     storageptr[0] = memptr[i++];
     storage <<= 6;
-    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = ige_base64_ctab[ ( storageptr[1] ) >> 2 ];
  
     storage <<= 2;
     storageptr[0] = 0;
     storage <<= 4;
-    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = ige_base64_ctab[ ( storageptr[1] ) >> 2 ];
     codedptr[j++] = '=';
     
   }
@@ -103,11 +106,11 @@ void* ige_cbase64(
   if( n == 1 )  {
     
     storageptr[1] = memptr[i++];
-    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = ige_base64_ctab[ ( storageptr[1] ) >> 2 ];
 
     storageptr[0] = 0;
     storage <<= 6;
-    codedptr[j++] = ig_encode_base64_tab[ ( storageptr[1] ) >> 2 ];
+    codedptr[j++] = ige_base64_ctab[ ( storageptr[1] ) >> 2 ];
     codedptr[j++] = '=';
     codedptr[j++] = '=';
     

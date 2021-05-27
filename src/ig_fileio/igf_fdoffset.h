@@ -28,8 +28,10 @@ Bog Ojeciec.
 #ifndef IGF_FDOFFSET_H
 #define IGF_FDOFFSET_H
 
+#include <sys/types.h>
+
 off_t igf_fdoffset_end(
-    const int fd )  {
-};
+    const int fd
+);
 
 #endif

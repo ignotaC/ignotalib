@@ -27,6 +27,8 @@ Bog Ojeciec.
 
 #include "igds_strarr.h"
 
+#include <string.h>
+
 // Can fail on malloc and realloc.
 // Will never lose data on fail.
 // Even of fail no memory leak

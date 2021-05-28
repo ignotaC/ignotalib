@@ -27,14 +27,19 @@ Bog Ojeciec.
 
 #include "igds_strarr.h"
 
+#include <assert.h>
+#include <stdlib.h>
 #include <string.h>
 
 // Can fail on malloc and realloc.
-// Will never lose data on fail.
-// Even of fail no memory leak
+// Should not lose data on fail.
+// On fail should not leak memory
 // Returns 0 on success and -1 on fail.
 // Array is for strings. You pass length
 // and function adds nul at the end.
+// You do not pass nul character.
+// It will not look for it. Instead it simply
+// copies memory length and adds nul
 int igds_strarr_addent(
     struct igds_strarr *const sa,
     void *const mem,

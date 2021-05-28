@@ -27,10 +27,14 @@ Bog Ojeciec.
 
 */
 
+#include "igf_dir.h"
+
 #include <assert.h>
 #include <errno.h>
 #include <dirent.h>
+#include <limits.h>
 #include <string.h>
+
 
 // Function fills igds_chrarr struct with strings.
 // Each string is name of file in the directory.
@@ -69,15 +73,15 @@ int igf_getdirfiles(
     }
 
     namelen = strnlen( dp->d_name, NAME_MAX );
-    keep_filenames = filenames->entry;
+    keep_filenames = filenames->list;
     if( igds_strarr_addent( filenames, dp->d_name,
-       namesize ) == -1 )  goto addent_err;
+       namelen ) == -1 )  goto addent_err;
     // nul is added inside strarr_addent
 
   }
 
  addent_err:
- readdir_err:
+ readdir_err:;
   int keep_err = errno;
   closedir( dir );
   errno = keep_err;

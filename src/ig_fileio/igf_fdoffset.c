@@ -27,6 +27,9 @@ Bog Ojeciec.
 
 #include "igf_fdoffset.h"
 
+#include <assert.h>
+#include <unistd.h>
+
 // Function returns fd end and sets back
 // to current pos.
 // On error it's undefined whenever the offset

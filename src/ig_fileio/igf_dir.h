@@ -31,7 +31,7 @@ Bog Ojeciec.
 
 #include "../ig_datastructure/igds_strarr.h"
 
-char *igf_getdirfiles(
+int igf_getdirfiles(
     const char *const dirname,
     struct igds_strarr *const filenames
 );

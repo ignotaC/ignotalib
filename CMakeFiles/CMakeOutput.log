@@ -1,0 +1,223 @@
+The system is: OpenBSD - 6.9 - amd64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is Clang, found in "/home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/3.19.4/CompilerIdC/a.out"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is Clang, found in "/home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/3.19.4/CompilerIdCXX/a.out"
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_9872d/fast && /usr/bin/make  -f CMakeFiles/cmTC_9872d.dir/build.make CMakeFiles/cmTC_9872d.dir/build
+Building C object CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc   -v -o CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake/Modules/CMakeCCompilerABI.c
+OpenBSD clang version 10.0.1 
+Target: amd64-unknown-openbsd6.9
+Thread model: posix
+InstalledDir: /usr/bin
+ (in-process)
+ "/usr/bin/cc" -cc1 -triple amd64-unknown-openbsd6.9 -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 1 -pic-is-pie -mthread-model posix -mframe-pointer=all -relaxed-aliasing -fno-rounding-math -masm-verbose -mconstructor-aliases -munwind-tables -target-cpu x86-64 -target-feature +retpoline-indirect-calls -target-feature +retpoline-indirect-branches -dwarf-column-info -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/clang/10.0.1 -fdebug-compilation-dir /home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fwrapv -D_RET_PROTECTOR -ret-protector -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fdiagnostics-show-option -fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-valloc -fno-builtin-free -fno-builtin-strdup -fno-builtin-strndup -faddrsig -o CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o -x c /usr/local/share/cmake/Modules/CMakeCCompilerABI.c
+clang -cc1 version 10.0.1 based upon LLVM 10.0.1 default target amd64-unknown-openbsd6.9
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/lib/clang/10.0.1/include
+ /usr/include
+End of search list.
+Linking C executable cmTC_9872d
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9872d.dir/link.txt --verbose=1
+/usr/bin/cc  -v CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o -o cmTC_9872d  -Wl,-rpath-link,/usr/X11R6/lib:/usr/local/lib 
+OpenBSD clang version 10.0.1 
+Target: amd64-unknown-openbsd6.9
+Thread model: posix
+InstalledDir: /usr/bin
+ "/usr/bin/ld" -e __start --eh-frame-hdr -Bdynamic -dynamic-linker /usr/libexec/ld.so -o cmTC_9872d /usr/bin/../lib/crt0.o /usr/bin/../lib/crtbegin.o -L/usr/bin/../lib -L/usr/lib CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o -rpath-link /usr/X11R6/lib:/usr/local/lib -lcompiler_rt -lc -lcompiler_rt /usr/bin/../lib/crtend.o
+
+
+
+Parsed C implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/usr/lib/clang/10.0.1/include]
+    add: [/usr/include]
+  end of search list found
+  collapse include dir [/usr/lib/clang/10.0.1/include] ==> [/usr/lib/clang/10.0.1/include]
+  collapse include dir [/usr/include] ==> [/usr/include]
+  implicit include dirs: [/usr/lib/clang/10.0.1/include;/usr/include]
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command(s):/usr/bin/make cmTC_9872d/fast && /usr/bin/make  -f CMakeFiles/cmTC_9872d.dir/build.make CMakeFiles/cmTC_9872d.dir/build]
+  ignore line: [Building C object CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [OpenBSD clang version 10.0.1 ]
+  ignore line: [Target: amd64-unknown-openbsd6.9]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /usr/bin]
+  ignore line: [ (in-process)]
+  ignore line: [ "/usr/bin/cc" -cc1 -triple amd64-unknown-openbsd6.9 -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 1 -pic-is-pie -mthread-model posix -mframe-pointer=all -relaxed-aliasing -fno-rounding-math -masm-verbose -mconstructor-aliases -munwind-tables -target-cpu x86-64 -target-feature +retpoline-indirect-calls -target-feature +retpoline-indirect-branches -dwarf-column-info -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/clang/10.0.1 -fdebug-compilation-dir /home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fwrapv -D_RET_PROTECTOR -ret-protector -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fdiagnostics-show-option -fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-valloc -fno-builtin-free -fno-builtin-strdup -fno-builtin-strndup -faddrsig -o CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o -x c /usr/local/share/cmake/Modules/CMakeCCompilerABI.c]
+  ignore line: [clang -cc1 version 10.0.1 based upon LLVM 10.0.1 default target amd64-unknown-openbsd6.9]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /usr/lib/clang/10.0.1/include]
+  ignore line: [ /usr/include]
+  ignore line: [End of search list.]
+  ignore line: [Linking C executable cmTC_9872d]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9872d.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc  -v CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o -o cmTC_9872d  -Wl -rpath-link /usr/X11R6/lib:/usr/local/lib ]
+  ignore line: [OpenBSD clang version 10.0.1 ]
+  ignore line: [Target: amd64-unknown-openbsd6.9]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /usr/bin]
+  link line: [ "/usr/bin/ld" -e __start --eh-frame-hdr -Bdynamic -dynamic-linker /usr/libexec/ld.so -o cmTC_9872d /usr/bin/../lib/crt0.o /usr/bin/../lib/crtbegin.o -L/usr/bin/../lib -L/usr/lib CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o -rpath-link /usr/X11R6/lib:/usr/local/lib -lcompiler_rt -lc -lcompiler_rt /usr/bin/../lib/crtend.o]
+    arg [/usr/bin/ld] ==> ignore
+    arg [-e] ==> ignore
+    arg [__start] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-Bdynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/usr/libexec/ld.so] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_9872d] ==> ignore
+    arg [/usr/bin/../lib/crt0.o] ==> ignore
+    arg [/usr/bin/../lib/crtbegin.o] ==> ignore
+    arg [-L/usr/bin/../lib] ==> dir [/usr/bin/../lib]
+    arg [-L/usr/lib] ==> dir [/usr/lib]
+    arg [CMakeFiles/cmTC_9872d.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-rpath-link] ==> ignore
+    arg [/usr/X11R6/lib:/usr/local/lib] ==> ignore
+    arg [-lcompiler_rt] ==> lib [compiler_rt]
+    arg [-lc] ==> lib [c]
+    arg [-lcompiler_rt] ==> lib [compiler_rt]
+    arg [/usr/bin/../lib/crtend.o] ==> ignore
+  collapse library dir [/usr/bin/../lib] ==> [/usr/lib]
+  collapse library dir [/usr/lib] ==> [/usr/lib]
+  implicit libs: [compiler_rt;c;compiler_rt]
+  implicit dirs: [/usr/lib]
+  implicit fwks: []
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_d1ba9/fast && /usr/bin/make  -f CMakeFiles/cmTC_d1ba9.dir/build.make CMakeFiles/cmTC_d1ba9.dir/build
+Building CXX object CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++   -v -o CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+OpenBSD clang version 10.0.1 
+Target: amd64-unknown-openbsd6.9
+Thread model: posix
+InstalledDir: /usr/bin
+ (in-process)
+ "/usr/bin/c++" -cc1 -triple amd64-unknown-openbsd6.9 -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 1 -pic-is-pie -mthread-model posix -mframe-pointer=all -relaxed-aliasing -fno-rounding-math -masm-verbose -mconstructor-aliases -munwind-tables -target-cpu x86-64 -target-feature +retpoline-indirect-calls -target-feature +retpoline-indirect-branches -dwarf-column-info -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/clang/10.0.1 -internal-isystem /usr/include/c++/v1 -fdeprecated-macro -fdebug-compilation-dir /home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fwrapv -D_RET_PROTECTOR -ret-protector -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fcxx-exceptions -fexceptions -fdiagnostics-show-option -fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-valloc -fno-builtin-free -fno-builtin-strdup -fno-builtin-strndup -faddrsig -o CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+clang -cc1 version 10.0.1 based upon LLVM 10.0.1 default target amd64-unknown-openbsd6.9
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/include/c++/v1
+ /usr/lib/clang/10.0.1/include
+ /usr/include
+End of search list.
+Linking CXX executable cmTC_d1ba9
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d1ba9.dir/link.txt --verbose=1
+/usr/bin/c++  -v CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_d1ba9  -Wl,-rpath-link,/usr/X11R6/lib:/usr/local/lib 
+OpenBSD clang version 10.0.1 
+Target: amd64-unknown-openbsd6.9
+Thread model: posix
+InstalledDir: /usr/bin
+ "/usr/bin/ld" -e __start --eh-frame-hdr -Bdynamic -dynamic-linker /usr/libexec/ld.so -o cmTC_d1ba9 /usr/bin/../lib/crt0.o /usr/bin/../lib/crtbegin.o -L/usr/bin/../lib -L/usr/lib CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o -rpath-link /usr/X11R6/lib:/usr/local/lib -lc++ -lc++abi -lpthread -lm -lcompiler_rt -lc -lcompiler_rt /usr/bin/../lib/crtend.o
+
+
+
+Parsed CXX implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/usr/include/c++/v1]
+    add: [/usr/lib/clang/10.0.1/include]
+    add: [/usr/include]
+  end of search list found
+  collapse include dir [/usr/include/c++/v1] ==> [/usr/include/c++/v1]
+  collapse include dir [/usr/lib/clang/10.0.1/include] ==> [/usr/lib/clang/10.0.1/include]
+  collapse include dir [/usr/include] ==> [/usr/include]
+  implicit include dirs: [/usr/include/c++/v1;/usr/lib/clang/10.0.1/include;/usr/include]
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command(s):/usr/bin/make cmTC_d1ba9/fast && /usr/bin/make  -f CMakeFiles/cmTC_d1ba9.dir/build.make CMakeFiles/cmTC_d1ba9.dir/build]
+  ignore line: [Building CXX object CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [OpenBSD clang version 10.0.1 ]
+  ignore line: [Target: amd64-unknown-openbsd6.9]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /usr/bin]
+  ignore line: [ (in-process)]
+  ignore line: [ "/usr/bin/c++" -cc1 -triple amd64-unknown-openbsd6.9 -emit-obj -mrelax-all -disable-free -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 1 -pic-is-pie -mthread-model posix -mframe-pointer=all -relaxed-aliasing -fno-rounding-math -masm-verbose -mconstructor-aliases -munwind-tables -target-cpu x86-64 -target-feature +retpoline-indirect-calls -target-feature +retpoline-indirect-branches -dwarf-column-info -fno-split-dwarf-inlining -debugger-tuning=gdb -v -resource-dir /usr/lib/clang/10.0.1 -internal-isystem /usr/include/c++/v1 -fdeprecated-macro -fdebug-compilation-dir /home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/CMakeTmp -ferror-limit 19 -fmessage-length 0 -fwrapv -D_RET_PROTECTOR -ret-protector -fgnuc-version=4.2.1 -fobjc-runtime=gnustep -fcxx-exceptions -fexceptions -fdiagnostics-show-option -fno-builtin-malloc -fno-builtin-calloc -fno-builtin-realloc -fno-builtin-valloc -fno-builtin-free -fno-builtin-strdup -fno-builtin-strndup -faddrsig -o CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/local/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [clang -cc1 version 10.0.1 based upon LLVM 10.0.1 default target amd64-unknown-openbsd6.9]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /usr/include/c++/v1]
+  ignore line: [ /usr/lib/clang/10.0.1/include]
+  ignore line: [ /usr/include]
+  ignore line: [End of search list.]
+  ignore line: [Linking CXX executable cmTC_d1ba9]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d1ba9.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++  -v CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_d1ba9  -Wl -rpath-link /usr/X11R6/lib:/usr/local/lib ]
+  ignore line: [OpenBSD clang version 10.0.1 ]
+  ignore line: [Target: amd64-unknown-openbsd6.9]
+  ignore line: [Thread model: posix]
+  ignore line: [InstalledDir: /usr/bin]
+  link line: [ "/usr/bin/ld" -e __start --eh-frame-hdr -Bdynamic -dynamic-linker /usr/libexec/ld.so -o cmTC_d1ba9 /usr/bin/../lib/crt0.o /usr/bin/../lib/crtbegin.o -L/usr/bin/../lib -L/usr/lib CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o -rpath-link /usr/X11R6/lib:/usr/local/lib -lc++ -lc++abi -lpthread -lm -lcompiler_rt -lc -lcompiler_rt /usr/bin/../lib/crtend.o]
+    arg [/usr/bin/ld] ==> ignore
+    arg [-e] ==> ignore
+    arg [__start] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-Bdynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/usr/libexec/ld.so] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_d1ba9] ==> ignore
+    arg [/usr/bin/../lib/crt0.o] ==> ignore
+    arg [/usr/bin/../lib/crtbegin.o] ==> ignore
+    arg [-L/usr/bin/../lib] ==> dir [/usr/bin/../lib]
+    arg [-L/usr/lib] ==> dir [/usr/lib]
+    arg [CMakeFiles/cmTC_d1ba9.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-rpath-link] ==> ignore
+    arg [/usr/X11R6/lib:/usr/local/lib] ==> ignore
+    arg [-lc++] ==> lib [c++]
+    arg [-lc++abi] ==> lib [c++abi]
+    arg [-lpthread] ==> lib [pthread]
+    arg [-lm] ==> lib [m]
+    arg [-lcompiler_rt] ==> lib [compiler_rt]
+    arg [-lc] ==> lib [c]
+    arg [-lcompiler_rt] ==> lib [compiler_rt]
+    arg [/usr/bin/../lib/crtend.o] ==> ignore
+  collapse library dir [/usr/bin/../lib] ==> [/usr/lib]
+  collapse library dir [/usr/lib] ==> [/usr/lib]
+  implicit libs: [c++;c++abi;pthread;m;compiler_rt;c;compiler_rt]
+  implicit dirs: [/usr/lib]
+  implicit fwks: []
+
+

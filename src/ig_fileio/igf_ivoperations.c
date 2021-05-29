@@ -125,65 +125,78 @@ ssize_t igf_readv(
 }
 
 
-// This is so broken
-// This is broken - look for writesize in code doing something - non existant
-// There is bug here
-
+// Description here later
+// Always tries to write everything.
+// It returns characters that were written.
 
 ssize_t igf_writev( 
     const int fd,
-    struct iovec *const iv, 
-    const int iv_len, 
-    const size_t writesize
+    struct iovec *iv, 
+    int ivlen, 
 )  {
 
   assert( fd >= 0 );
   assert( iv != NULL );
-  assert( iv_len > 0 );
-  assert( writesize != 0 );
+  assert( ivlen > 0 );
 
-  int changed_pos = 0;
-  void *changed_ptr = iv->iov_base;
-  size_t changed_len = iv->iov_len;
-  
-  struct iovec *iv_pos = iv->iov_base;
-  int iv_left_len = iv_len;
-  ssize_t write_return;
+  ssize_t writevret = 0;
+  ssize_t writesum = 0;
 
-  int i = 0;
-  // handle EINTR
-  while( ( write_return =  writev( fd, iv_pos, iv_left_len ) )  > 0 )  {
+  uint8_t *ivbase_keep = iv->iov_base;
+  size_t ivbaselen_keep = iv->iov_len;
 
-    iv[ changed_pos ].iov_base = changed_ptr;
-    iv[ changed_pos ].iov_len = changed_len;
+  for(;;)  {
+
+    // we move iv_pos when one buff gets filled so
+    // it's the 0 pos we start each time from
+    // and the
+
+    writevret =  writev( fd, iv, ivlen );
+    if( writevret > 0 )  {
+
+      if( writevret == 0 )  continue;
+
+      // at this point we should restore the iv struct
+      iv->iov_base = ivbase_keep;
+      iv->iov_len = ivbaselen_keep;
+      if( errno == EINTR )  continue;
+      return -1;
+
+    }
     
-    while( write_return )  {
+    ivlen_left -= writevret;
+    writesum += writeret;
+    if( ivlen_left == 0 )  {
+	    
+      iv->iov_base = ivbase_keep;
+      iv->iov_len = ivbaselen_keep;
+      return writesum;
 
-      write_return -= iv_pos->iov_len; // TO JEST DO ROZWIĄZANIA. BLAD FAIL.
-      if( write_return < 0 )  {  // problem co jak przerwało w  TEJ SAMEJ STRUKTURZE.
+    }
 
-	changed_pos = iv_pos->iov_base;
-	changed_len = iv_pos->iov_len;
+    for(;;)  {
 
-	iov_pos->iov_base = ( uint8t* )iov_pos->iov_base - write_return;
-	iov_pos->iov_len += write_return;	
-	break;
+      writevret -= iv->iov_len;
+     if( writevret >= 0 )  {
+
+        iv->iov_base = ivbase_keep;
+        iv->iov_len = ivbaselen_keep;
+        ivlen--;
+	iv++;
+	ivbase_keep = iv->iov_base;
+	ivbaselen_keep = iv->iov_len;
+	continue;
 
       }
 
-      iv_pos++;
-      iv_left_len--;
+      writeret = -writeret;
+      
+
 
     }
     
   }
 
-  iv[ changed_pos ].iov_base = changed_ptr;
-  iv[ changed_pos ].iov_len = changed_len;
-  
-  if( write_return < 0 )  return -1;
-  return 0;
-  
 }
 
 

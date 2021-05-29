@@ -1,3 +1,0 @@
-/home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/rebuild_cache.dir
-/home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/edit_cache.dir
-/home/piotr/dokumenty/00progr/moje_programy/ignota/CMakeFiles/ignotalib.dir

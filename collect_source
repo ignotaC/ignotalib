@@ -72,7 +72,7 @@ printf "\n%s\n" 'file( GLOB cm_allsource' >> "$cmake_file"
 printf "$cm_source" >> "$cmake_file"
 printf "\t%s\n" ')' >> "$cmake_file"
 
-printf "\n"'add_library( ignotalib SHARED ${cm_allsource} )'"\n" \
+printf "\n"'add_library( ignota SHARED ${cm_allsource} )'"\n" \
        	>> "$cmake_file"
 
 rm -f "$tempfile"

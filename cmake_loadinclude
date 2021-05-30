@@ -29,4 +29,4 @@ file( GLOB cm_allsource
 	"${cm_ig_datastructure}/*.c"
 	)
 
-add_library( ignotalib SHARED ${cm_allsource} )
+add_library( ignota SHARED ${cm_allsource} )

@@ -27,6 +27,10 @@ Bog Ojeciec.
 
 #include "igf_openfd.h"
 
+#include <assert.h>
+#include <fcntl.h>
+#include <stddef.h>
+
 // Returns fd to read.
 // It can fail on open function
 // Tested, satisfied.
@@ -51,7 +55,7 @@ int igf_openfd_ap(
   assert( filename != NULL );
  
   return   open( filename, O_WRONLY | O_APPEND
-    | O_CREAT, IGF_DEFAULT_FDMODE );
+    | O_CREAT, IGF_DEFAULT_FMODE );
 
 }
 
@@ -66,7 +70,7 @@ int igf_openfd_wr(
   assert( filename != NULL );
 
   return   open( filename, O_WRONLY | O_TRUNC
-    | O_CREAT, IGF_DEFAULT_FDMODE );
+    | O_CREAT, IGF_DEFAULT_FMODE );
 
 }
 

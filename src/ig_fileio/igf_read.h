@@ -28,6 +28,8 @@ Bog Ojeciec.
 #ifndef IGF_READ_H
 #define IGF_READ_H
 
+#include <sys/types.h>
+
 ssize_t igf_read(
   const int fd,
   void *const buff,

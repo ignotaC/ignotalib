@@ -28,6 +28,14 @@ Bog Ojeciec.
 #ifndef IGF_OPENFD_H
 #define IGF_OPENFD_H
 
+#include <sys/stat.h>
+
+#define IGF_DEFAULT_FMODE ( \
+  S_IRUSR | S_IWUSR | \
+  S_IRGRP | \
+  S_IROTH )
+  
+
 int igf_openfd_rd(
     const char *const filename
 );

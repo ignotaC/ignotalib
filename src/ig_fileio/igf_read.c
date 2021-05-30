@@ -27,6 +27,11 @@ Bog Ojeciec.
 
 #include "igf_read.h"
 
+#include <assert.h>
+#include <errno.h>
+#include <stddef.h>
+#include <unistd.h>
+
 // Reads bytes from fd to buff untill error on read
 // EOF or buff is full.
 // Returns read bytes size or 0 if EOF.

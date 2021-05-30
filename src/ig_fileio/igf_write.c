@@ -27,6 +27,11 @@ Bog Ojeciec.
 
 #include "igf_write.h"
 
+#include <assert.h>
+#include <errno.h>
+#include <stddef.h>
+#include <unistd.h>
+
 // Writes bytes to fd from buff untill
 // error on read or all bytes written.
 // Returns 0 on succes and -1 on fail

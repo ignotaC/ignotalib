@@ -28,6 +28,8 @@ Bog Ojeciec.
 #ifndef IGF_WRITE_H
 #define IGF_WRITE_H
 
+#include <sys/types.h>
+
 ssize_t igf_write(
     const int fd,
     void *const buff,

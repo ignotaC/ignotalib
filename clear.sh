@@ -1,5 +1,6 @@
+make clean
 
-rm -f CMakeCache.txt
-rm -rf CMakeFiles
-rm -f cmake_install.cmake
-rm -f Makefile
+rm -fv CMakeCache.txt
+rm -rfv CMakeFiles
+rm -fv cmake_install.cmake
+rm -fv Makefile

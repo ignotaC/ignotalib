@@ -27,6 +27,9 @@ Bog Ojeciec.
 
 #include "igs_convert.h"
 
+#include <assert.h>
+#include <ctype.h>
+
 // All alpha characters are turned to upper case,
 // untill nul character met or passed_strlen passed.
 // Does not work for locales only pure ascii.

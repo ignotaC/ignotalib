@@ -28,6 +28,8 @@ Bog Ojeciec.
 #ifndef IGS_CONVERT_H
 #define IGS_CONVERT_H
 
+#include <stddef.h>
+
 void igs_strtoupper(
     char *const igs_str,
     const size_t igs_strlen

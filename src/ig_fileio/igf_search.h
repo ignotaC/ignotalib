@@ -27,8 +27,10 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGF_FDCHR_H
-#define IGF_FDCHR_H
+#ifndef IGF_FDSEARCH_H
+#define IGF_FDSEARCH_H
+
+#include <stddef.h>
 
 int igf_fdchr(
     const int fd,

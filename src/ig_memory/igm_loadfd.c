@@ -27,6 +27,14 @@ Bog Ojeciec.
 
 #include "igm_loadfd.h"
 
+#include "../ig_fileio/igf_read.h"
+
+#include <assert.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 // Loads fd to memory.
 // The fd_pos of file is set back on it's right place.
 // Which means if we read it a bit.
@@ -40,15 +48,20 @@ Bog Ojeciec.
 // You must pass buffor and it's size for this function
 void* igm_fdtomem(
     const int fd,
-    size_t *const memsize
+    size_t *const memsize,
     void *const buff,
     const size_t buffsize )  {
   
+  assert( fd >= 0 );
+  assert( memsize != NULL );
+  assert( buff != NULL );
+  assert( buffsize != 0 );
+
   off_t keep_fdpos = lseek( fd, 0, SEEK_CUR );
   if( keep_fdpos == -1 )   return NULL;
   
-  off_t end_fd_pos = lseek( fd, 0, SEEK_END );
-  if( end_fd_pos == -1 )   goto errorstart;
+  off_t end_fdpos = lseek( fd, 0, SEEK_END );
+  if( end_fdpos == -1 )   goto errorstart;
 
 // Now go at start of file.
   off_t read_fdpos = lseek( fd, 0, SEEK_SET );
@@ -78,8 +91,8 @@ void* igm_fdtomem(
  errorseek:
  errorread:
   free( mem );
- erroralloca:
- errorstart:
+ erroralloc:
+ errorstart:;
   int keeperr = errno;
   // still try to set this back
   lseek( fd, keep_fdpos, SEEK_SET );

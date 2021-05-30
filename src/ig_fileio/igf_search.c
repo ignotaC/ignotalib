@@ -29,6 +29,12 @@ Bog Ojeciec.
 
 #include "igf_search.h"
 
+#include "igf_read.h"
+
+#include <assert.h>
+#include <string.h>
+#include <unistd.h>
+
 // Find character in file descriptor.
 // Function will set the fd offset
 // right on the character if it was found
@@ -53,9 +59,10 @@ int igf_fdchr(
 
   // save starting off_t
   off_t track_offset = lseek( fd, 0, SEEK_CUR );
-  if( start_offset == -1 )  return -1;
+  if( track_offset == -1 )  return -1;
 
-  for( ssize_t readret = 0, void *memret = NULL ;;)  {
+  void *memret = NULL;
+  for( ssize_t readret = 0;; )  {
 
     readret = igf_read( fd, buff, buffsize );
     if( readret == -1 )  return -1;
@@ -64,8 +71,8 @@ int igf_fdchr(
     memret = memchr( buff, chr, readret );
     if( memret != NULL )  {
 
-      ptrdiff_t charpos = ( ( uint8_t *)  )
-        - ( ( uint8_t )buff )
+      ptrdiff_t charpos = ( ( uint8_t *)memret  )
+        - ( ( uint8_t *)buff );
 
       track_offset += ( off_t )charpos;
       if( lseek( fd, track_offset, SEEK_SET ) == -1 )

@@ -30,24 +30,24 @@ Bog Ojeciec.
 #include <assert.h>
 #include <errno.h>
 #include <stddef.h>
-
+#include <stdint.h>
 
 size_t igf_ivbuff_sumsize(
     const struct iovec *const iv,
-    const int iv_len
+    const int ivlen
 )  {
 
   assert( iv != NULL );
-  assert( iv_len > 0 );
+  assert( ivlen > 0 );
 
   size_t ivbuff_sumsize = 0;
-  for( int i = 0; i < iv_len; i++ )
+  for( int i = 0; i < ivlen; i++ )
     ivbuff_sumsize += iv[i].iov_len;
   return ivbuff_sumsize;
   
 }
 
-
+// fix it later so it's similar to writev lower
 ssize_t igf_readv(
     const int fd, 
     struct iovec *const iv, 
@@ -132,12 +132,15 @@ ssize_t igf_readv(
 ssize_t igf_writev( 
     const int fd,
     struct iovec *iv, 
-    int ivlen, 
+    int ivlen
 )  {
 
   assert( fd >= 0 );
   assert( iv != NULL );
   assert( ivlen > 0 );
+
+  size_t ivbuff_sizeleft = 
+    igf_ivbuff_sumsize( iv, ivlen );
 
   ssize_t writevret = 0;
   ssize_t writesum = 0;
@@ -149,24 +152,23 @@ ssize_t igf_writev(
 
     // we move iv_pos when one buff gets filled so
     // it's the 0 pos we start each time from
-    // and the
 
     writevret =  writev( fd, iv, ivlen );
     if( writevret > 0 )  {
 
       if( writevret == 0 )  continue;
 
+      if( errno == EINTR )  continue;
       // at this point we should restore the iv struct
       iv->iov_base = ivbase_keep;
       iv->iov_len = ivbaselen_keep;
-      if( errno == EINTR )  continue;
       return -1;
 
     }
     
-    ivlen_left -= writevret;
-    writesum += writeret;
-    if( ivlen_left == 0 )  {
+    ivbuff_sizeleft -= writevret;
+    writesum += writevret;
+    if( ivbuff_sizeleft == 0 )  {
 	    
       iv->iov_base = ivbase_keep;
       iv->iov_len = ivbaselen_keep;
@@ -177,7 +179,7 @@ ssize_t igf_writev(
     for(;;)  {
 
       writevret -= iv->iov_len;
-     if( writevret >= 0 )  {
+      if( writevret >= 0 )  {
 
         iv->iov_base = ivbase_keep;
         iv->iov_len = ivbaselen_keep;
@@ -189,9 +191,13 @@ ssize_t igf_writev(
 
       }
 
-      writeret = -writeret;
-      
-
+      // at this point writeret is on minus so
+      // but let's set it back on +
+      writevret = -writevret;
+      iv->iov_base = ( uint8_t* )iv->iov_base +
+        iv->iov_len - writevret;
+      iv->iov_len = writevret;
+      break;
 
     }
     

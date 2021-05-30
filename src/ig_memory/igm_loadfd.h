@@ -28,11 +28,13 @@ Bog Ojeciec.
 #ifndef IGM_LOADFD_H
 #define IGM_LOADFD_H
 
+#include <stddef.h>
+
 void* igm_fdtomem(
     const int fd,
-    size_t *const memsize
+    size_t *const memsize,
     void *const buff,
     const size_t buffsize
-)
+);
 
 #endif

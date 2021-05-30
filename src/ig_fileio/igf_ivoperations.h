@@ -32,7 +32,7 @@ Bog Ojeciec.
 
 size_t igf_ivbuff_sumsize(
     const struct iovec *const iv,
-    const int iv_len
+    const int ivlen
 );
 
 ssize_t igf_readv(
@@ -44,9 +44,8 @@ ssize_t igf_readv(
 
 ssize_t igf_writev( 
     const int fd,
-    struct iovec *const iv, 
-    const int iv_len, 
-    const size_t writesize
+    struct iovec *iv, 
+    int ivlen
 );
 
 

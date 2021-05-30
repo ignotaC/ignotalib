@@ -3,8 +3,8 @@
 #define IGNOTA_CONF_H
 
 
-#define IGNOTALIB_VERSION 0.\
-1.\
-0
+#define IGNOTALIB_VERSION .\
+.\
+
 
 #endif

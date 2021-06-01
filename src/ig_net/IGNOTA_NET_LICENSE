@@ -26,11 +26,3 @@ Bog Ojeciec.
 */
 
 
-
-
-#ifndef IG_NET_H
-#define IG_NET_H
-
-#include "ign_unixsock.h"
-
-#endif

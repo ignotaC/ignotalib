@@ -25,12 +25,22 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGN_UNIXSOCK_H
+#define IGN_UNIXSOCK_H
+
+#include <sys/un.h>
+
+#ifndef SUN_LEN
+  #define SUN_LEN(sun) ( sizeof( *( sun ) ) \
+    - sizeof( ( sun )->sun_path ) \
+    + strlen( ( sun )->sun_path  ) )
+#endif
 
 
+int ign_getsun( 
+    const char *const name,
+    const int listen_queue
+);
 
-#ifndef IG_NET_H
-#define IG_NET_H
-
-#include "ign_unixsock.h"
 
 #endif

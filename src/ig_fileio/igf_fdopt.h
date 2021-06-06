@@ -25,19 +25,16 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGF_FDOPT_H
+#define IGF_FDOPT_H
 
+int igf_fdcloexec(
+    const int fd
+);
 
+int igf_fdnonblock( 
+    const int fd
+);
 
-#ifndef IG_FILEIO_H
-#define IG_FILEIO_H
-
-#include "igf_openfd.h"
-#include "igf_dir.h"
-#include "igf_fdoffset.h"
-#include "igf_ivoperations.h"
-#include "igf_read.h"
-#include "igf_search.h"
-#include "igf_write.h"
-#include "igf_fdopt.h"
 
 #endif

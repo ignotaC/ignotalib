@@ -25,19 +25,30 @@ Bog Ojeciec.
 
 */
 
-
-
-
-#ifndef IG_FILEIO_H
-#define IG_FILEIO_H
-
-#include "igf_openfd.h"
-#include "igf_dir.h"
-#include "igf_fdoffset.h"
-#include "igf_ivoperations.h"
-#include "igf_read.h"
-#include "igf_search.h"
-#include "igf_write.h"
 #include "igf_fdopt.h"
 
-#endif
+#include <fcntl.h>
+
+int igf_fdcloexec(
+    const int fd
+)  {
+
+  int flags = fcntl( fd, F_GETFL );
+  if( flags == -1 )  return -1;
+  if( fcntl( fd, F_SETFL, flags | FD_CLOEXEC ) == -1 )  return -1;
+  return 0;
+
+}
+
+int igf_fdnonblock( 
+    const int fd
+)  {
+
+  int flags = fcntl( fd, F_GETFL );
+  if( flags == -1 )  return -1;
+  if( fcntl( fd, F_SETFL, flags | O_NONBLOCK ) == -1 )  return -1;
+  return 0;
+
+}
+
+

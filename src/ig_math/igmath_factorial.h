@@ -25,20 +25,13 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGMATH_FACTORIAL_H
+#define IGMATH_FACTORIAL_H
 
+#include <stdint.h>
 
-#ifndef IGNOTA_H
-#define IGNOTA_H
+uint64_t igmath_factorial( 
+    uint64_t number
+);
 
-#include "ig_fileio/ig_fileio.h"
-#include "ig_string/ig_string.h"
-#include "ig_memory/ig_memory.h"
-#include "ig_net/ig_net.h"
-#include "ig_encoding/ig_encoding.h"
-#include "ig_compress/ig_compress.h"
-#include "ig_datastructure/ig_datastructure.h"
-#include "ig_math/ig_math.h"
-
-#include "ignota_conf.h"
-
-#endif 
+#endif

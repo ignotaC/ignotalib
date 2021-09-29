@@ -25,20 +25,21 @@ Bog Ojeciec.
 
 */
 
+#include "igmath_factorial.h"
 
+// TODO handle in future overflow
+uint64_t igmath_factorial( 
+    uint64_t number
+)  {
 
-#ifndef IGNOTA_H
-#define IGNOTA_H
+  // !0 = 1
+  uint64_t answer = 1;
+  for(; number != 0; number-- )  {
 
-#include "ig_fileio/ig_fileio.h"
-#include "ig_string/ig_string.h"
-#include "ig_memory/ig_memory.h"
-#include "ig_net/ig_net.h"
-#include "ig_encoding/ig_encoding.h"
-#include "ig_compress/ig_compress.h"
-#include "ig_datastructure/ig_datastructure.h"
-#include "ig_math/ig_math.h"
+    answer = answer * number;
 
-#include "ignota_conf.h"
+  }
 
-#endif 
+  return answer;
+
+}

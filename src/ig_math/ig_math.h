@@ -27,18 +27,11 @@ Bog Ojeciec.
 
 
 
-#ifndef IGNOTA_H
-#define IGNOTA_H
 
-#include "ig_fileio/ig_fileio.h"
-#include "ig_string/ig_string.h"
-#include "ig_memory/ig_memory.h"
-#include "ig_net/ig_net.h"
-#include "ig_encoding/ig_encoding.h"
-#include "ig_compress/ig_compress.h"
-#include "ig_datastructure/ig_datastructure.h"
-#include "ig_math/ig_math.h"
+#ifndef IG_MATH_H
+#define IG_MATH_H
 
-#include "ignota_conf.h"
+#include "igmath_factorial.h"
+#include "igmath_binomial_coefficient.h"
 
-#endif 
+#endif

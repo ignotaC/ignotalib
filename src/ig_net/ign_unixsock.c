@@ -32,6 +32,7 @@ Bog Ojeciec.
 #include <assert.h>
 #include <errno.h>
 #include <string.h>
+#include <unistd.h>
 
 // You pass string that is file name we want to open
 // socket under it

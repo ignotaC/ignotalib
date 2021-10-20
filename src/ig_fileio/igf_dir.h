@@ -31,9 +31,15 @@ Bog Ojeciec.
 
 #include "../ig_datastructure/igds_strarr.h"
 
-int igf_getdirfiles(
+int igf_getdirfnames(
     const char *const dirname,
     struct igds_strarr *const filenames
 );
+
+int igf_getdirtree(
+    const char *const dirname,
+    struct igds_strarr *const filetree
+);
+
 
 #endif

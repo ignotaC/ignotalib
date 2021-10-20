@@ -44,19 +44,19 @@ Bog Ojeciec.
 ssize_t igf_write(
     const int fd,
     void *const buff,
-    size_t buffsize
+    size_t writesize
 )  {
  
   assert( fd >= 0 );
   assert( buff != NULL );
-  assert( buffsize != 0 );
+  assert( writesize != 0 );
 
   const uint8_t *buffptr = buff;
   ssize_t  writeret = 0;
   
   for(;;)  {
     
-    writeret = write( fd, buffptr, buffsize );
+    writeret = write( fd, buffptr, writesize );
     switch( writeret )  {
 
       case -1:
@@ -76,8 +76,8 @@ ssize_t igf_write(
     }
 
     buffptr += writeret;
-    buffsize -= ( size_t )writeret;
-    if( buffsize == 0 )  return 0;
+    writesize -= ( size_t )writeret;
+    if( ! writesize )  return 0;
     
   }
     

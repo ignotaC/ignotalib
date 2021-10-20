@@ -40,12 +40,12 @@ Bog Ojeciec.
 ssize_t igf_read(
   const int fd,
   void *const buff,
-  size_t buffsize
+  size_t readsize
 )  {
  
   assert( fd >= 0 );
   assert( buff != NULL );
-  assert( buffsize != 0 );
+  assert( readsize != 0 );
 
   uint8_t *buffptr = buff;
   ssize_t  readret = 0;
@@ -53,7 +53,7 @@ ssize_t igf_read(
 
   for(;;)  { 
     
-    readret = read( fd, buffptr, buffsize );
+    readret = read( fd, buffptr, readsize );
     switch( readret )  {
 
       case -1:
@@ -77,8 +77,8 @@ ssize_t igf_read(
     
     readsum += readret;
     buffptr += readret;
-    buffsize -= ( size_t )readret;
-    if( ! buffsize )  break;
+    readsize -= ( size_t )readret;
+    if( ! readsize )  break;
     
   }
   

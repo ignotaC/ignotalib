@@ -46,7 +46,7 @@ Bog Ojeciec.
 // On failure the opened dirname is closed but saved
 // names to igds_chrarr are not touched. So it end
 // up partialy filled.
-int igf_getdirfiles(
+int igf_getdirfnames(
     const char *const dirname,
     struct igds_strarr *const filenames
 )  {
@@ -88,4 +88,23 @@ int igf_getdirfiles(
   return -1;
 
 }
+
+
+/*
+ * Function creates directory tree.
+ *
+ *
+ *
+ *
+ */
+int igf_getdirtree(
+    const char *const dirname,
+    struct igds_strarr *const filetree
+)  {
+
+  assert( dirname != NULL );
+  assert( filetree != NULL );
+
+}
+
 

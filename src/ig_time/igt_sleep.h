@@ -25,21 +25,11 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGT_SLEEP_H
+#define IGT_SLEEP_H
 
+int igt_sleepmsec(
+    const long msec_time
+);
 
-#ifndef IGNOTA_H
-#define IGNOTA_H
-
-#include "ig_fileio/ig_fileio.h"
-#include "ig_string/ig_string.h"
-#include "ig_memory/ig_memory.h"
-#include "ig_net/ig_net.h"
-#include "ig_encoding/ig_encoding.h"
-#include "ig_compress/ig_compress.h"
-#include "ig_datastructure/ig_datastructure.h"
-#include "ig_math/ig_math.h"
-#include "ig_time/ig_time.h"
-
-#include "ignota_conf.h"
-
-#endif 
+#endif

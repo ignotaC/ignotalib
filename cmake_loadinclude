@@ -7,6 +7,7 @@ set( cm_src "src" )
 	set( cm_ig_compress "src/ig_compress" )
 	set( cm_ig_datastructure "src/ig_datastructure" )
 	set( cm_ig_math "src/ig_math" )
+	set( cm_ig_time "src/ig_time" )
 
 include_directories(
 	${cm_src}
@@ -18,6 +19,7 @@ include_directories(
 	${cm_ig_compress}
 	${cm_ig_datastructure}
 	${cm_ig_math}
+	${cm_ig_time}
 	)
 
 file( GLOB cm_allsource
@@ -30,6 +32,7 @@ file( GLOB cm_allsource
 	"${cm_ig_compress}/*.c"
 	"${cm_ig_datastructure}/*.c"
 	"${cm_ig_math}/*.c"
+	"${cm_ig_time}/*.c"
 	)
 
 add_library( ignota SHARED ${cm_allsource} )

@@ -25,21 +25,33 @@ Bog Ojeciec.
 
 */
 
+#include "igt_sleep.h"
 
+#include <assert.h>
+#include <errno.h>
+#include <time.h>
 
-#ifndef IGNOTA_H
-#define IGNOTA_H
+// Function uses nanosleep
+// You pass time in miliseconds you want program to sleep
+// EINTR is *handled*
+// MAXIMUM time should be less than one second. And bigger/equal zero.
+int igt_sleepmsec(
+    const long msec_time
+)  {
 
-#include "ig_fileio/ig_fileio.h"
-#include "ig_string/ig_string.h"
-#include "ig_memory/ig_memory.h"
-#include "ig_net/ig_net.h"
-#include "ig_encoding/ig_encoding.h"
-#include "ig_compress/ig_compress.h"
-#include "ig_datastructure/ig_datastructure.h"
-#include "ig_math/ig_math.h"
-#include "ig_time/ig_time.h"
+  assert( msec_time >= 0 );
+  assert( msec_time < 1000 );
 
-#include "ignota_conf.h"
+  struct timespec ts;
+  ts.tv_sec = 0;
+  ts.tv_nsec = msec_time * 1000000; // make  miliseconds
 
-#endif 
+  for(;;)  {
+
+    if( nanosleep( &ts, &ts ) == 0 )  return 0;
+    if( errno != EINTR )  return -1;
+
+  }
+
+}
+

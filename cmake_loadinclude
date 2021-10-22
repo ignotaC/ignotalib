@@ -8,6 +8,7 @@ set( cm_src "src" )
 	set( cm_ig_datastructure "src/ig_datastructure" )
 	set( cm_ig_math "src/ig_math" )
 	set( cm_ig_time "src/ig_time" )
+	set( cm_ig_web "src/ig_web" )
 
 include_directories(
 	${cm_src}
@@ -20,6 +21,7 @@ include_directories(
 	${cm_ig_datastructure}
 	${cm_ig_math}
 	${cm_ig_time}
+	${cm_ig_web}
 	)
 
 file( GLOB cm_allsource
@@ -33,6 +35,7 @@ file( GLOB cm_allsource
 	"${cm_ig_datastructure}/*.c"
 	"${cm_ig_math}/*.c"
 	"${cm_ig_time}/*.c"
+	"${cm_ig_web}/*.c"
 	)
 
 add_library( ignota SHARED ${cm_allsource} )

@@ -75,7 +75,13 @@ int igp_double_rmvtrailzeros(
 
   i--; // move before nul
   for(; &tempbuff[i] != dotpos; i-- )  {
+ 
+    if( tempbuff[i] == '.' )  {
 
+      tempbuff[i] = '\0';
+      break;
+
+    }
     if( tempbuff[i] != '0' )  break;
     tempbuff[i] = '\0';
 

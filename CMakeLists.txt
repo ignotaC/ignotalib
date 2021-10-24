@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 3.0 )
 
-project( ignota VERSION 0.1.1 )
+project( ignota VERSION 0.1.1 LANGUAGES C )
 
 set( CMAKE_VERBOSE_MAKEFILE true )
 

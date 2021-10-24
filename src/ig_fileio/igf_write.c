@@ -30,7 +30,9 @@ Bog Ojeciec.
 #include <assert.h>
 #include <errno.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <unistd.h>
+
 
 // Writes bytes to fd from buff untill
 // error on read or all bytes written.

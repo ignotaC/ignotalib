@@ -33,6 +33,7 @@ Bog Ojeciec.
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #include <unistd.h>
 
 // Loads fd to memory.

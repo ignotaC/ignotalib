@@ -7,7 +7,7 @@ set( CMAKE_VERBOSE_MAKEFILE true )
 set( CMAKE_C_STANDARD 99 )
 set( CMAKE_C_STANDARD_REQUIRED true )
 
-set( CMAKE_C_FLAGS " -Wall -Wextra -pedantic " )
+set( CMAKE_C_FLAGS " -Wall -Wextra -pedantic -D_POSIX_C_SOURCE=200809L" )
 
 
 

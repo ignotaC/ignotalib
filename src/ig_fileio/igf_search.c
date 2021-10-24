@@ -33,6 +33,7 @@ Bog Ojeciec.
 
 #include <assert.h>
 #include <string.h>
+#include <stdint.h>
 #include <unistd.h>
 
 // Find character in file descriptor.

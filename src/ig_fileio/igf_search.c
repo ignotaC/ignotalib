@@ -89,4 +89,71 @@ int igf_fdchr(
 }
 
 
+// THIS BADLY NEEDS TESTING
+// you must provide big enough buff
+// at least phrase size + 1.a
+// buffdatasize should be set to 0 on first call of this function
+// returns -1 on error.
+// 0 if nothing was found and we have EOF
+// 1 if soemthing was found.
+// Can fail on igf_read
+ssize_t igf_fdstr(
+    const int fd,
+    void *const phrase,
+    const size_t phrasesize,
+    void *const buff,
+    const size_t buffsize,
+    ssize_t *buffdatasize
+)  {
+
+  assert( fd >= 0 );
+  assert( phrase != NULL );
+  assert( buff != NULL );
+  assert( phrasesize < buffsize );
+  assert( buffdatasize != NULL );
+  assert( *buffdatasize >= 0 );
+  assert( *buffdatasize < buffsize );
+
+  size_t cpyphrase_endsize = phrasesize - 1;
+
+  uint8_t *buffreadpos = buff + *buffdatasize;
+  size_t readsize = buffsize - *buffdatasize;
+
+  ssize_t readret = 0;
+  uint8_t *foundphrase = NULL;
+
+  for(;;)  {
+
+    readret = igf_read( fd, buffreadpos, readsize );
+    if( readret == -1 )  return -1;
+    else if( readret == 0 )  {
+
+      *buffdatasize = 0;
+      return 0;
+
+    } // finished
+
+    // data size inside buff
+    *buffdatasize += readret;
+
+    foundphrease = memmem( buffreadpos, *buffdatasize,
+         phrase, phrasesize );
+    if( foundphrease != NULL )  {
+
+      *buffdatasize -= buff - foundphrease;
+      memmove( buff, foundphrease, *buffdatasize );
+      return 1;
+
+    }
+
+    memmove( buff, buff + *buffdatasize - cpyphrase_endsize,
+        cpyphrase_endsize );
+    *buffdatasize = cpyphrase_endsize;
+    buffreadpos = buff + *buffdatasize;
+    readsize = buffsize - *buffdatasize;
+
+  }
+
+}
+
 

@@ -25,18 +25,16 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGF_FDOFFSET_H
-#define IGF_FDOFFSET_H
+#ifndef IGF_READWORD_H
+#define IGF_READWORD_H
 
 #include <sys/types.h>
 
-off_t igf_fdoffset_end(
-    const int fd
+char* igf_readword(
+  const int fd,
+  void *const buff,
+  size_t buffsize
 );
 
-int igf_fdoffset_mv(
-    const int fd,
-    const off_t offset
-);
- 
 #endif
+

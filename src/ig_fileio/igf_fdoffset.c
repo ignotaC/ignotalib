@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021-2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -32,8 +32,8 @@ Bog Ojeciec.
 
 // Function returns fd end and sets back
 // to current pos.
-// On error it's undefined whenever the offset
-// changed back to i
+// On error fd offset is undefined.
+// Can fail on lseek
 off_t igf_fdoffset_end(
     const int fd
 )  {
@@ -51,6 +51,25 @@ off_t igf_fdoffset_end(
   return end_offset;
   
 }
+
+
+// Function moves current fd pos.
+// 0 on succes
+// -1 on fail
+// Can fail on lseek
+int igf_fdoffset_mv(
+    const int fd,
+    const off_t offset
+)  {
+ 
+  assert( fd >= 0 );
+  off_t ans = lseek( fd, offset, SEEK_CUR );
+  if( ans != -1 )  return 0;
+  return -1;
+
+}
+
+
 
 
 

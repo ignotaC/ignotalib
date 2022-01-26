@@ -35,7 +35,7 @@ Bog Ojeciec.
 #include <string.h>
 #include <stdint.h>
 #include <unistd.h>
-
+/*
 // Find character in file descriptor.
 // Function will set the fd offset
 // right on the character if it was found
@@ -156,4 +156,4 @@ ssize_t igf_fdstr(
 
 }
 
-
+*/

@@ -30,6 +30,8 @@ Bog Ojeciec.
 #ifndef IGF_FDSEARCH_H
 #define IGF_FDSEARCH_H
 
+#include <sys/types.h>
+
 #include <stddef.h>
 
 int igf_fdchr(

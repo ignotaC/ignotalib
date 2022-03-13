@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,20 +25,16 @@ Bog Ojeciec.
 
 */
 
-
-
-
-#ifndef IG_FILEIO_H
-#define IG_FILEIO_H
-
-#include "igf_offset.h"
-#include "igf_openfd.h"
-#include "igf_dir.h"
-#include "igf_ivoperations.h"
 #include "igf_read.h"
-#include "igf_search.h"
-#include "igf_write.h"
-#include "igf_fdopt.h"
-#include "igf_readword.h"
 
-#endif
+#include <assert.h>
+#include <errno.h>
+
+/*
+#include <stddef.h>
+#include <stdint.h>
+#include <unistd.h>
+*/
+
+
+

@@ -34,7 +34,7 @@ Bog Ojeciec.
 // print double, remove trailing zeros so
 // 34.049000 will be printed like this: 34.049
 // 35.000000 like this:  35
-// can fial on snprintf allocation errors etc.
+// Can fail on snprintf allocation errors etc.
 // if buff_size  is to small functon sets errno = 0 and returns -1
 int igp_double_rmvtrailzeros(
     const double number,

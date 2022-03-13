@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021-2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,18 +25,51 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGF_FDOFFSET_H
-#define IGF_FDOFFSET_H
+#include "igf_offset.h"
 
-#include <sys/types.h>
+#include <assert.h>
+#include <unistd.h>
 
-off_t igf_fdoffset_end(
+// Function returns fd end and sets back
+// to current pos.
+// On error fd offset is undefined.
+// Can fail on lseek
+off_t igf_offset_end(
     const int fd
-);
+)  {
+ 
+  assert( fd >= 0 );
 
-int igf_fdoffset_mv(
+  off_t keep_offset = lseek( fd, 0, SEEK_CUR );
+  if( keep_offset == -1 )  return -1;
+
+  off_t end_offset = lseek( fd, 0, SEEK_END );
+  if( end_offset == -1 )  return -1;
+
+  if( lseek( fd, keep_offset, SEEK_SET ) == -1 )  return -1;
+
+  return end_offset;
+  
+}
+
+
+// Function moves current fd pos.
+// 0 on succes
+// -1 on fail
+// Can fail on lseek
+int igf_offset_mv(
     const int fd,
     const off_t offset
-);
+)  {
  
-#endif
+  assert( fd >= 0 );
+  off_t ans = lseek( fd, offset, SEEK_CUR );
+  if( ans != -1 )  return 0;
+  return -1;
+
+}
+
+
+
+
+

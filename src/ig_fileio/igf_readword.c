@@ -27,7 +27,7 @@ Bog Ojeciec.
 
 #include "igf_readword.h"
 
-#include "igf_fdoffset.h"
+#include "igf_offset.h"
 #include "igf_read.h"
 
 #include <assert.h>
@@ -111,7 +111,7 @@ char* igf_readword(
       if( ( bpos[i] == '\0' ) || ( isspace( bpos[i] ) ) ) {
 
 	// move to whitespace/nul offset
-	if( igf_fdoffset_mv( fd, i - readsize ) == -1 )
+	if( igf_offset_mv( fd, i - readsize ) == -1 )
           goto freeonerr;
 	fin = true;
         break;

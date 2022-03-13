@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,16 +25,30 @@ Bog Ojeciec.
 
 */
 
-#include "igf_read.h"
+#include "igf_opt.h"
 
-#include <assert.h>
-#include <errno.h>
+#include <fcntl.h>
 
-/*
-#include <stddef.h>
-#include <stdint.h>
-#include <unistd.h>
-*/
+int igf_cloexec(
+    const int fd
+)  {
 
+  int flags = fcntl( fd, F_GETFL );
+  if( flags == -1 )  return -1;
+  if( fcntl( fd, F_SETFL, flags | FD_CLOEXEC ) == -1 )  return -1;
+  return 0;
+
+}
+
+int igf_nonblock( 
+    const int fd
+)  {
+
+  int flags = fcntl( fd, F_GETFL );
+  if( flags == -1 )  return -1;
+  if( fcntl( fd, F_SETFL, flags | O_NONBLOCK ) == -1 )  return -1;
+  return 0;
+
+}
 
 

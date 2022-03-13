@@ -25,7 +25,7 @@ Bog Ojeciec.
 
 */
 
-#include "igf_openfd.h"
+#include "igf_open.h"
 
 #include <assert.h>
 #include <fcntl.h>
@@ -34,7 +34,7 @@ Bog Ojeciec.
 // Returns fd to read.
 // It can fail on open function
 // Tested, satisfied.
-int igf_openfd_rd(
+int igf_openrd(
     const char *const filename
 )  {
 
@@ -48,7 +48,7 @@ int igf_openfd_rd(
 // Returns fd in appending mode.
 // If no file to append than creates it
 // Can fail on open function
-int igf_openfd_ap(
+int igf_openap(
     const char *const filename
 )  {
 
@@ -63,7 +63,7 @@ int igf_openfd_ap(
 // Returns fd in writing mode.
 // If file exist it will be removed - overwritten
 // Can fail on open function
-int igf_openfd_wr(
+int igf_openwr(
     const char *const filename
 )  {
 

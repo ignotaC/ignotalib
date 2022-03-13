@@ -1,5 +1,4 @@
 set( cm_src "src" )
-	set( cm_ig_fileio "src/ig_fileio" )
 	set( cm_ig_string "src/ig_string" )
 	set( cm_ig_memory "src/ig_memory" )
 	set( cm_ig_net "src/ig_net" )
@@ -10,10 +9,10 @@ set( cm_src "src" )
 	set( cm_ig_time "src/ig_time" )
 	set( cm_ig_web "src/ig_web" )
 	set( cm_ig_print "src/ig_print" )
+	set( cm_ig_file "src/ig_file" )
 
 include_directories(
 	${cm_src}
-	${cm_ig_fileio}
 	${cm_ig_string}
 	${cm_ig_memory}
 	${cm_ig_net}
@@ -24,11 +23,11 @@ include_directories(
 	${cm_ig_time}
 	${cm_ig_web}
 	${cm_ig_print}
+	${cm_ig_file}
 	)
 
 file( GLOB cm_allsource
 	"${cm_src}/*.c"
-	"${cm_ig_fileio}/*.c"
 	"${cm_ig_string}/*.c"
 	"${cm_ig_memory}/*.c"
 	"${cm_ig_net}/*.c"
@@ -39,6 +38,7 @@ file( GLOB cm_allsource
 	"${cm_ig_time}/*.c"
 	"${cm_ig_web}/*.c"
 	"${cm_ig_print}/*.c"
+	"${cm_ig_file}/*.c"
 	)
 
 add_library( ignota SHARED ${cm_allsource} )

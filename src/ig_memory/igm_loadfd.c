@@ -27,7 +27,7 @@ Bog Ojeciec.
 
 #include "igm_loadfd.h"
 
-#include "../ig_fileio/igf_read.h"
+#include "../ig_file/igf_read.h"
 
 #include <assert.h>
 #include <errno.h>

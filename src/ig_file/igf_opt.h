@@ -25,30 +25,16 @@ Bog Ojeciec.
 
 */
 
-#include "igf_fdopt.h"
+#ifndef IGF_OPT_H
+#define IGF_OPT_H
 
-#include <fcntl.h>
-
-int igf_fdcloexec(
+int igf_cloexec(
     const int fd
-)  {
+);
 
-  int flags = fcntl( fd, F_GETFL );
-  if( flags == -1 )  return -1;
-  if( fcntl( fd, F_SETFL, flags | FD_CLOEXEC ) == -1 )  return -1;
-  return 0;
-
-}
-
-int igf_fdnonblock( 
+int igf_nonblock( 
     const int fd
-)  {
-
-  int flags = fcntl( fd, F_GETFL );
-  if( flags == -1 )  return -1;
-  if( fcntl( fd, F_SETFL, flags | O_NONBLOCK ) == -1 )  return -1;
-  return 0;
-
-}
+);
 
 
+#endif

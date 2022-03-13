@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,16 +25,9 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGF_FDOPT_H
-#define IGF_FDOPT_H
-
-int igf_fdcloexec(
-    const int fd
-);
-
-int igf_fdnonblock( 
-    const int fd
-);
-
+#ifndef IGF_DATA_AMIDSTR_H
+#define IGF_DATA_AMIDSTR_H
 
 #endif
+
+

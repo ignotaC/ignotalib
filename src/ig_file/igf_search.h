@@ -34,12 +34,13 @@ Bog Ojeciec.
 
 #include <stddef.h>
 
-off_t igf_findmem(
+int igf_findmem(
     const int fd,
     void *const mem,
     const size_t memsize,
     void *const buff,
-    const size_t buffsize
+    const size_t buffsize,
+    off_t *found_offset
 );
 
 #endif

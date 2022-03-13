@@ -47,12 +47,13 @@ Bog Ojeciec.
 // 0 if nothing was found and we have EOF
 // 1 if soemthing was found.
 // -1 fail and errno set.
-off_t igf_findmem(
+int igf_findmem(
     const int fd,
     void *const mem,
     const size_t memsize,
     void *const buff,
-    const size_t buffsize
+    const size_t buffsize,
+    off_t *found_offset
 )  {
 
   // check for  most simple mistakes
@@ -61,6 +62,7 @@ off_t igf_findmem(
   assert( buff != NULL );
   assert( buffsize > 0 );
   assert( buffsize > memsize );
+  assert( found_offset != NULL );
 
   // If memsize is zero than simply return
   // without doing anything
@@ -115,9 +117,13 @@ off_t igf_findmem(
 
     // we found something so just return the proper offset
     // and function is done
-    if( foundpos != NULL )
-        return lseek( fd, foundpos - buffp - buff_readsize, SEEK_CUR );
+    if( foundpos != NULL )  {
+     
+      *found_offset = lseek( fd,
+        foundpos - buffp - buff_readsize, SEEK_CUR );
+      return 1;
 
+    }
     // nothing found, move tail data in buff at start of it.
     // Obviously we need to keep last characters  in size of memsize
     // without one char , since buff_readsize sis position

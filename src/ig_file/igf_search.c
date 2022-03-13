@@ -2,7 +2,7 @@
 
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021-2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -28,132 +28,105 @@ Bog Ojeciec.
 */
 
 #include "igf_search.h"
-
 #include "igf_read.h"
 
 #include <assert.h>
 #include <string.h>
 #include <stdint.h>
 #include <unistd.h>
-/*
-// Find character in file descriptor.
-// Function will set the fd offset
-// right on the character if it was found
-// you must provide buffor for this function
-// Returns -1 on fail.
-// Offset will not get reset to starting pos
-// on failure
-// Returns 0 if nothing was found Offset will
-// be set on end of file
-// Returns 1 if something was found.
-// Can fail on read and lseek
-int igf_fdchr(
+
+// for bigmem in future - look for matching few  or one  character
+// then check whole string.
+
+
+// This function will always reset offset to found  memory
+// if nothing is found - value of offset is set back to 
+// offset value before any read
+// Memory we look for is smaller than buff. 
+// If not, than the behavior is undefined.
+// 0 if nothing was found and we have EOF
+// 1 if soemthing was found.
+// -1 fail and errno set.
+off_t igf_findmem(
     const int fd,
-    const int chr,
+    void *const mem,
+    const size_t memsize,
     void *const buff,
     const size_t buffsize
 )  {
 
+  // check for  most simple mistakes
   assert( fd >= 0 );
+  assert( mem != NULL );
   assert( buff != NULL );
-  assert( buffsize != 0 );
+  assert( buffsize > 0 );
+  assert( buffsize > memsize );
 
-  // save starting off_t
-  off_t track_offset = lseek( fd, 0, SEEK_CUR );
-  if( track_offset == -1 )  return -1;
+  // If memsize is zero than simply return
+  // without doing anything
+  if( memsize == 0 )  return 0;
 
-  void *memret = NULL;
-  for( ssize_t readret = 0;; )  {
+  // keep the start offset
+  off_t save_offset = lseek( fd, 0, SEEK_CUR );
+  if( save_offset == -1 )  return -1;
 
-    readret = igf_read( fd, buff, buffsize );
-    if( readret == -1 )  return -1;
-    else if( readret == 0 )  return 0;
+  // we need one byte so we can move pointer
+  // also to keep the mem and buff pointer untouched
+  // it is constant anyway
+  uint8_t *buffp = buff;
+  uint8_t *foundpos;
 
-    memret = memchr( buff, chr, readret );
-    if( memret != NULL )  {
+  // We need this since some part of buff 
+  // will remain from earlier read
+  size_t buffsize_left = buffsize;
+  size_t buff_readsize = 0;
 
-      ptrdiff_t charpos = ( ( uint8_t *)memret  )
-        - ( ( uint8_t *)buff );
+  // this is used at the end of function loop
+  // static value 
+  const size_t tailsize = memsize - 1;
 
-      track_offset += ( off_t )charpos;
-      if( lseek( fd, track_offset, SEEK_SET ) == -1 )
-        return -1;
-      return 1;
+  // set up return value for read etc
+  for( ssize_t readret;;)  {
 
-    }
-
-    track_offset += ( off_t )readret;
-
-  }
-
-}
-
-
-// THIS BADLY NEEDS TESTING
-// you must provide big enough buff
-// at least phrase size + 1.a
-// buffdatasize should be set to 0 on first call of this function
-// returns -1 on error.
-// 0 if nothing was found and we have EOF
-// 1 if soemthing was found.
-// Can fail on igf_read
-ssize_t igf_fdstr(
-    const int fd,
-    void *const phrase,
-    const size_t phrasesize,
-    void *const buff,
-    const size_t buffsize,
-    ssize_t *buffdatasize
-)  {
-
-  assert( fd >= 0 );
-  assert( phrase != NULL );
-  assert( buff != NULL );
-  assert( phrasesize < buffsize );
-  assert( buffdatasize != NULL );
-  assert( *buffdatasize >= 0 );
-  assert( *buffdatasize < buffsize );
-
-  size_t cpyphrase_endsize = phrasesize - 1;
-
-  uint8_t *buffreadpos = buff + *buffdatasize;
-  size_t readsize = buffsize - *buffdatasize;
-
-  ssize_t readret = 0;
-  uint8_t *foundphrase = NULL;
-
-  for(;;)  {
-
-    readret = igf_read( fd, buffreadpos, readsize );
+    //read data into buffp - but pass the filled memory
+    readret = igf_read( fd, &buffp[ buff_readsize ],
+       buffsize - buff_readsize );
     if( readret == -1 )  return -1;
     else if( readret == 0 )  {
 
-      *buffdatasize = 0;
-      return 0;
+      // reset the offset back to value before read
+      if( lseek( fd, save_offset, SEEK_SET ) == -1 )
+        return -1;
 
-    } // finished
-
-    // data size inside buff
-    *buffdatasize += readret;
-
-    foundphrease = memmem( buffreadpos, *buffdatasize,
-         phrase, phrasesize );
-    if( foundphrease != NULL )  {
-
-      *buffdatasize -= buff - foundphrease;
-      memmove( buff, foundphrease, *buffdatasize );
-      return 1;
+      return 0;  // finished, nothing was found
 
     }
 
-    memmove( buff, buff + *buffdatasize - cpyphrase_endsize,
-        cpyphrase_endsize );
-    *buffdatasize = cpyphrase_endsize;
-    buffreadpos = buff + *buffdatasize;
-    readsize = buffsize - *buffdatasize;
+    // count how much actual data we have inside buff
+    buff_readsize += ( size_t )readret;
+
+    // if buff_readsize is smaller then mem size we
+    // should try to read more 
+    if( buff_readsize < memsize )
+      continue;
+
+    // look for the memory  
+    foundpos = memmem( buffp, buff_readsize, mem, memsize );
+
+    // we found something so just return the proper offset
+    // and function is done
+    if( foundpos != NULL )
+        return lseek( fd, foundpos - buffp - buff_readsize, SEEK_CUR );
+
+    // nothing found, move tail data in buff at start of it.
+    // Obviously we need to keep last characters  in size of memsize
+    // without one char , since buff_readsize sis position
+    // after our last character in buff it's a -1 + 1
+    // so it simplifies to ust as we see down below 
+    memmove( buffp, &buffp[ buff_readsize ] - memsize, tailsize );
+    buff_readsize = tailsize;
 
   }
 
 }
 
-*/

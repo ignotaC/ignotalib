@@ -2,7 +2,7 @@
 
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021-20222 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -34,9 +34,10 @@ Bog Ojeciec.
 
 #include <stddef.h>
 
-int igf_fdchr(
+off_t igf_findmem(
     const int fd,
-    const int chr,
+    void *const mem,
+    const size_t memsize,
     void *const buff,
     const size_t buffsize
 );

@@ -27,8 +27,12 @@ Bog Ojeciec.
 
 */
 
-#include "igf_search.h"
+#include "igf_offset.h"
 #include "igf_read.h"
+#include "igf_search.h"
+
+// TODO
+// #include ".../igm_memmem.h"
 
 #include <assert.h>
 #include <string.h>
@@ -52,8 +56,7 @@ int igf_findmem(
     void *const mem,
     const size_t memsize,
     void *const buff,
-    const size_t buffsize,
-    off_t *found_offset
+    const size_t buffsize
 )  {
 
   // check for  most simple mistakes
@@ -62,7 +65,6 @@ int igf_findmem(
   assert( buff != NULL );
   assert( buffsize > 0 );
   assert( buffsize > memsize );
-  assert( found_offset != NULL );
 
   // If memsize is zero than simply return
   // without doing anything
@@ -119,11 +121,17 @@ int igf_findmem(
     // and function is done
     if( foundpos != NULL )  {
      
-      *found_offset = lseek( fd,
-        foundpos - buffp - buff_readsize, SEEK_CUR );
+      // first go back characters we have read.
+      // then  when we are on buffp star tposition
+      // just subtract foundposs from buffp since we now
+      // must move forword to position we are looking for
+      if( lseek( fd, foundpos - buffp - buff_readsize,
+          SEEK_CUR ) == -1 )
+        return -1;
       return 1;
 
     }
+
     // nothing found, move tail data in buff at start of it.
     // Obviously we need to keep last characters  in size of memsize
     // without one char , since buff_readsize sis position
@@ -133,6 +141,97 @@ int igf_findmem(
     buff_readsize = tailsize;
 
   }
+
+}
+
+// You must be sure the mem1 and mem2 sizes are smaller than buff size.
+// otherwise undefined behavior.
+// returns:
+// 1 - found something
+// set the fd position after mem1
+// and set bytesnum - number of bytes
+// just before mem2 position
+// 0 - did not find anything
+// reset fd to starting position
+//
+// -1 error
+//  the fd position is undefined
+int igf_amidmem(
+    const int fd,
+    void *const mem1,
+    const size_t mem1size,
+    void *const mem2,
+    const size_t mem2size,
+    void *const buff,
+    const size_t buffsize,
+    size_t *const bytesnum
+)  {
+
+  assert( fd >= 0 );
+  assert( mem1 != NULL );
+  // it makes little to zero sens 
+  // to allow size of memo1 and mem2
+  // to be zero here
+  assert( mem1size > 0 );
+  assert( mem2 != NULL );
+  assert( mem2size > 0 );
+  assert( buff != NULL );
+  assert( buffsize > 0 );
+  assert( bytesnum != NULL );
+
+  // We will need this if  nothing shall be found.
+  // the offset will be reseted to the starting
+  // position when function was called.
+  const off_t keepoffset = lseek( fd, 0, SEEK_CUR );
+  if( keepoffset == -1 )  return -1;
+
+  // find memory1
+  int ans = igf_findmem( 
+    fd, mem1, mem1size, buff, buffsize );
+
+  if( ans == -1 )  return -1;
+  // if we did not find anything do not reset
+  // fd offset - igf_findmem allready did it
+  //  since it did not find anything.
+  if( ans == 0 )  return 0;
+
+  // now we need to move offset
+  // to pass mem1
+  if( igf_offset_mv( fd, ( off_t )mem1size ) == -1 )
+    return -1;
+
+  // save the offset after the mem1
+  // this is out part of answet if mem2 will be found
+  const off_t aftermem1_offset = lseek( fd, 0, SEEK_CUR );
+  if( aftermem1_offset == -1 )  return -1;
+  
+  ans = igf_findmem(
+    fd, mem2, mem2size, buff, buffsize );
+
+  if( ans == -1 )  return -1;
+  // Reset the fd offset since we moved after
+  // finding mem1
+  if( ans == 0 )  {
+
+    if( lseek( fd, keepoffset, SEEK_SET ) == -1 )
+      return -1;
+    return 0;
+
+  }
+
+  // this means we found the mem1 as well as mem2
+  // Now jus set how many bytes wee have between them
+  const off_t mem2_offset = lseek( fd, 0, SEEK_CUR );
+  if( mem2_offset == -1 )  return -1;
+
+  *bytesnum = ( size_t )( mem2_offset - aftermem1_offset );
+
+  // Now move back to offset just after mem1 and return
+
+  if( lseek( fd, aftermem1_offset, SEEK_SET ) == -1 )
+    return -1;
+
+  return 1;
 
 }
 

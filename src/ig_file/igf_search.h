@@ -39,8 +39,18 @@ int igf_findmem(
     void *const mem,
     const size_t memsize,
     void *const buff,
+    const size_t buffsize
+);
+
+int igf_amidmem(
+    const int fd,
+    void *const mem1,
+    const size_t mem1size,
+    void *const mem2,
+    const size_t mem2size,
+    void *const buff,
     const size_t buffsize,
-    off_t *found_offset
+    size_t *const bytesnum
 );
 
 #endif

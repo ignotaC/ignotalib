@@ -40,6 +40,5 @@ Bog Ojeciec.
 #include "igf_write.h"
 #include "igf_opt.h"
 #include "igf_readword.h"
-#include "igf_data_amidstr.h"
 
 #endif

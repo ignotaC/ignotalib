@@ -31,8 +31,7 @@ Bog Ojeciec.
 #include "igf_read.h"
 #include "igf_search.h"
 
-// TODO
-// #include ".../igm_memmem.h"
+#include "../ig_memory/igm_search.h"
 
 #include <assert.h>
 #include <string.h>
@@ -115,7 +114,7 @@ int igf_findmem(
       continue;
 
     // look for the memory  
-    foundpos = memmem( buffp, buff_readsize, mem, memsize );
+    foundpos = igm_inmem( buffp, buff_readsize, mem, memsize );
 
     // we found something so just return the proper offset
     // and function is done

@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,13 +25,16 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGM_INMEM_H
+#define IGM_INMEM_H
 
+#include <stddef.h>
 
-
-#ifndef IG_MEMORY_H
-#define IG_MEMORY_H
-
-#include "igm_loadfd.h"
-#include "igm_search.h"
+void *igm_inmem(
+    void *const bigmem,
+    const size_t bm_size,
+    void *const smallmem,
+    const size_t sm_size
+);
 
 #endif

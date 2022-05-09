@@ -51,7 +51,8 @@ void* igm_fdtomem(
     const int fd,
     size_t *const memsize,
     void *const buff,
-    const size_t buffsize )  {
+    const size_t buffsize
+)  {
   
   assert( fd >= 0 );
   assert( memsize != NULL );

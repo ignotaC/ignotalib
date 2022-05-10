@@ -55,7 +55,7 @@ void *igm_inmem(
 
   uint8_t *bmp = bigmem;
   uint8_t *mp = NULL;
-  for( size_t leftsize = bm_size;; leftsize >= sm_size)  {
+  for( size_t leftsize = bm_size; leftsize >= sm_size; )  {
                             /*  sm_size can't be bigger */
 
     // First find one matching byte.

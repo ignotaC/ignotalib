@@ -80,8 +80,7 @@ int igf_findmem(
   uint8_t *foundpos;
 
   // We need this since some part of buff 
-  // will remain from earlier read
-  size_t buffsize_left = buffsize;
+  // will need to be saved -> part from earlier read
   size_t buff_readsize = 0;
 
   // this is used at the end of function loop

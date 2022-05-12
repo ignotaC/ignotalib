@@ -53,7 +53,7 @@ void *igm_inmem(
   if( sm_size == 1 )
     return memchr( bigmem, ( int )( *smp ), bm_size );
 
-  uint8_t *bmp = bigmem;
+  uint8_t *bmp = bigmem, *keepstart = bigmem;
   uint8_t *mp = NULL;
   for( size_t leftsize = bm_size; leftsize >= sm_size; )  {
                             /*  sm_size can't be bigger */
@@ -62,7 +62,7 @@ void *igm_inmem(
     mp = memchr( bmp, ( int )( *smp ), leftsize );
     if( mp == NULL )  return NULL;  
     // ^ Nothing found, great leave.
-    
+
     // Check does the whole memory match.
     if( ! memcmp( mp, smp, sm_size ) )
       return mp; // Found the memory that matches.
@@ -75,9 +75,8 @@ void *igm_inmem(
     // Now we need to set new leftsize and bigmem pointer.
     // The additional 1 is because we pass the mp memchr
     // returned.
-    leftsize = mp - bmp - 1;
     bmp = mp + 1;
-
+    leftsize = bm_size - ( bmp - keepstart );
 
   }  // search loop end
 

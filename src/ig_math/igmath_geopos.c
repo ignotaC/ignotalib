@@ -94,6 +94,8 @@ int igmath_get_geopos(
   gp->y = Y_pos;
   gp->z = Z_pos;
 
+  return 0;
+
 }
 
 

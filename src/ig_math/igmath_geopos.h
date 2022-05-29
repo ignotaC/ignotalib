@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,14 +25,35 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGMATH_GEOPOS_H
+#define IGMATH_GEOPOS_H
 
 
+// radius in meters for elipsoid model of earth
+#define IGMATH_EQUATORIAL_RADIUS 6378140U
+#define IGMATH_POLAR_RADIUS 6356750U
 
-#ifndef IG_MATH_H
-#define IG_MATH_H
 
-#include "igmath_factorial.h"
-#include "igmath_binomial_coefficient.h"
-#include "igmath_geopos.h"
+// 3D position of point on earth
+// using basic rotary elipsoid model
+// ( X / Re )^2 + ( Y / Re )^2 + ( Z / Rp )^2 = 1
+// Re - Equatorial radious
+// Rp - Polar Radious
+
+struct igmath_geopos {
+
+  double x;
+  double y;
+  double z;
+
+};
+
+int igmath_get_geopos(
+    struct igmath_geopos *const gp,
+    const double latitude, // deg
+    const char latitude_hemisphere, // N or S
+    const double longtitude, // deg
+    const char longtitude_hemisphere  // W or E
+);
 
 #endif

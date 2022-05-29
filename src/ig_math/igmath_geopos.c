@@ -65,17 +65,13 @@ int igmath_get_geopos(
   double latitude_radious =
      ( 1.0 / IGMATH_EQUATORIAL_RADIUS ) * 
      ( 1.0 / IGMATH_EQUATORIAL_RADIUS );
-  printf( "lat rad = %e\n", latitude_radious );
   latitude_radious +=
     ( latitude_tg / IGMATH_POLAR_RADIUS ) *
     ( latitude_tg / IGMATH_POLAR_RADIUS );
-  printf( "lat rad = %e\n", latitude_radious );
   latitude_radious = 1.0 / latitude_radious;  
   // at this point latitude_radious is r^2
   // we need to sqare it later but to count Z it's
   // better to use it instead of taking power of it later
-
-  printf( "lat rad = %e\n", latitude_radious );
 
   // Now we can count Z position
   double Z_pos =
@@ -90,7 +86,6 @@ int igmath_get_geopos(
   // finish counting the latitude radious
   latitude_radious = sqrt( latitude_radious );
 
-  printf( "lat rad = %e\n", latitude_radious );
   // We are left now with getting X and Y
   // but the *hardest job* was done already
   double X_pos = latitude_radious * sin( lon_in_radians );

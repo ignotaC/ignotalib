@@ -27,6 +27,8 @@ Bog Ojeciec.
 
 #include "igmath_geopos.h"
 
+#include <stdio.h>
+
 #include <assert.h>
 #include <math.h>
 
@@ -48,31 +50,39 @@ int igmath_get_geopos(
   assert( ( longtitude_hemisphere == 'W' ) ||
     ( longtitude_hemisphere == 'E' ) );
 
+  // convert degries to radians
+  double lat_in_radians = latitude * IGMATH_PI / 180.0;
+  double lon_in_radians = longtitude * IGMATH_PI / 180.0;
  
   // first let us use the ellipse that by rotating creates the
   // elipsoid model of earth
   // ( r / Re ) ^2 + ( Z / Rp )^2 = 1
   
-  double latitude_tg = tan( latitude );
+
+  double latitude_tg = tan( lat_in_radians );
 
   // count r
   double latitude_radious =
      ( 1.0 / IGMATH_EQUATORIAL_RADIUS ) * 
      ( 1.0 / IGMATH_EQUATORIAL_RADIUS );
+  printf( "lat rad = %e\n", latitude_radious );
   latitude_radious +=
     ( latitude_tg / IGMATH_POLAR_RADIUS ) *
     ( latitude_tg / IGMATH_POLAR_RADIUS );
+  printf( "lat rad = %e\n", latitude_radious );
   latitude_radious = 1.0 / latitude_radious;  
   // at this point latitude_radious is r^2
   // we need to sqare it later but to count Z it's
   // better to use it instead of taking power of it later
 
+  printf( "lat rad = %e\n", latitude_radious );
+
   // Now we can count Z position
   double Z_pos =
-    IGMATH_EQUATORIAL_RADIUS * IGMATH_EQUATORIAL_RADIUS;
+    ( IGMATH_EQUATORIAL_RADIUS ) * IGMATH_EQUATORIAL_RADIUS;
   Z_pos = 1.0 - ( latitude_radious / Z_pos );
   Z_pos *= 
-    IGMATH_POLAR_RADIUS * IGMATH_POLAR_RADIUS;
+    ( IGMATH_POLAR_RADIUS ) * IGMATH_POLAR_RADIUS;
   Z_pos = sqrt( Z_pos );
   if( latitude_hemisphere == 'S' )
     Z_pos = -Z_pos;
@@ -80,14 +90,15 @@ int igmath_get_geopos(
   // finish counting the latitude radious
   latitude_radious = sqrt( latitude_radious );
 
+  printf( "lat rad = %e\n", latitude_radious );
   // We are left now with getting X and Y
   // but the *hardest job* was done already
-  double X_pos = latitude_radious * sin( longtitude );
+  double X_pos = latitude_radious * sin( lon_in_radians );
   if( longtitude_hemisphere == 'W' )
     X_pos = -X_pos;
 
   // here cosinus simply sets Y negative or positive
-  double Y_pos = latitude_radious * cos( longtitude );
+  double Y_pos = latitude_radious * cos( lon_in_radians );
 
   // as this point we have everythign for a 3d position
   gp->x = X_pos;

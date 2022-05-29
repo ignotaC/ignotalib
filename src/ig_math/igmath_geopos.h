@@ -30,8 +30,9 @@ Bog Ojeciec.
 
 
 // radius in meters for elipsoid model of earth
-#define IGMATH_EQUATORIAL_RADIUS 6378140U
-#define IGMATH_POLAR_RADIUS 6356750U
+#define IGMATH_EQUATORIAL_RADIUS 6378140.0
+#define IGMATH_POLAR_RADIUS 6356750.0
+#define IGMATH_PI 3.141592653589
 
 
 // 3D position of point on earth

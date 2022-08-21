@@ -25,7 +25,7 @@ Bog Ojeciec.
 
 */
 
-#include "ign_unixsock.h"
+#include "ign_unixserv.h"
 
 #include <sys/socket.h>
 
@@ -33,6 +33,9 @@ Bog Ojeciec.
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
+
+// TODO - think about socketoptions
+// TODO UDP and TCP
 
 // You pass string that is file name we want to open
 // socket under it
@@ -42,7 +45,7 @@ Bog Ojeciec.
 // It cleans socket on fail so no open
 // descriptors should be left on fail.
 // 0 on success.
-int ign_getsun( 
+int ign_unixserv( 
     const char *const name,
     const int listen_queue
 )  {

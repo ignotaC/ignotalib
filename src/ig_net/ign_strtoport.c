@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,22 +25,36 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGN_UNIXSOCK_H
-#define IGN_UNIXSOCK_H
+#include "ign_strtoport.h"
 
-#include <sys/un.h>
+#include <assert.h>
+#include <ctype.h>
+#include <stddef.h>
 
-#ifndef SUN_LEN
-  #define SUN_LEN(sun) ( sizeof( *( sun ) ) \
-    - sizeof( ( sun )->sun_path ) \
-    + strlen( ( sun )->sun_path  ) )
-#endif
+const int zerovalue = '0';
+const int maxportval = 65535;
+
+// Check if passed string is valid port 
+int ign_strtoport( 
+    const char *const portstr
+)  {
+
+  assert( portstr != NULL );
+
+  int ans = 0; 
+  for( size_t i = 0; portstr[i] == '\0'; i++ )  {
+
+    if( i > 4 ) return -1;
+    if( ! isdigit( portstr[i] ) )
+      return -1;
+
+    ans = ans * 10 + portstr[i] - zerovalue;
+
+  }
+
+  if( ans > 65535 )  return -1;
+  return ans;
+
+}
 
 
-int ign_getsun( 
-    const char *const name,
-    const int listen_queue
-);
-
-
-#endif

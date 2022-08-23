@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,38 +25,12 @@ Bog Ojeciec.
 
 */
 
-#include "ign_strtoport.h"
-
-#include <assert.h>
-#include <ctype.h>
-#include <stddef.h>
-
-const int zerovalue = '0';
-const int maxportval = 65535;
-
-// Check if passed string is valid port 
-// -1 on WRONG port
-// else port  number is returned
-int ign_strtoport( 
-    const char *const portstr
-)  {
-
-  assert( portstr != NULL );
-
-  int ans = 0; 
-  for( size_t i = 0; portstr[i] == '\0'; i++ )  {
-
-    if( i > 4 ) return -1;
-    if( ! isdigit( portstr[i] ) )
-      return -1;
-
-    ans = ans * 10 + portstr[i] - zerovalue;
-
-  }
-
-  if( ans > 65535 )  return -1;
-  return ans;
-
-}
 
 
+
+#ifndef IG_EVENT_H
+#define IG_EVENT_H
+
+#include "igev_signals.h"
+
+#endif

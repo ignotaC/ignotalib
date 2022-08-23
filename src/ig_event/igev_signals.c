@@ -1,3 +1,5 @@
+
+
 /*
 
 Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
@@ -25,38 +27,18 @@ Bog Ojeciec.
 
 */
 
-#include "ign_strtoport.h"
+#include "igev_signals.h"
 
-#include <assert.h>
-#include <ctype.h>
-#include <stddef.h>
+#include <signal.h>
 
-const int zerovalue = '0';
-const int maxportval = 65535;
-
-// Check if passed string is valid port 
-// -1 on WRONG port
-// else port  number is returned
-int ign_strtoport( 
-    const char *const portstr
+int igev_sigign(
+    const int signal
 )  {
 
-  assert( portstr != NULL );
-
-  int ans = 0; 
-  for( size_t i = 0; portstr[i] == '\0'; i++ )  {
-
-    if( i > 4 ) return -1;
-    if( ! isdigit( portstr[i] ) )
-      return -1;
-
-    ans = ans * 10 + portstr[i] - zerovalue;
-
-  }
-
-  if( ans > 65535 )  return -1;
-  return ans;
+  struct sigaction sa = { 0 };
+  sa.sa_handler = SIG_IGN;
+  if( sigfillset( &( sa.sa_mask ) ) == -1 )
+    return -1;  // not sure it matters
+  return sigaction( signal, &sa, NULL );
 
 }
-
-

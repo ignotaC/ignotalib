@@ -34,6 +34,7 @@ Bog Ojeciec.
 #include "ig_memory/ig_memory.h"
 #include "ig_net/ig_net.h"
 #include "ig_encoding/ig_encoding.h"
+#include "ig_event/ig_event.h"
 #include "ig_compress/ig_compress.h"
 #include "ig_datastructure/ig_datastructure.h"
 #include "ig_math/ig_math.h"

@@ -3,6 +3,7 @@ set( cm_src "src" )
 	set( cm_ig_memory "src/ig_memory" )
 	set( cm_ig_net "src/ig_net" )
 	set( cm_ig_encoding "src/ig_encoding" )
+	set( cm_ig_event "src/ig_event" )
 	set( cm_ig_compress "src/ig_compress" )
 	set( cm_ig_datastructure "src/ig_datastructure" )
 	set( cm_ig_math "src/ig_math" )
@@ -17,6 +18,7 @@ include_directories(
 	${cm_ig_memory}
 	${cm_ig_net}
 	${cm_ig_encoding}
+	${cm_ig_event}
 	${cm_ig_compress}
 	${cm_ig_datastructure}
 	${cm_ig_math}
@@ -32,6 +34,7 @@ file( GLOB cm_allsource
 	"${cm_ig_memory}/*.c"
 	"${cm_ig_net}/*.c"
 	"${cm_ig_encoding}/*.c"
+	"${cm_ig_event}/*.c"
 	"${cm_ig_compress}/*.c"
 	"${cm_ig_datastructure}/*.c"
 	"${cm_ig_math}/*.c"

@@ -58,8 +58,6 @@ int igf_getdirfnames(
   if( dir == NULL ) return -1;
 
   size_t namelen = 0;
-  char *newname = NULL;
-  char **keep_filenames = NULL;
   for( struct dirent *dp = NULL ;;)  {
 
     errno = 0;
@@ -73,7 +71,7 @@ int igf_getdirfnames(
     }
 
     namelen = strnlen( dp->d_name, NAME_MAX );
-    keep_filenames = filenames->list;
+    // TODO check if on realloc error old pointer gets restored
     if( igds_strarr_addent( filenames, dp->d_name,
        namelen ) == -1 )  goto addent_err;
     // nul is added inside strarr_addent
@@ -104,6 +102,8 @@ int igf_getdirtree(
 
   assert( dirname != NULL );
   assert( filetree != NULL );
+
+  return 0;
 
 }
 

@@ -104,7 +104,8 @@ ssize_t igf_readv(
       if( readvret <= 0 )  {
 
 	iv_ptr->iov_len += readvret;
-	iv_ptr->iov_base -= readvret;
+	// TODO there was change here it should be fine but needs testing.
+	iv_ptr->iov_base = ( ( uint8_t* )iv_ptr->iov_base ) - readvret; 
 	break;
 	
       }

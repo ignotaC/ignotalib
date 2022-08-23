@@ -37,7 +37,7 @@ Bog Ojeciec.
 #endif
 
 
-int ign_sunserv( 
+int ign_unixserv( 
     const char *const name,
     const int listen_queue
 );

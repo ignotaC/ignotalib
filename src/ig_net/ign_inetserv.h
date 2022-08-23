@@ -28,17 +28,17 @@ Bog Ojeciec.
 #ifndef IGN_INETSERV_H
 #define IGN_INETSERV_H
 
-int ign_sin4tcpserv( 
+int ign_inet4tcpserv( 
     const unsigned short port,
     const int listen_queue
 );
 
-int ign_sin6tcpserv( 
+int ign_inet6tcpserv( 
     const unsigned short port,
     const int listen_queue
 );
 
-int ign_sintcpserv(
+int ign_inettcpserv(
     const unsigned short port,
     const int listen_queue
 );

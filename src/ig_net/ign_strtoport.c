@@ -43,7 +43,10 @@ int ign_strtoport(
 
   assert( portstr != NULL );
 
-  int ans = -1; // what iff "" is passed? we will get -1 
+  // special case, else ans 0 whill break
+  if( portstr[0] == '\0' )  return -1;
+
+  int ans = 0; // what iff "" is passed? we will get -1 
 		// this way so error, as should be
   
   for( size_t i = 0; portstr[i] != '\0'; i++ )  {

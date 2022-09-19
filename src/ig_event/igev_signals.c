@@ -29,6 +29,7 @@ Bog Ojeciec.
 
 #include "igev_signals.h"
 
+#include <stddef.h>
 #include <signal.h>
 
 int igev_sigign(

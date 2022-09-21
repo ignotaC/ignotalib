@@ -1,5 +1,7 @@
 # ignotalib
 
+irc: ##ignotac irc.libera.chat
+
 HOW TO COMPILE:
 cmake .
 make

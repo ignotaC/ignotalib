@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021-2022 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -28,9 +28,13 @@ Bog Ojeciec.
 
 
 
-#ifndef IG_WEB_H
-#define IG_WEB_H
+#ifndef IGPROC_DAEMON_H
+#define IGPROC_DAEMON_H
 
-#include "igw_urlcode.h"
+#include <stdbool.h>
+
+int igproc_daemon(
+    bool setdirroot
+);
 
 #endif

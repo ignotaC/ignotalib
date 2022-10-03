@@ -11,6 +11,7 @@ set( cm_src "src" )
 	set( cm_ig_web "src/ig_web" )
 	set( cm_ig_print "src/ig_print" )
 	set( cm_ig_file "src/ig_file" )
+	set( cm_ig_process "src/ig_process" )
 
 include_directories(
 	${cm_src}
@@ -26,6 +27,7 @@ include_directories(
 	${cm_ig_web}
 	${cm_ig_print}
 	${cm_ig_file}
+	${cm_ig_process}
 	)
 
 file( GLOB cm_allsource
@@ -42,6 +44,7 @@ file( GLOB cm_allsource
 	"${cm_ig_web}/*.c"
 	"${cm_ig_print}/*.c"
 	"${cm_ig_file}/*.c"
+	"${cm_ig_process}/*.c"
 	)
 
 add_library( ignota SHARED ${cm_allsource} )

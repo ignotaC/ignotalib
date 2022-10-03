@@ -32,6 +32,8 @@ Bog Ojeciec.
 #include <stddef.h>
 #include <signal.h>
 
+// Return -1 on error
+// 0 on success
 int igev_sigign(
     const int signal
 )  {

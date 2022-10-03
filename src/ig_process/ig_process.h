@@ -28,9 +28,9 @@ Bog Ojeciec.
 
 
 
-#ifndef IG_WEB_H
-#define IG_WEB_H
+#ifndef IG_PROCESS_H
+#define IG_PROCESS_H
 
-#include "igw_urlcode.h"
+#include "igproc_daemon.h"
 
 #endif

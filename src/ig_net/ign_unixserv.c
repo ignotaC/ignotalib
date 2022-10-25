@@ -28,6 +28,7 @@ Bog Ojeciec.
 #include "ign_unixserv.h"
 
 #include <sys/socket.h>
+#include <sys/un.h>
 
 #include <assert.h>
 #include <errno.h>
@@ -40,6 +41,7 @@ Bog Ojeciec.
 // You pass string that is file name we want to open
 // socket under it
 // it can fail if name is too big
+// name string or fail
 // also can fail on socket function, bind and listen
 // -1 on Fail
 // It cleans socket on fail so no open
@@ -50,13 +52,14 @@ int ign_unixserv(
     const int listen_queue
 )  {
 
-  //as for second assert not sure how
-  //listen would react with queue passed 0
+  // as for second assert not sure how
+  // listen would react with queue passed 0
   assert( name != NULL );
   assert( listen_queue != 0 ); 
 
-  struct sockaddr_un sun = { 0 };
+  struct sockaddr_un sun = { 0 }; // this is very important
   size_t namelen = strlen( name );
+  // somehow I feel safer to force nul here at end
   if( namelen >= sizeof( sun.sun_path ) )  {
 
     errno = 0;
@@ -70,12 +73,13 @@ int ign_unixserv(
   int sockfd = socket( AF_UNIX, SOCK_STREAM, 0 );
   if( sockfd == -1 )  return -1;
 
+  // Sizeof is safest thing, beware SUN_LEN
   if( bind( sockfd, ( struct sockaddr* ) &sun,
-      SUN_LEN( &sun ) ) == -1 )
+      sizeof( sun ) ) == -1 )
     goto sockfail;
 
   // Better to havebigger since if no place instant drop
-  // unix socket for you
+  // connecting unix socket for you
   if( listen( sockfd, listen_queue ) == -1 )
     goto sockfail;
 

@@ -28,15 +28,6 @@ Bog Ojeciec.
 #ifndef IGN_SUNSERV_H
 #define IGN_SUNSERV_H
 
-#include <sys/un.h>
-
-#ifndef SUN_LEN
-  #define SUN_LEN(sun) ( sizeof( *( sun ) ) \
-    - sizeof( ( sun )->sun_path ) \
-    + strlen( ( sun )->sun_path  ) )
-#endif
-
-
 int ign_unixserv( 
     const char *const name,
     const int listen_queue

@@ -37,6 +37,11 @@ struct igds_strarr  {
 
 };
 
+int igds_strarr_init(
+    struct igds_strarr *const sa
+);
+
+
 int igds_strarr_addent(
     struct igds_strarr *const sa,
     void *const mem,

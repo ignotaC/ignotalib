@@ -29,7 +29,7 @@ printf "\n\n" >> "$sumhead"
 printf "#ifndef ""$strupper""_H\n" >> "$sumhead"
 printf "#define ""$strupper""_H\n\n" >> "$sumhead"
 
-while read -r line
+while IFS= read -r line
 do
 	printf "#include \"""${line##*/}""\"\n" >> \
 		"$sumhead"

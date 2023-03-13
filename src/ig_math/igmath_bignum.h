@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021-2022 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2022 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,20 +25,33 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGMATH_BIGNUM_H
+#define IGMATH_BIGNUM_H
+
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
+typedef struct igmath_bignum {
+
+  bool plus;
+  uintmax_t *val;
+  size_t val_len;
+
+} igmath_bignum;
+
+void igmath_init( 
+    void
+);
+
+void igmath_init_bignum( 
+    igmath_bignum *const bignum
+);
 
 
 
-#ifndef IG_FILE_H
-#define IG_FILE_H
-
-#include "igf_dir.h"
-#include "igf_ivoperations.h"
-#include "igf_offset.h"
-#include "igf_open.h"
-#include "igf_opt.h"
-#include "igf_read.h"
-#include "igf_readword.h"
-#include "igf_search.h"
-#include "igf_write.h"
+// #define IGMATH_BIGNUM_CAPACITY UINTMAX_MAX / 
 
 #endif
+
+

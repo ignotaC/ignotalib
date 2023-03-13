@@ -34,7 +34,7 @@ printf "#include \"ignota.h\"\n" >> "$ignotac"
 printf "#ifndef IGNOTA_H\n" >> "$ignotah"
 printf "#define IGNOTA_H\n\n" >> "$ignotah"
 
-while read -r line
+while IFS= read -r line
 do
 	echo "$line"
 
@@ -53,7 +53,7 @@ done < "$tempfile"
 
 printf "\n" >> "$ignotah"
 
-while read -r line
+while IFS= read -r line
 do
 
 	printf "#include \"""${line#*/}""\"\n" >> "$ignotah"

@@ -31,6 +31,20 @@ Bog Ojeciec.
 #include <stdlib.h>
 #include <string.h>
 
+// ini sa
+
+int igds_strarr_init(
+    struct igds_strarr *const sa
+)  {
+
+  asser( sa != NULL );
+
+  sa->list = NULL;
+  sa->listlen = 0;
+
+}
+
+
 // Can fail on malloc and realloc.
 // Should not lose data on fail.
 // On fail should not leak memory

@@ -37,7 +37,7 @@ int igds_strarr_init(
     struct igds_strarr *const sa
 )  {
 
-  asser( sa != NULL );
+  assert( sa != NULL );
 
   sa->list = NULL;
   sa->listlen = 0;

@@ -32,7 +32,7 @@ Bog Ojeciec.
 #ifndef IGMISC_GETANS_H
 #define IGMISC_GETANS_H
 
-int igmisc_get_yn_ans(
+int igmisc_getans_yn(
     const char *const  question
 );
 

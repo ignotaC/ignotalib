@@ -1,5 +1,3 @@
-
-
 /*
 
 Copyright (c) 2023 Piotr Trzpil  p.trzpil@protonmail.com
@@ -27,35 +25,17 @@ Bog Ojeciec.
 
 */
 
-#include "igmisc_getans.h"
+#include <stddef.h>
 
-#include <assert.h>
-#include <stdio.h>
+#ifndef IGF_PURGE_TILLBLOCK_H
+#define IGF_PURGE_TILLBLOCK_H
 
-// get answer from user, clear stdin before reading ans.
-// So garbage data is discarded but you can't automate passing it
-// Fails on printf askign question
-// 0 is NO, anything triggers it except y/Y
-// 1 is YES only Y/y sets it
-// -1 i serror
-int igmisc_getans_yn(
-    const char *const  question
-)  {
+int igf_purge_tillblock(
+  const int fd,
+  void *const buff,
+  size_t readsize
+);
 
-  assert( question != NULL );
+#endif
 
-  int ans = getc( stdin );
-  switch( ans )  {
-
-    case 'Y':
-    case 'y':
-      return 1;
-    case EOF:
-      if( ferror( stdin ) )  return -1;
-    default:
-      return 0;
-
-  }
-
-}
 

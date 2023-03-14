@@ -29,6 +29,28 @@ Bog Ojeciec.
 
 #include <fcntl.h>
 
+// -1 on error
+int igf_getflags(
+    const int fd
+)  {
+
+  int flags = fcntl( fd, F_GETFL );
+  return flags;   // flags should never return negative value 
+		  // as posix teahces us!
+
+}
+
+// 0 on success -1 on errpor
+int igf_setflags(
+    const int fd,
+    const int flags
+)  {
+
+  if( fcntl( fd, F_SETFL, flags ) == -1 )  return -1;
+  return 0;
+
+}
+
 int igf_cloexec(
     const int fd
 )  {
@@ -47,6 +69,17 @@ int igf_nonblock(
   int flags = fcntl( fd, F_GETFL );
   if( flags == -1 )  return -1;
   if( fcntl( fd, F_SETFL, flags | O_NONBLOCK ) == -1 )  return -1;
+  return 0;
+
+}
+
+int igf_block( 
+    const int fd
+)  {
+
+  int flags = fcntl( fd, F_GETFL );
+  if( flags == -1 )  return -1;
+  if( fcntl( fd, F_SETFL, flags & ( ~O_NONBLOCK ) ) == -1 )  return -1;
   return 0;
 
 }

@@ -28,6 +28,17 @@ Bog Ojeciec.
 #ifndef IGF_OPT_H
 #define IGF_OPT_H
 
+int igf_getflags(
+    const int fd
+);
+
+
+int igf_setflags(
+    const int fd,
+    const int flags
+);
+
+
 int igf_cloexec(
     const int fd
 );
@@ -35,6 +46,11 @@ int igf_cloexec(
 int igf_nonblock( 
     const int fd
 );
+
+int igf_block( 
+    const int fd
+);
+
 
 
 #endif

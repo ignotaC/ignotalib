@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021-2022 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021-2023 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -28,4 +28,4 @@ Bog Ojeciec.
 
 
 
-#include "ig_miscellaneus.h"
+#include "ig_miscellaneous.h"

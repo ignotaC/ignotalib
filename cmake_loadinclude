@@ -12,7 +12,7 @@ set( cm_src "src" )
 	set( cm_ig_string "src/ig_string" )
 	set( cm_ig_time "src/ig_time" )
 	set( cm_ig_web "src/ig_web" )
-	set( cm_ig_miscellaneus "src/ig_miscellaneus" )
+	set( cm_ig_miscellaneous "src/ig_miscellaneous" )
 
 include_directories(
 	${cm_src}
@@ -29,7 +29,7 @@ include_directories(
 	${cm_ig_string}
 	${cm_ig_time}
 	${cm_ig_web}
-	${cm_ig_miscellaneus}
+	${cm_ig_miscellaneous}
 	)
 
 file( GLOB cm_allsource
@@ -47,7 +47,7 @@ file( GLOB cm_allsource
 	"${cm_ig_string}/*.c"
 	"${cm_ig_time}/*.c"
 	"${cm_ig_web}/*.c"
-	"${cm_ig_miscellaneus}/*.c"
+	"${cm_ig_miscellaneous}/*.c"
 	)
 
 add_library( ignota SHARED ${cm_allsource} )

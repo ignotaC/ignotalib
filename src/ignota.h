@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021-2022 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021-2023 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -43,7 +43,7 @@ Bog Ojeciec.
 #include "ig_string/ig_string.h"
 #include "ig_time/ig_time.h"
 #include "ig_web/ig_web.h"
-#include "ig_miscellaneus/ig_miscellaneus.h"
+#include "ig_miscellaneous/ig_miscellaneous.h"
 
 #include "ignota_conf.h"
 

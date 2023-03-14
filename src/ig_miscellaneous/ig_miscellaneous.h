@@ -28,4 +28,9 @@ Bog Ojeciec.
 
 
 
-#include "ig_memory.h"
+#ifndef IG_MISCELLANEOUS_H
+#define IG_MISCELLANEOUS_H
+
+#include "igmisc_getans.h"
+
+#endif

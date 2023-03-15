@@ -1,8 +1,0 @@
-/home/piotr/dokumenty/00progr/moje_programy/ignota/src/ig_web/ig_web.c:31:20: warning: ISO C requires a translation unit to contain at least one declaration [-Wempty-translation-unit]
-#include "ig_web.h"
-                   ^
-1 warning generated.
-/home/piotr/dokumenty/00progr/moje_programy/ignota/src/ig_web/igw_urlcode.c:28:57: warning: ISO C requires a translation unit to contain at least one declaration [-Wempty-translation-unit]
-// TODO encode decode, the code is somewher ein the mess
-                                                        ^
-1 warning generated.

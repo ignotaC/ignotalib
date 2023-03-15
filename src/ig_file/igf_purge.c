@@ -41,6 +41,7 @@ Bog Ojeciec.
 // -1 is returned on error ( read error ).
 // Restarts on EINTR
 //
+// don't use it as stdin ( will cause problems )
 // ON ERROR we might lend up with changed flags status
 int igf_purge_tillblock(
   const int fd,
@@ -65,11 +66,10 @@ int igf_purge_tillblock(
   for(;;)  {
 
     readret = read( fd, buff, readsize );
-    if( readret > 0 )  continue;
+    if( readret > 0 )   continue;
     if( readret == 0 )  break; // this is a bit rare case but can happen
     
     // now we have errors
-
     switch( errno )  {
 
       case EAGAIN:
@@ -81,6 +81,9 @@ int igf_purge_tillblock(
 	return -1;
 
     }
+
+    // at this point we know we would block
+    break;
 
   }
 

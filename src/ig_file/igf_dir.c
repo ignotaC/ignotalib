@@ -87,6 +87,42 @@ int igf_getdirfnames(
 
 }
 
+int igf_usedirent(
+    const char *const dirname,
+    int ( *use )( struct dirent *de )
+)  {
+
+  assert( dirname != NULL );
+  assert( use != NULL );
+
+  DIR *dir = opendir( dirname );
+  if( dir == NULL ) return -1;
+
+  for( struct dirent *dp = NULL ;;)  {
+
+    errno = 0;
+    dp = readdir( dir );
+    if( dp == NULL )  {
+
+      if( errno != 0 )  goto readdir_err;
+      closedir( dir );
+      return 0;
+
+    }
+
+    if( use( dp ) == -1 )  goto useent_err;
+
+  }
+
+ useent_err:
+ readdir_err:;
+  int keep_err = errno;
+  closedir( dir );
+  errno = keep_err;
+  return -1;
+
+}
+
 
 /*
  * Function creates directory tree.

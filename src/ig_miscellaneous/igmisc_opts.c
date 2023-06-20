@@ -1,6 +1,8 @@
+
+
 /*
 
-Copyright (c) 2021-2023 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2023 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -26,12 +28,48 @@ Bog Ojeciec.
 */
 
 
-
-
-#ifndef IG_MISCELLANEOUS_H
-#define IG_MISCELLANEOUS_H
-
-#include "igmisc_getans.h"
 #include "igmisc_opts.h"
 
-#endif
+#include <assert.h>
+#include <stddef.h>
+
+int igmisc_opts_get(
+    igmisc_opts *const opts,
+    const int optc,
+    const char *const  optv[] 
+);
+
+
+
+void igmisc_opts_init(
+    igmisc_opts *const opts,
+    const char *permitted
+)  {
+
+  assert( opts != NULL );
+  assert( permitted != NULL );
+  
+  // set all option not permited to -1
+  for( int i = 0; i < IGMISC_SOPTMAX_SIZE; i++ )
+    ( *opts )[i] = -1;
+  
+  // set permitted to 0
+  while( *permitted != '\0' )  {
+
+    ( *opts )[ *permitted ] = 0;
+    permitted++; 
+
+  }
+
+}
+
+int igmisc_opts_get(
+    igmisc_opts *const opts,
+    const int optc,
+    const char *const  optv[] 
+)  {
+
+  return 1;
+
+}
+

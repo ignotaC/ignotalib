@@ -1,6 +1,8 @@
+
+
 /*
 
-Copyright (c) 2021-2023 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2023 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -27,11 +29,24 @@ Bog Ojeciec.
 
 
 
+#ifndef IGMISC_OPTS_H
+#define IGMISC_OPTS_H
 
-#ifndef IG_MISCELLANEOUS_H
-#define IG_MISCELLANEOUS_H
+#include <limits.h>
 
-#include "igmisc_getans.h"
-#include "igmisc_opts.h"
+#define IGMISC_SOPTMAX_SIZE UCHAR_MAX
+
+typedef int igmisc_opts[ IGMISC_SOPTMAX_SIZE ];
+
+void igmisc_opts_init(
+    igmisc_opts *const opts,
+    const char *permitted
+);
+
+int igmisc_opts_get(
+    igmisc_opts *const opts,
+    const int optc,
+    const char *const  optv[] 
+);
 
 #endif

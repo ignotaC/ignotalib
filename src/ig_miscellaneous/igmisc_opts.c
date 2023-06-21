@@ -69,7 +69,7 @@ void igmisc_sopts_init(
 // If option is not allowed ( -1 ) return -1
 // Otherwise it's incremented.
 // No errors = return 0
-int igmisc_sopts_read(
+int igmisc_sopts_readcount(
     igmisc_short_opts *const sopts,
     const unsigned char *optstr 
 )  {
@@ -91,18 +91,58 @@ int igmisc_sopts_read(
 
 }
 
-
-// load all short options from 
-int igmisc_sopts_load_ignlastarg(
+// Short options start with '-' else return -1
+// At least one  character but not nul must appear
+// after '-' else return -1
+// If option is not allowed ( -1 ) return -1
+// Otherwise it's order of appearing is set
+// If option appears again nothing is done
+// No errors = return 0
+int igmisc_sopts_readorder(
     igmisc_short_opts *const sopts,
-    int argc,
-    const char *const argv[]
+    const unsigned char *optstr 
 )  {
 
-  argc--; // since we don't check for options in last argc
-  for( int i = 0; i < argc; i++ )  {
+  if( optstr[0] != '-' )  return -1;
+  if( optstr[1] == '\0' )  return -1;
 
-    if( igmisc_sopts_read( sopts, argv[i] ) == -1 )
+  int order = 1;
+
+  optstr++;
+  do  {
+
+    if( ( *sopts )[ *optstr ] == -1 )
+      return -1;
+
+    if( ( ( *sopts )[ *optstr ] ) == 0 )  {
+
+      ( ( *sopts )[ *optstr ] ) = order;
+      order++;  
+
+    }
+    // else it already appeared and we do nothing
+    optstr++;
+
+  }  while( *optstr != '\0' );
+
+  return 0;
+
+}
+
+
+// load all short options from passed
+// argument strings that you expect to contain options
+// also need to pass function for options read
+int igmisc_sopts_load(
+    igmisc_short_opts *const sopts,
+    int ( *sopts_read )( igmisc_short_opts *const, const unsigned char* ),
+    int optc,
+    const char *const optv[]
+)  {
+
+  for( int i = 0; i < optc; i++ )  {
+
+    if( sopts_read( sopts, optv[i] ) == -1 )
       return -1;
 
   }

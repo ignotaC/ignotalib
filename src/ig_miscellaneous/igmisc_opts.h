@@ -43,16 +43,21 @@ void igmisc_sopts_init(
     const unsigned char *permitted
 );
 
-int igmisc_sopts_read(
+int igmisc_sopts_readcount(
     igmisc_short_opts *const sopts,
     const unsigned char *optstr
 );
 
-
-int igmisc_sopts_load_ignlastarg(
+int igmisc_sopts_readorder(
     igmisc_short_opts *const sopts,
-    int argc,
-    const char *const argv[]
+    const unsigned char *optstr 
+);
+
+int igmisc_sopts_load(
+    igmisc_short_opts *const sopts,
+    int ( *sopts_read )( igmisc_short_opts *const, const unsigned char* ),
+    int optc,
+    const char *const optv[]
 );
 
 #endif

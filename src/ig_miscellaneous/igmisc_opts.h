@@ -36,17 +36,23 @@ Bog Ojeciec.
 
 #define IGMISC_SOPTMAX_SIZE UCHAR_MAX
 
-typedef int igmisc_opts[ IGMISC_SOPTMAX_SIZE ];
+typedef int igmisc_short_opts[ IGMISC_SOPTMAX_SIZE ];
 
-void igmisc_opts_init(
-    igmisc_opts *const opts,
-    const char *permitted
+void igmisc_sopts_init(
+    igmisc_short_opts *const sopts,
+    const unsigned char *permitted
 );
 
-int igmisc_opts_get(
-    igmisc_opts *const opts,
-    const int optc,
-    const char *const  optv[] 
+int igmisc_sopts_read(
+    igmisc_short_opts *const sopts,
+    const unsigned char *optstr
+);
+
+
+int igmisc_sopts_load_ignlastarg(
+    igmisc_short_opts *const sopts,
+    int argc,
+    const char *const argv[]
 );
 
 #endif

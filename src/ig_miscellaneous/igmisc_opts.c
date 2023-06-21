@@ -33,43 +33,82 @@ Bog Ojeciec.
 #include <assert.h>
 #include <stddef.h>
 
-int igmisc_opts_get(
-    igmisc_opts *const opts,
+int igmisc_sopts_get(
+    igmisc_short_opts *const sopts,
     const int optc,
     const char *const  optv[] 
 );
 
 
-
-void igmisc_opts_init(
-    igmisc_opts *const opts,
-    const char *permitted
+// short options initalizator - should be called at all times.
+void igmisc_sopts_init(
+    igmisc_short_opts *const sopts,
+    const unsigned char *permitted
 )  {
 
-  assert( opts != NULL );
+  assert( sopts != NULL );
   assert( permitted != NULL );
   
   // set all option not permited to -1
   for( int i = 0; i < IGMISC_SOPTMAX_SIZE; i++ )
-    ( *opts )[i] = -1;
+    ( *sopts )[i] = -1;
   
   // set permitted to 0
   while( *permitted != '\0' )  {
 
-    ( *opts )[ *permitted ] = 0;
+    ( *sopts )[ *permitted ] = 0;
     permitted++; 
 
   }
 
 }
 
-int igmisc_opts_get(
-    igmisc_opts *const opts,
-    const int optc,
-    const char *const  optv[] 
+// Short options start with '-' else return -1
+// At least one  character but not nul must appear
+// after '-' else return -1
+// If option is not allowed ( -1 ) return -1
+// Otherwise it's incremented.
+// No errors = return 0
+int igmisc_sopts_read(
+    igmisc_short_opts *const sopts,
+    const unsigned char *optstr 
 )  {
 
-  return 1;
+  if( optstr[0] != '-' )  return -1;
+  if( optstr[1] == '\0' )  return -1;
+
+  optstr++;
+  do  {
+
+    if( ( *sopts )[ *optstr ] == -1 )
+      return -1;
+    ( ( *sopts )[ *optstr ] )++;
+    optstr++;
+
+  }  while( *optstr != '\0' );
+
+  return 0;
 
 }
+
+
+// load all short options from 
+int igmisc_sopts_load_ignlastarg(
+    igmisc_short_opts *const sopts,
+    int argc,
+    const char *const argv[]
+)  {
+
+  argc--; // since we don't check for options in last argc
+  for( int i = 0; i < argc; i++ )  {
+
+    if( igmisc_sopts_read( sopts, argv[i] ) == -1 )
+      return -1;
+
+  }
+
+  return 0;
+
+}
+
 

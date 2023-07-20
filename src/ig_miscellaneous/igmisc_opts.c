@@ -30,15 +30,10 @@ Bog Ojeciec.
 
 #include "igmisc_opts.h"
 
+#include <stdio.h>
+
 #include <assert.h>
 #include <stddef.h>
-
-int igmisc_sopts_get(
-    igmisc_short_opts *const sopts,
-    const int optc,
-    const char *const  optv[] 
-);
-
 
 // short options initalizator - should be called at all times.
 void igmisc_sopts_init(

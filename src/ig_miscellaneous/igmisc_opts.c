@@ -69,6 +69,9 @@ int igmisc_sopts_readcount(
     const unsigned char *optstr 
 )  {
 
+  assert( sopts != NULL );
+  assert( optstr != NULL );
+ 
   if( optstr[0] != '-' )  return -1;
   if( optstr[1] == '\0' )  return -1;
 
@@ -93,11 +96,16 @@ int igmisc_sopts_readcount(
 // Otherwise it's order of appearing is set
 // If option appears again nothing is done
 // No errors = return 0
+// BUG - when  -4 -6 it will not detect what was first opt order.
+// TODO ^^
 int igmisc_sopts_readorder(
     igmisc_short_opts *const sopts,
     const unsigned char *optstr 
 )  {
 
+  assert( sopts != NULL );
+  assert( optstr != NULL );
+ 
   if( optstr[0] != '-' )  return -1;
   if( optstr[1] == '\0' )  return -1;
 
@@ -135,6 +143,10 @@ int igmisc_sopts_load(
     const char *const optv[]
 )  {
 
+  assert( sopts != NULL );
+  assert( sopts_read != NULL );
+  assert( optv != NULL );
+ 
   for( int i = 0; i < optc; i++ )  {
 
     if( sopts_read( sopts, optv[i] ) == -1 )
@@ -145,5 +157,32 @@ int igmisc_sopts_load(
   return 0;
 
 }
+
+
+// simply print options that appeared
+int igmisc_sopts_print(
+    igmisc_short_opts *const sopts,
+    const unsigned char *permitted
+)  {
+
+  assert( sopts != NULL );
+  assert( permitted != NULL );
+  
+  // set permitted to 0
+  while( *permitted != '\0' )  {
+
+    int optc = ( *sopts )[ *permitted ];
+    if( optc != 0 )  {
+
+      if( printf( "%c", optc ) < 0 )
+        return -1;
+
+    }
+    permitted++; 
+
+  }
+
+}
+
 
 

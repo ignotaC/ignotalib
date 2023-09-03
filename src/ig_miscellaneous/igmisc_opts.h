@@ -60,4 +60,9 @@ int igmisc_sopts_load(
     const char *const optv[]
 );
 
+int igmisc_sopts_print(
+    igmisc_short_opts *const sopts,
+    const unsigned char *permitted
+);
+
 #endif

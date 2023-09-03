@@ -168,19 +168,19 @@ int igmisc_sopts_print(
   assert( sopts != NULL );
   assert( permitted != NULL );
   
-  // set permitted to 0
   while( *permitted != '\0' )  {
 
-    int optc = ( *sopts )[ *permitted ];
-    if( optc != 0 )  {
+    if( ( *sopts )[ *permitted ] != 0 )  {
 
-      if( printf( "%c", optc ) < 0 )
+      if( printf( "%c", ( int )( *permitted ) ) < 0 )
         return -1;
 
     }
     permitted++; 
 
   }
+
+  return 0;
 
 }
 

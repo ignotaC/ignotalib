@@ -1,0 +1,66 @@
+/*
+
+Copyright (c) 2023 Piotr Trzpil  p.trzpil@protonmail.com
+
+Permission to use, copy, modify, and distribute 
+this software for any purpose with or without fee
+is hereby granted, provided that the above copyright
+notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR
+DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE
+INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE
+FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF
+CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
+OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+OF THIS SOFTWARE.
+
+Prise God in holy trinity: 
+Jezus Chrystus,
+Duch Swiety,
+Bog Ojeciec.
+
+*/
+
+#ifndef IGMATH_MATRIX_H
+#define IGMATH_MATRIX_H
+
+#include "stddef.h"
+
+struct igmath_matrix_minor_split {
+
+  int **matrix;
+  size_t raw_len;
+  size_t col_len;
+
+  struct igmath_matrix_minor_split *minors;
+  size_t minors_count;
+  size_t minors_pos;
+  int minors_multiplier;
+
+  struct igmath_matrix_minor_split *top_minor;
+  
+  int determinant;
+
+};
+
+static void igmath_init_matrix_minor_split(
+    struct igmath_matrix_minor_split *const matrix_ms
+    const int *const *const matrix,
+    const size_t raw_len.
+    const size_t col_len
+    struct igmath_matrix_minor_split *const top_minor,
+    const size_t minors_count
+    const int minors_multiplier
+);
+
+int igmath_matrix_determinant( 
+    const int *const *const matrix,
+    const size_t raw_len,
+    const size_t col_len
+);
+
+#endif

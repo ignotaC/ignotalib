@@ -30,6 +30,8 @@ Bog Ojeciec.
 
 #include "stddef.h"
 
+// TODO minors_count is unneeded - we can use squreroot
+
 struct igmath_matrix_minor_split {
 
   int **matrix;
@@ -45,15 +47,6 @@ struct igmath_matrix_minor_split {
   int determinant;
 
 };
-
-static void igmath_init_matrix_minor_split(
-    struct igmath_matrix_minor_split *const matrix_ms
-    const int *const *const matrix,
-    const size_t matrix_squareroot.
-    struct igmath_matrix_minor_split *const top_minor,
-    const size_t minors_count
-    const int minors_multiplier
-);
 
 int igmath_matrix_determinant( 
     const int *const *const matrix,

@@ -61,7 +61,7 @@ static int igmath_matrix_2x2_determinant(
 
 // TODO assert all
 
-static void igmath_init_matrix_minor_split(
+static void igmath_matrix_minor_split_init(
     struct igmath_matrix_minor_split *const matrix_ms
     const int *const *const matrix,
     const size_t matrix_squareroot,
@@ -82,10 +82,24 @@ static void igmath_init_matrix_minor_split(
 
 }
 
+static void igmath_matrix_free(
+    struct igmath_matrix_minor_split *minor 
+)  {
+
+  // free matrix rows
+  for( size_t i = 0; i < minor->squareroot; i++ )
+    free( minor->matrix[i] );
+
+  // free matrix
+  free( matrix );
+
+}
+
 int igmath_matrix_determinant( 
     const int *const *const matrix,
     const size_t squareroot )  {
 
+  // error
   if( squareroot == 0 )  {
 
     // TODO handle error
@@ -93,18 +107,21 @@ int igmath_matrix_determinant(
 
   }
 
+  // 1x1 matrix, determinant is the only value matrix keeps
   if( squareroot == 1 )  {
 
     return matrix[0][0];
 
   }
 
+  // 2x2 matrix easy to get determinant
   if( squareroot == 2 )  {
 
     return igmath_matrix_2x2_determinant( matrix );
 
   }
 
+  // 3x3 matrix easy to get determinant
   if( squareroot == 3 )  {
 
     return igmath_matrix_3x3_determinant( matrix );
@@ -114,41 +131,144 @@ int igmath_matrix_determinant(
   // matrix 4x4 or bigger
   struct igmath_matrix_minor_split matrix_ms;
   struct igmath_matrix_minot_split *ms_pos = &matrix_ms;
-  igmath_init_matrix_minor_split(
+  igmath_matrix_minor_split_init(
       &matrix_ms, matrix, squareroot,
       NULL, 0, 1 );
 
   for(;;)  {
 
+    // this is minor we can count determinant with sarrus
     if( ms_pos->squareroot == 3 )  {
 
-      // math part
-      int minor_determinant = igmath_matrix_3x3_determinant( ma_pos->matrix );
+      // math part  
+      int minor_determinant = igmath_matrix_3x3_determinant( ms_pos->matrix );
       minor_determinant *= minors_multipiler;
 
-      // count matrix 33
+      // free 3x3 matrix - we won't be using it anymore
+      igmath_matrix_free( ms_pos );
+
       // move to top minor
-      // free minor and set new 
-      // loop estart
+      ms_pos = ms_pos->top_minor;
+
+      // add determinant to top minor determinant
+      ms_pos->determinant += minor_determinant;
+
+      // increment our position in minors
+      ms_pos->minors_pos++;
+
+      // restart loop
+      continue
 
     }
 
+    // create minors 
     if( ms_pos->minors == NULL )  {
 
-      // create minors
-      
+      // allocate minors
+      size_t minors_len = ms_pos->matrix_squareroot - 1;
+      ms_pos->minors = malloc( sizeof *( ms_pos->minors ) * minors_len );
+      if( ms_pos->minors == NULL )  {
 
+        // TODO handle malloc errors
+        return 0
 
+      }
+
+      // allocate matrix and set minors
+      int multiplier_part = 1;
+      for( size_t i = 0; i < minors_len; i++ )  {
+
+        int **minor_matrix = malloc( sizeof( *minor_matrix ) * minors_len );
+        if( minor_matrix == NULL )  {
+
+          //TODO handle malloc error
+          return 0;
+
+        }
+
+        for( size_t j = 0; j < minors_len; j++ )  {
+
+          minor_matrix[j] = malloc( sizeof ( **minor_matrix ) * minors_len );
+          if( minor_matrix[j] == NULL )  {
+
+            // TODO handle malloc error
+            return 0;
+
+          }
+
+        }
+
+        // For now we assume minors are created allways from first row
+        // filling stuff before column we ignore
+        size_t k_minor = 0;
+        for( size_t k = 0; k < i; k++ )  {
+
+          // allways 1 because we choose allways first row
+          size_t j_minor = 0
+          for( size_t j = 1; j < minors_len; j++, j_minor++ )
+            minor_matrix[ k_minor ][ j_minor ] = ms_pos->matrix[k][j];
+
+          k_minor++;
+
+        }
+
+        // now after i pos column we ignore
+        for( size_t k = i + 1; k < minors_len; k++ )  {
+
+          // continuing row 1
+          size_t j_minor = 0
+          for( size_t j = 1; j < minors_len; j++, j_minor++ )
+            minor_matrix[ k_minor ][ j_minor ] = ms_pos->matrix[k][j];
+
+          k_minor++;
+
+        }
+
+        // set multiplier
+        int minors_multiplier = ms_pos->matrix[0][i] * multiplier_part;
+        multiplier_part *= -1;  // every column we move changes it
+
+        // init a minor
+        igmat_matrix_minor_split_init(
+            &ms_pos->minors[i], minor_matrix, minors_len,
+            ms_pos, minors_len, minors_multiplier 
+        );
+
+      }
 
     }
 
+    // we need to leave the minor determinant
+    // since we looped through all minors
     if( ms_pos->minors_pos == ms_pos->minors.count )  {
 
-      // free the minors pointer
-      // perform the math and add stuff to top determinant 
-      // top determinant += 
-      // move to top minor if null we break out
-      // increment new place
+      // free the minors pointer and cleanup matrix
+      free( ms_pos->minors );
+
+      // If top minor is null
+      // do not free the matrix since it's the root matrix
+      // which was passed down to function
+      if( ms_pos->top_minor != NULL )
+        igmath_matrix_free( ms_pos );
+
+      // perform the math to get determinant
+      int determinant = ms_pos->determinant * ms_pos->minors_multiplier;
+
+      // if top determinant is NULL we are at finish
+      // return the determinant
+      // by default top determinant multiplyer is simp[ly 1
+      // so it has no effect on the determinant value
+      if( ms_pos->top_minor == NULL )
+        return determinant;
+
+      // move to top minor
+      ms_pos = ms_pos->top_minor;
+
+      // add determinant we counted to top minor determinant
+      ms_pos->determinant += determinant;
+
+      // increment to next minor
+      ms_pos->minors_pos++;
 
     }
 
@@ -157,11 +277,7 @@ int igmath_matrix_determinant(
 
   }
 
-  int ans = matrix_ms.determinant
-
-    // freee stuff
-
-  return ans;
+  // we should never reach here
 
 }
 

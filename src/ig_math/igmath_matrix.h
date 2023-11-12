@@ -33,8 +33,7 @@ Bog Ojeciec.
 struct igmath_matrix_minor_split {
 
   int **matrix;
-  size_t raw_len;
-  size_t col_len;
+  size_t matrix_squareroot;
 
   struct igmath_matrix_minor_split *minors;
   size_t minors_count;
@@ -50,8 +49,7 @@ struct igmath_matrix_minor_split {
 static void igmath_init_matrix_minor_split(
     struct igmath_matrix_minor_split *const matrix_ms
     const int *const *const matrix,
-    const size_t raw_len.
-    const size_t col_len
+    const size_t matrix_squareroot.
     struct igmath_matrix_minor_split *const top_minor,
     const size_t minors_count
     const int minors_multiplier
@@ -59,8 +57,7 @@ static void igmath_init_matrix_minor_split(
 
 int igmath_matrix_determinant( 
     const int *const *const matrix,
-    const size_t raw_len,
-    const size_t col_len
+    const size_t matrix_squareroot
 );
 
 #endif

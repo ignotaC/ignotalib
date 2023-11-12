@@ -64,20 +64,17 @@ static int igmath_matrix_2x2_determinant(
 static void igmath_init_matrix_minor_split(
     struct igmath_matrix_minor_split *const matrix_ms
     const int *const *const matrix,
-    const size_t raw_len.
-    const size_t col_len
+    const size_t matrix_squareroot,
     struct igmath_matrix_minor_split *const top_minor,
     const size_t minors_count
     const int minors_multiplier
 )  {
 
-
   matrix_ms->matrix = matrix;
-  matrix_ms->raw_len = raw_len;
-  matrix_ms->col_len = col_len;
-  matrix_ms-top_minor = top_minor
+  matrix_ms->matrix_squareroot = matrix_squareroot;
+  matrix_ms-top_minor = top_minor;
   matrix_ms->minors_count = minors_count;
-  matrix_ms->minors_count = minor_multiplyer;
+  matrix_ms->minors_multiplier = minor_multiplier;
 
   matrix_ms->minor = NULL;
   matrix_ms->minors_pos = 0;
@@ -87,36 +84,28 @@ static void igmath_init_matrix_minor_split(
 
 int igmath_matrix_determinant( 
     const int *const *const matrix,
-    const size_t raw_len,
-    const size_t col_len )  {
+    const size_t squareroot )  {
 
-  if( raw_len != col_len )  {
-
-    // TODO handle error
-    return 0;
-
-  }
-
-  if( raw_len == 0 )  {
+  if( squareroot == 0 )  {
 
     // TODO handle error
     return 0;
 
   }
 
-  if( raw_len == 1 )  {
+  if( squareroot == 1 )  {
 
     return matrix[0][0];
 
   }
 
-  if( raw_len == 2 )  {
+  if( squareroot == 2 )  {
 
     return igmath_matrix_2x2_determinant( matrix );
 
   }
 
-  if( raw_len == 3 )  {
+  if( squareroot == 3 )  {
 
     return igmath_matrix_3x3_determinant( matrix );
 
@@ -124,13 +113,47 @@ int igmath_matrix_determinant(
 
   // matrix 4x4 or bigger
   struct igmath_matrix_minor_split matrix_ms;
+  struct igmath_matrix_minot_split *ms_pos = &matrix_ms;
   igmath_init_matrix_minor_split(
-      &matrix_ms, matrix, raw_len, col_len,
-      NULL, raw_len - 1, 1 );
+      &matrix_ms, matrix, squareroot,
+      NULL, 0, 1 );
 
   for(;;)  {
 
-    // do stuff 
+    if( ms_pos->squareroot == 3 )  {
+
+      // math part
+      int minor_determinant = igmath_matrix_3x3_determinant( ma_pos->matrix );
+      minor_determinant *= minors_multipiler;
+
+      // count matrix 33
+      // move to top minor
+      // free minor and set new 
+      // loop estart
+
+    }
+
+    if( ms_pos->minors == NULL )  {
+
+      // create minors
+      
+
+
+
+    }
+
+    if( ms_pos->minors_pos == ms_pos->minors.count )  {
+
+      // free the minors pointer
+      // perform the math and add stuff to top determinant 
+      // top determinant += 
+      // move to top minor if null we break out
+      // increment new place
+
+    }
+
+    // move into next minor
+    ms_pos = &ms_pos->minors[ ms_pos->minors_pos ];
 
   }
 

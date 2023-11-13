@@ -25,4 +25,6 @@ Bog Ojeciec.
 
 */
 
+#include "igw_urlcode.h"
+
 // TODO encode decode, the code is somewher ein the mess

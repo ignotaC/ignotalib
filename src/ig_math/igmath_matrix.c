@@ -27,9 +27,11 @@ Bog Ojeciec.
 
 #include "igmath_matrix.h"
 
+#include <stdlib.h>
+
 // Sarrus method
 static int igmath_matrix_3x3_determinant( 
-    const int *const *const matrix
+    int *const *const matrix
 )  {
 
   int ans = 0;
@@ -47,7 +49,7 @@ static int igmath_matrix_3x3_determinant(
 }
  
 static int igmath_matrix_2x2_determinant( 
-    const int *const *const matrix
+    int *const *const matrix
 )  {
 
   int ans = 0;
@@ -62,21 +64,21 @@ static int igmath_matrix_2x2_determinant(
 // TODO assert all
 
 static void igmath_matrix_minor_split_init(
-    struct igmath_matrix_minor_split *const matrix_ms
-    const int *const *const matrix,
+    struct igmath_matrix_minor_split *const matrix_ms,
+    int **const matrix,
     const size_t matrix_squareroot,
     struct igmath_matrix_minor_split *const top_minor,
-    const size_t minors_count
+    const size_t minors_count,
     const int minors_multiplier
 )  {
 
   matrix_ms->matrix = matrix;
   matrix_ms->matrix_squareroot = matrix_squareroot;
-  matrix_ms-top_minor = top_minor;
+  matrix_ms->top_minor = top_minor;
   matrix_ms->minors_count = minors_count;
-  matrix_ms->minors_multiplier = minor_multiplier;
+  matrix_ms->minors_multiplier = minors_multiplier;
 
-  matrix_ms->minor = NULL;
+  matrix_ms->minors = NULL;
   matrix_ms->minors_pos = 0;
   matrix_ms->determinant = 0;
 
@@ -86,17 +88,17 @@ static void igmath_matrix_free(
     struct igmath_matrix_minor_split *minor 
 )  {
 
-  // free matrix rows
-  for( size_t i = 0; i < minor->squareroot; i++ )
+  // free rows content
+  for( size_t i = 0; i < minor->matrix_squareroot; i++ )
     free( minor->matrix[i] );
 
-  // free matrix
-  free( matrix );
+  // free matrix rows
+  free( minor->matrix );
 
 }
 
 int igmath_matrix_determinant( 
-    const int *const *const matrix,
+    int **const matrix,
     const size_t squareroot )  {
 
   // error
@@ -130,7 +132,7 @@ int igmath_matrix_determinant(
 
   // matrix 4x4 or bigger
   struct igmath_matrix_minor_split matrix_ms;
-  struct igmath_matrix_minot_split *ms_pos = &matrix_ms;
+  struct igmath_matrix_minor_split *ms_pos = &matrix_ms;
   igmath_matrix_minor_split_init(
       &matrix_ms, matrix, squareroot,
       NULL, 0, 1 );
@@ -138,11 +140,11 @@ int igmath_matrix_determinant(
   for(;;)  {
 
     // this is minor we can count determinant with sarrus
-    if( ms_pos->squareroot == 3 )  {
+    if( ms_pos->matrix_squareroot == 3 )  {
 
       // math part  
       int minor_determinant = igmath_matrix_3x3_determinant( ms_pos->matrix );
-      minor_determinant *= minors_multipiler;
+      minor_determinant *= ms_pos->minors_multiplier;
 
       // free 3x3 matrix - we won't be using it anymore
       igmath_matrix_free( ms_pos );
@@ -157,7 +159,7 @@ int igmath_matrix_determinant(
       ms_pos->minors_pos++;
 
       // restart loop
-      continue
+      continue;
 
     }
 
@@ -170,7 +172,7 @@ int igmath_matrix_determinant(
       if( ms_pos->minors == NULL )  {
 
         // TODO handle malloc errors
-        return 0
+        return 0;
 
       }
 
@@ -204,7 +206,7 @@ int igmath_matrix_determinant(
         for( size_t k = 0; k < i; k++ )  {
 
           // allways 1 because we choose allways first row
-          size_t j_minor = 0
+          size_t j_minor = 0;
           for( size_t j = 1; j < minors_len; j++, j_minor++ )
             minor_matrix[ k_minor ][ j_minor ] = ms_pos->matrix[k][j];
 
@@ -216,7 +218,7 @@ int igmath_matrix_determinant(
         for( size_t k = i + 1; k < minors_len; k++ )  {
 
           // continuing row 1
-          size_t j_minor = 0
+          size_t j_minor = 0;
           for( size_t j = 1; j < minors_len; j++, j_minor++ )
             minor_matrix[ k_minor ][ j_minor ] = ms_pos->matrix[k][j];
 
@@ -229,7 +231,7 @@ int igmath_matrix_determinant(
         multiplier_part *= -1;  // every column we move changes it
 
         // init a minor
-        igmat_matrix_minor_split_init(
+        igmath_matrix_minor_split_init(
             &ms_pos->minors[i], minor_matrix, minors_len,
             ms_pos, minors_len, minors_multiplier 
         );
@@ -240,7 +242,7 @@ int igmath_matrix_determinant(
 
     // we need to leave the minor determinant
     // since we looped through all minors
-    if( ms_pos->minors_pos == ms_pos->minors.count )  {
+    if( ms_pos->minors_pos == ms_pos->minors_count )  {
 
       // free the minors pointer and cleanup matrix
       free( ms_pos->minors );

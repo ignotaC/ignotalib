@@ -57,7 +57,7 @@ int igmisc_sopts_load(
     igmisc_short_opts *const sopts,
     int ( *sopts_read )( igmisc_short_opts *const, const unsigned char* ),
     int optc,
-    const char *const optv[]
+    const unsigned char *optv[]
 );
 
 int igmisc_sopts_print(

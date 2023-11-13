@@ -35,5 +35,6 @@ Bog Ojeciec.
 #include "igmath_binomial_coefficient.h"
 #include "igmath_factorial.h"
 #include "igmath_geopos.h"
+#include "igmath_matrix.h"
 
 #endif

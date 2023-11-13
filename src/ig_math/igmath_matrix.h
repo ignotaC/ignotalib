@@ -49,7 +49,7 @@ struct igmath_matrix_minor_split {
 };
 
 int igmath_matrix_determinant( 
-    const int *const *const matrix,
+    int **const matrix,
     const size_t matrix_squareroot
 );
 

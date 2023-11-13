@@ -37,7 +37,7 @@ struct igds_strarr  {
 
 };
 
-int igds_strarr_init(
+void igds_strarr_init(
     struct igds_strarr *const sa
 );
 

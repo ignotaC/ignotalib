@@ -132,7 +132,6 @@ int igmisc_sopts_readorder(
 
 }
 
-
 // load all short options from passed
 // argument strings that you expect to contain options
 // also need to pass function for options read
@@ -140,7 +139,7 @@ int igmisc_sopts_load(
     igmisc_short_opts *const sopts,
     int ( *sopts_read )( igmisc_short_opts *const, const unsigned char* ),
     int optc,
-    const char *const optv[]
+    const unsigned char *optv[]
 )  {
 
   assert( sopts != NULL );

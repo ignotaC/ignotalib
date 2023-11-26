@@ -1,18 +1,18 @@
 set( cm_src "src" )
-	set( cm_ig_compress "src/ig_compress" )
-	set( cm_ig_datastructure "src/ig_datastructure" )
-	set( cm_ig_encoding "src/ig_encoding" )
-	set( cm_ig_event "src/ig_event" )
-	set( cm_ig_file "src/ig_file" )
-	set( cm_ig_math "src/ig_math" )
-	set( cm_ig_memory "src/ig_memory" )
-	set( cm_ig_net "src/ig_net" )
-	set( cm_ig_print "src/ig_print" )
-	set( cm_ig_process "src/ig_process" )
-	set( cm_ig_string "src/ig_string" )
-	set( cm_ig_time "src/ig_time" )
-	set( cm_ig_web "src/ig_web" )
-	set( cm_ig_miscellaneous "src/ig_miscellaneous" )
+set( cm_ig_compress "src/ig_compress" )
+set( cm_ig_datastructure "src/ig_datastructure" )
+set( cm_ig_encoding "src/ig_encoding" )
+set( cm_ig_event "src/ig_event" )
+set( cm_ig_file "src/ig_file" )
+set( cm_ig_math "src/ig_math" )
+set( cm_ig_memory "src/ig_memory" )
+set( cm_ig_net "src/ig_net" )
+set( cm_ig_print "src/ig_print" )
+set( cm_ig_process "src/ig_process" )
+set( cm_ig_string "src/ig_string" )
+set( cm_ig_time "src/ig_time" )
+set( cm_ig_web "src/ig_web" )
+set( cm_ig_miscellaneous "src/ig_miscellaneous" )
 
 include_directories(
 	${cm_src}
@@ -51,3 +51,5 @@ file( GLOB cm_allsource
 	)
 
 add_library( ignota SHARED ${cm_allsource} )
+
+install( TARGETS ignota DESTINATION lib )

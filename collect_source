@@ -42,7 +42,7 @@ do
 	cm_dirs="$cm_dirs""\t"'${'$cm_dir'}'"\n"
 	cm_source="$cm_source""\t"'"${'$cm_dir'}/*.c"'"\n"
 	setline='set( '"$cm_dir"' "src/'"$line"'" )'
-	printf "\t%s\n" "$setline" >> "$cmake_file"
+	printf "%s\n" "$setline" >> "$cmake_file"
 
 	#source header maker
 
@@ -74,6 +74,10 @@ printf "\t%s\n" ')' >> "$cmake_file"
 
 printf "\n"'add_library( ignota SHARED ${cm_allsource} )'"\n" \
        	>> "$cmake_file"
+
+printf "\n"'install( TARGETS ignota DESTINATION lib )'"\n" \
+       	>> "$cmake_file"
+
 
 rm -f "$tempfile"
 rm -f "$tempfile2"

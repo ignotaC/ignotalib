@@ -53,3 +53,11 @@ file( GLOB cm_allsource
 add_library( ignota SHARED ${cm_allsource} )
 
 install( TARGETS ignota DESTINATION lib )
+
+add_custom_target("uninstall" COMMENT "uninstall ignota lib")
+add_custom_command(
+TARGET "uninstall"
+POST_BUILD
+COMMENT "Remove ignota files listed in install_manifest.txt"
+COMMAND sh uninstall.sh
+)

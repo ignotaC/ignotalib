@@ -75,9 +75,20 @@ printf "\t%s\n" ')' >> "$cmake_file"
 printf "\n"'add_library( ignota SHARED ${cm_allsource} )'"\n" \
        	>> "$cmake_file"
 
+#install
+
 printf "\n"'install( TARGETS ignota DESTINATION lib )'"\n" \
        	>> "$cmake_file"
 
+#uninstall
+
+printf  "\n"'add_custom_target("uninstall" COMMENT "uninstall ignota lib")'"\n" >> "$cmake_file"
+printf 'add_custom_command('"\n" >> "$cmake_file"
+printf 'TARGET "uninstall"'"\n" >> "$cmake_file"
+printf 'POST_BUILD'"\n" >> "$cmake_file"
+printf 'COMMENT "Remove ignota files listed in install_manifest.txt"'"\n" >> "$cmake_file"
+printf 'COMMAND sh uninstall.sh'"\n" >> "$cmake_file"
+printf ')'"\n" >> "$cmake_file"
 
 rm -f "$tempfile"
 rm -f "$tempfile2"

@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021-2023 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2024 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,15 +25,22 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGN_INETSERV_H
+#define IGN_INETSERV_H
 
+int ign_inet4tcpcli( 
+    const char *const ip,
+    const unsigned short port
+);
 
+int ign_inet6tcpcli( 
+    const char *const ip,
+    const unsigned short port
+);
 
-#ifndef IG_NET_H
-#define IG_NET_H
-
-#include "ign_inetserv.h"
-#include "ign_strtoport.h"
-#include "ign_unixserv.h"
-#include "ign_inetcli.h"
+int ign_inettcpcli(
+    const char *const ip,
+    const unsigned short port
+);
 
 #endif

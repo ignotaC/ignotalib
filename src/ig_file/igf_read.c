@@ -37,7 +37,7 @@ Bog Ojeciec.
 // EOF or buff is full.
 // Returns read bytes size or 0 if EOF.
 // -1 is returned on error ( read error ).
-// Restarts on EINTR
+// Handles EINTR
 ssize_t igf_read(
   const int fd,
   void *const buff,
@@ -87,5 +87,67 @@ ssize_t igf_read(
   
 }
 
+
+// Reads bytes from fd to buff untill error on read
+// EOF or buff is full.
+// Returns read bytes size or 0 if EOF.
+// -1 is returned on error ( read error ).
+// Handles on EINTR
+// On EAGAIN or EWOULDBLOCK it shall stop reading
+// simply return what you have read as far.
+ssize_t igf_read_nb(
+  const int fd,
+  void *const buff,
+  size_t readsize
+)  {
+ 
+  assert( fd >= 0 );
+  assert( buff != NULL );
+  assert( readsize != 0 );
+
+  uint8_t *buffptr = buff;
+  ssize_t  readret = 0;
+  ssize_t  readsum = 0;
+
+  for(;;)  { 
+    
+    readret = read( fd, buffptr, readsize );
+    switch( readret )  {
+
+      case -1:
+       switch( errno )  {
+
+         case EINTR:
+           continue;
+
+         #if ( EWOULDBLOCK != EAGAIN )
+         case EWOULDBLOCK:
+         #endif
+         case EAGAIN:
+           return readsum;
+
+	 default:
+           return -1;
+
+       }
+
+      case 0:
+       return readsum;
+
+      default:
+       break;
+
+    }
+    
+    readsum += readret;
+    buffptr += readret;
+    readsize -= ( size_t )readret;
+    if( ! readsize )  break;
+    
+  }
+  
+  return readsum;
+  
+}
 
 

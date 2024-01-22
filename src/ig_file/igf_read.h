@@ -36,5 +36,12 @@ ssize_t igf_read(
   size_t buffsize
 );
 
+ssize_t igf_read_nb(
+  const int fd,
+  void *const buff,
+  size_t buffsize
+);
+
+
 #endif
 

@@ -120,10 +120,15 @@ int ign_inettcpcli(
 
   assert( ip != NULL );
 
+  errno = 0; // must do this since we can fail on inet_pton
+	     // also beware what can happen if on AF_INET we pass ipv6 str
+	     // so this order is safer - first ipv6
   int clifd = ign_inet6tcpcli( ip, port );
   if( clifd == -1 )  {
 
-    if( errno != EAFNOSUPPORT )
+    // if errno == 0 this means inet_pton failed
+    // so meaby ipv4 addr is correct ?
+    if( errno != 0 )
       return -1;
 
   }

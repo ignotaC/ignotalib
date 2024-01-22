@@ -31,13 +31,15 @@ Bog Ojeciec.
 #include <ctype.h>
 #include <stddef.h>
 
-const int zerovalue = '0';
+const int zerocharvalue = '0';
 const int maxportval = 65535;
 
 // Check if passed string is valid port 
 // -1 on WRONG port
 // else port  number is returned
-int ign_strtoport( 
+// chances are probably 0 that int will be 16 bit but
+// long int to being strict
+long int ign_strtoport( 
     const char *const portstr
 )  {
 
@@ -46,16 +48,16 @@ int ign_strtoport(
   // special case, else ans 0 whill break
   if( portstr[0] == '\0' )  return -1;
 
-  int ans = 0; // what iff "" is passed? we will get -1 
+  long int ans = 0; // what iff "" is passed? we will get -1 
 		// this way so error, as should be
   
   for( size_t i = 0; portstr[i] != '\0'; i++ )  {
 
-    if( i > 4 ) return -1;
-    if( ! isdigit( portstr[i] ) )
+    if( i > 4 ) return -1;  // too big for a port number
+    if( ! isdigit( portstr[i] ) )  // must be digits alone
       return -1;
 
-    ans = ans * 10 + portstr[i] - zerovalue;
+    ans = ans * 10 + portstr[i] - zerocharvalue; // count port
 
   }
 

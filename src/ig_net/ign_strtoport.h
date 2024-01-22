@@ -28,7 +28,7 @@ Bog Ojeciec.
 #ifndef IGN_STRTOPORT_H
 #define IGN_STRTOPORT_H
 
-int ign_strtoport( 
+long int ign_strtoport( 
     const char *const portstr
 );
 

@@ -32,6 +32,9 @@ Bog Ojeciec.
 #include <stddef.h>
 #include <signal.h>
 
+// Ignore signal
+// Do not block other signals, since we are ignoring
+// I think it does not matter too much tbh
 // Return -1 on error
 // 0 on success
 int igev_sigign(
@@ -40,8 +43,8 @@ int igev_sigign(
 
   struct sigaction sa = { 0 };
   sa.sa_handler = SIG_IGN;
-  if( sigfillset( &( sa.sa_mask ) ) == -1 )
-    return -1;  // not sure it matters
+  if( sigemptyset( &( sa.sa_mask ) ) == -1 )
+    return -1;
   return sigaction( signal, &sa, NULL );
 
 }

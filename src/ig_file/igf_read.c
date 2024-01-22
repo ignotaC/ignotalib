@@ -90,6 +90,7 @@ ssize_t igf_read(
 
 // Reads bytes from fd to buff untill error on read
 // EOF or buff is full.
+// errno set to zero always so we can detect EOF from EAGAIN
 // Returns read bytes size or 0 if EOF.
 // -1 is returned on error ( read error ).
 // Handles on EINTR
@@ -104,6 +105,8 @@ ssize_t igf_read_nb(
   assert( fd >= 0 );
   assert( buff != NULL );
   assert( readsize != 0 );
+
+  errno = 0;
 
   uint8_t *buffptr = buff;
   ssize_t  readret = 0;

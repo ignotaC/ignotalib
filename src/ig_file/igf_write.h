@@ -33,7 +33,15 @@ Bog Ojeciec.
 ssize_t igf_write(
     const int fd,
     void *const buff,
-    size_t buffsize
+    size_t writesize
 );
+
+ssize_t igf_writeall_nb(
+    const int fd,
+    void *const buff,
+    size_t writesize,
+    const long wait_milisec
+);
+
 
 #endif

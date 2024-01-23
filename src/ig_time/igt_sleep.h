@@ -28,8 +28,15 @@ Bog Ojeciec.
 #ifndef IGT_SLEEP_H
 #define IGT_SLEEP_H
 
-int igt_sleepmsec(
-    const long msec_time
+#include <time.h>
+
+int igt_sleepmilisec(
+    const long milisec_time
+);
+
+int igt_sleep(
+    const time_t sec_time,
+    const long mikrosec_time
 );
 
 #endif

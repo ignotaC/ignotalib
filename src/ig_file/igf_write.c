@@ -26,6 +26,7 @@ Bog Ojeciec.
 */
 
 #include "igf_write.h"
+#include "../ig_time/igt_sleep.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -38,7 +39,6 @@ Bog Ojeciec.
 // error on read or all bytes written.
 // Returns 0 on succes and -1 on fail
 // If unable to write - will end up in endless loop,
-// write returning all the time 0.
 // It can fail on write.
 // Restarts on EINTR
 // At error we do not know how much we have written
@@ -65,6 +65,63 @@ ssize_t igf_write(
         switch( errno )  {
 
 	  case EINTR:
+           continue;
+
+	  default:
+	   return -1;
+
+	}
+
+      default:
+	break;
+
+    }
+
+    buffptr += writeret;
+    writesize -= ( size_t )writeret;
+    if( ! writesize )  return 0;
+    
+  }
+    
+}
+
+// Writes bytes to fd from buff untill
+// error on read or all bytes written.
+// Returns 0 on succes and -1 on fail
+// If unable to write - will end up in endless loop,
+// It can fail on write.
+// Restarts on EINTR and EAGAINJ EWOULDBLOCK after 
+// waiting specified miliseconds
+// At error we do not know how much we have written
+// On return success 0 - all bytes have been written
+ssize_t igf_writeall_nb(
+    const int fd,
+    void *const buff,
+    size_t writesize,
+    const long wait_milisec
+)  {
+ 
+  assert( fd >= 0 );
+  assert( buff != NULL );
+  assert( writesize != 0 );
+
+  const uint8_t *buffptr = buff;
+  ssize_t  writeret = 0;
+  
+  for(;;)  {
+    
+    writeret = write( fd, buffptr, writesize );
+    switch( writeret )  {
+
+      case -1:
+        switch( errno )  {
+
+	  #if ( EWOULDBLOCK != EAGAIN )
+	  case EWOULDBLOCK:
+	  #endif
+	  case EAGAIN:
+	  case EINTR:
+	   igt_sleepmilisec( wait_milisec );	
            continue;
 
 	  default:

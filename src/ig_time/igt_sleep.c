@@ -29,22 +29,45 @@ Bog Ojeciec.
 
 #include <assert.h>
 #include <errno.h>
-#include <time.h>
 
 // Function uses nanosleep
 // You pass time in miliseconds you want program to sleep
-// EINTR is *handled*
 // MAXIMUM time should be less than one second. And bigger/equal zero.
-int igt_sleepmsec(
-    const long msec_time
+// EINTR is handled
+int igt_sleepmilisec(
+    const long milisec_time
 )  {
 
-  assert( msec_time >= 0 );
-  assert( msec_time < 1000 );
+  assert( milisec_time >= 0 );
+  assert( milisec_time < 1000 );
 
   struct timespec ts;
   ts.tv_sec = 0;
-  ts.tv_nsec = msec_time * 1000000; // make  miliseconds
+  ts.tv_nsec = milisec_time * 1000000; // make  miliseconds
+
+  for(;;)  {
+
+    if( nanosleep( &ts, &ts ) == 0 )  return 0;
+    if( errno != EINTR )  return -1;
+
+  }
+
+}
+
+// Function uses nanosleep
+// You pass time in seconds and microseconds you want program to sleep
+// EINTR is handled
+int igt_sleep(
+    const time_t sec_time,
+    const long mikrosec_time
+)  {
+
+  assert( mikrosec_time >= 0 );
+  assert( mikrosec_time < 1000000 );
+
+  struct timespec ts;
+  ts.tv_sec = 0;
+  ts.tv_nsec = mikrosec_time * 1000; // make  microseconds
 
   for(;;)  {
 

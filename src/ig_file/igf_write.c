@@ -59,9 +59,8 @@ ssize_t igf_write(
   for(;;)  {
     
     writeret = write( fd, buffptr, writesize );
-    switch( writeret )  {
+    if( writeret == -1 )  {
 
-      case -1:
         switch( errno )  {
 
 	  case EINTR:
@@ -71,9 +70,6 @@ ssize_t igf_write(
 	   return -1;
 
 	}
-
-      default:
-	break;
 
     }
 
@@ -90,8 +86,9 @@ ssize_t igf_write(
 // Returns 0 on succes and -1 on fail
 // If unable to write - will end up in endless loop,
 // It can fail on write.
-// Restarts on EINTR and EAGAINJ EWOULDBLOCK after 
-// waiting specified miliseconds
+// Restarts on EINTR
+// On EAGAINJ EWOULDBLOCK waiting specified miliseconds
+// than try to write again
 // At error we do not know how much we have written
 // On return success 0 - all bytes have been written
 ssize_t igf_writeall_nb(
@@ -111,26 +108,22 @@ ssize_t igf_writeall_nb(
   for(;;)  {
     
     writeret = write( fd, buffptr, writesize );
-    switch( writeret )  {
+    if( writeret == -1  )  {
 
-      case -1:
         switch( errno )  {
 
 	  #if ( EWOULDBLOCK != EAGAIN )
 	  case EWOULDBLOCK:
 	  #endif
 	  case EAGAIN:
-	  case EINTR:
 	   igt_sleepmilisec( wait_milisec );	
+	  case EINTR:
            continue;
 
 	  default:
 	   return -1;
 
 	}
-
-      default:
-	break;
 
     }
 

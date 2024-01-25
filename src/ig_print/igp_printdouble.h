@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021-2023 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,13 +25,12 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGP_PRINTDOUBLE_H
+#define IGP_PRINTDOUBLE_H
 
-
-
-#ifndef IG_PRINT_H
-#define IG_PRINT_H
-
-#include "igp_allocprintf.h"
-#include "igp_printdouble.h"
+int igp_printdouble_rmvtrail(
+    const double number,
+    const int precision
+);
 
 #endif

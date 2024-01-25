@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2024 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,12 +25,16 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGP_DOUBLE_H
-#define IGP_DOUBLE_H
+#ifndef IGP_ALLOCPRINTF_H
+#define IGP_ALLOCPRINTF_H
 
-int igp_double_rmvtrailzeros(
-    const double number,
-    const int precision
+#include <stddef.h>
+#include <stdint.h>
+
+char* igp_allocprintf(
+    size_t *alocstr_size,
+    char *const format,
+    ...
 );
 
 #endif

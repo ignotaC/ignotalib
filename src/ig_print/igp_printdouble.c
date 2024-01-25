@@ -25,6 +25,8 @@ Bog Ojeciec.
 
 */
 
+#include "igp_printdouble.h"
+
 #include <assert.h>
 #include <errno.h>
 #include <limits.h>
@@ -36,7 +38,7 @@ Bog Ojeciec.
 // 35.000000 like this:  35
 // Can fail on snprintf allocation errors etc.
 // if buff_size  is to small functon sets errno = 0 and returns -1
-int igp_double_rmvtrailzeros(
+int igp_printdouble_rmvtrail(
     const double number,
     const int precision
 )  {

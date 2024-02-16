@@ -31,7 +31,7 @@ Bog Ojeciec.
 #ifndef IG_PRINT_H
 #define IG_PRINT_H
 
-#include "igp_allocprintf.h"
 #include "igp_printdouble.h"
+#include "igp_allocprintf.h"
 
 #endif

@@ -25,8 +25,8 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGN_UNDEF_H
-#define IGN_UNDEF_H
+#ifndef IGN_UNIXDEF_H
+#define IGN_UNIXDEF_H
 
 #include <stddef.h>
 #include <sys/socket.h>

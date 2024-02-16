@@ -31,15 +31,15 @@ Bog Ojeciec.
 #ifndef IG_FILE_H
 #define IG_FILE_H
 
-#include "igf_dir.h"
-#include "igf_ivoperations.h"
-#include "igf_offset.h"
-#include "igf_open.h"
-#include "igf_opt.h"
-#include "igf_read.h"
-#include "igf_readword.h"
-#include "igf_search.h"
 #include "igf_write.h"
+#include "igf_search.h"
+#include "igf_readword.h"
+#include "igf_read.h"
 #include "igf_purge.h"
+#include "igf_opt.h"
+#include "igf_open.h"
+#include "igf_offset.h"
+#include "igf_ivoperations.h"
+#include "igf_dir.h"
 
 #endif

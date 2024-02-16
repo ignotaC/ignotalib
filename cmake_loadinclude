@@ -1,53 +1,53 @@
 set( cm_src "src" )
-set( cm_ig_compress "src/ig_compress" )
-set( cm_ig_datastructure "src/ig_datastructure" )
-set( cm_ig_encoding "src/ig_encoding" )
-set( cm_ig_event "src/ig_event" )
-set( cm_ig_file "src/ig_file" )
-set( cm_ig_math "src/ig_math" )
-set( cm_ig_memory "src/ig_memory" )
-set( cm_ig_net "src/ig_net" )
-set( cm_ig_print "src/ig_print" )
-set( cm_ig_process "src/ig_process" )
-set( cm_ig_string "src/ig_string" )
-set( cm_ig_time "src/ig_time" )
 set( cm_ig_web "src/ig_web" )
+set( cm_ig_time "src/ig_time" )
+set( cm_ig_string "src/ig_string" )
+set( cm_ig_process "src/ig_process" )
+set( cm_ig_print "src/ig_print" )
+set( cm_ig_net "src/ig_net" )
 set( cm_ig_miscellaneous "src/ig_miscellaneous" )
+set( cm_ig_memory "src/ig_memory" )
+set( cm_ig_math "src/ig_math" )
+set( cm_ig_file "src/ig_file" )
+set( cm_ig_event "src/ig_event" )
+set( cm_ig_encoding "src/ig_encoding" )
+set( cm_ig_datastructure "src/ig_datastructure" )
+set( cm_ig_compress "src/ig_compress" )
 
 include_directories(
 	${cm_src}
-	${cm_ig_compress}
-	${cm_ig_datastructure}
-	${cm_ig_encoding}
-	${cm_ig_event}
-	${cm_ig_file}
-	${cm_ig_math}
-	${cm_ig_memory}
-	${cm_ig_net}
-	${cm_ig_print}
-	${cm_ig_process}
-	${cm_ig_string}
-	${cm_ig_time}
 	${cm_ig_web}
+	${cm_ig_time}
+	${cm_ig_string}
+	${cm_ig_process}
+	${cm_ig_print}
+	${cm_ig_net}
 	${cm_ig_miscellaneous}
+	${cm_ig_memory}
+	${cm_ig_math}
+	${cm_ig_file}
+	${cm_ig_event}
+	${cm_ig_encoding}
+	${cm_ig_datastructure}
+	${cm_ig_compress}
 	)
 
 file( GLOB cm_allsource
 	"${cm_src}/*.c"
-	"${cm_ig_compress}/*.c"
-	"${cm_ig_datastructure}/*.c"
-	"${cm_ig_encoding}/*.c"
-	"${cm_ig_event}/*.c"
-	"${cm_ig_file}/*.c"
-	"${cm_ig_math}/*.c"
-	"${cm_ig_memory}/*.c"
-	"${cm_ig_net}/*.c"
-	"${cm_ig_print}/*.c"
-	"${cm_ig_process}/*.c"
-	"${cm_ig_string}/*.c"
-	"${cm_ig_time}/*.c"
 	"${cm_ig_web}/*.c"
+	"${cm_ig_time}/*.c"
+	"${cm_ig_string}/*.c"
+	"${cm_ig_process}/*.c"
+	"${cm_ig_print}/*.c"
+	"${cm_ig_net}/*.c"
 	"${cm_ig_miscellaneous}/*.c"
+	"${cm_ig_memory}/*.c"
+	"${cm_ig_math}/*.c"
+	"${cm_ig_file}/*.c"
+	"${cm_ig_event}/*.c"
+	"${cm_ig_encoding}/*.c"
+	"${cm_ig_datastructure}/*.c"
+	"${cm_ig_compress}/*.c"
 	)
 
 add_library( ignota SHARED ${cm_allsource} )

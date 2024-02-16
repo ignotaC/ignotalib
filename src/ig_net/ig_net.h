@@ -31,11 +31,11 @@ Bog Ojeciec.
 #ifndef IG_NET_H
 #define IG_NET_H
 
-#include "ign_inetserv.h"
-#include "ign_strtoport.h"
-#include "ign_unixserv.h"
-#include "ign_inetcli.h"
 #include "ign_unixcli.h"
-#include "ign_undef.h"
+#include "ign_unixdef.h"
+#include "ign_unixserv.h"
+#include "ign_strtoport.h"
+#include "ign_inetserv.h"
+#include "ign_inetcli.h"
 
 #endif

@@ -25,7 +25,7 @@ Bog Ojeciec.
 
 */
 
-#include "ign_undef.h"
+#include "ign_unixdef.h"
 #include "ign_unixcli.h"
 
 #include <sys/socket.h>
@@ -162,4 +162,54 @@ int ign_unixcli_strm(
   return -1;
 
 }
+
+
+
+int ign_unixcli_drgm( 
+    const char *const servname
+)  {
+
+  // assert check
+  assert( servname != NULL );
+
+  struct sockaddr_un sun = { 0 }; // this is very important
+  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
+  // throw error on name with no nul
+  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+
+    errno = 0;
+    return -1;
+
+  }
+
+  strncpy( sun.sun_path, servname, namelen );
+  sun.sun_family = AF_UNIX;
+
+  // socket setup
+  int sockfd = socket( AF_UNIX, SOCK_DGRAM, 0 );
+  if( sockfd == -1 )  return -1;
+
+  // connect, handle eintr  - do we need for dgram
+  for(;;)  {
+
+    if( connect( sockfd, ( struct sockaddr* ) &sun,
+        sizeof( sun ) ) == -1 )  {
+
+      if( errno == EINTR )  continue;
+      goto sockfail;
+
+    }
+
+    break;
+
+  }
+
+  return sockfd;
+
+  sockfail:
+  close( sockfd );
+  return -1;
+
+}
+
 

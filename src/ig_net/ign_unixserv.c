@@ -26,7 +26,7 @@ Bog Ojeciec.
 */
 
 #include "ign_unixserv.h"
-#include "ign_undef.h"
+#include "ign_unixdef.h"
 
 #include <sys/socket.h>
 #include <sys/un.h>

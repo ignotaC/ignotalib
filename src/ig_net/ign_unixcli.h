@@ -37,6 +37,8 @@ int ign_unixcli_strm(
     const char *const cliname
 );
 
-
+int ign_unixcli_dgrm( 
+    const char *const servname
+);
 
 #endif

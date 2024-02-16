@@ -28,9 +28,15 @@ Bog Ojeciec.
 #ifndef IGN_UNIXCLI_H
 #define IGN_UNIXCLI_H
 
-int ign_unixcli( 
-    const char *const name
+int ign_unixcli_strm_anon( 
+    const char *const servname
 );
+
+int ign_unixcli_strm( 
+    const char *const servname,
+    const char *const cliname
+);
+
 
 
 #endif

@@ -28,10 +28,13 @@ Bog Ojeciec.
 #ifndef IGN_UNIXSERV_H
 #define IGN_UNIXSERV_H
 
-int ign_unixserv( 
-    const char *const name,
+int ign_unixserv_strm( 
+    const char *const servname,
     const int listen_queue
 );
 
+int ign_unixserv_dgrm( 
+    const char *const servname
+);
 
 #endif

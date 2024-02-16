@@ -51,15 +51,15 @@ Bog Ojeciec.
 // -1 on Fail
 // It tries to cleans socket on fail so no open
 // sockfd  on success.
-int ign_unixcli_anon( 
-    const char *const name
+int ign_unixcli_strm_anon( 
+    const char *const servname
 )  {
 
   // assert check
-  assert( name != NULL );
+  assert( servname != NULL );
 
   struct sockaddr_un sun = { 0 }; // this is very important
-  size_t namelen = strnlen( name, IGN_SUNNAME_MAXSIZE );
+  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
   // throw error on name with no nul
   if( namelen == IGN_SUNNAME_MAXSIZE )  {
 
@@ -68,7 +68,7 @@ int ign_unixcli_anon(
 
   }
 
-  strncpy( sun.sun_path, name, namelen );
+  strncpy( sun.sun_path, servname, namelen );
   sun.sun_family = AF_UNIX;
 
   // socket setup
@@ -98,4 +98,68 @@ int ign_unixcli_anon(
 
 }
 
+int ign_unixcli_strm( 
+    const char *const servname,
+    const char *const cliname
+)  {
+
+  // assert check
+  assert( servname != NULL );
+  assert( cliname != NULL );
+
+  // server struct ////
+  struct sockaddr_un sun = { 0 }; // this is very important
+  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
+  // throw error on name with no nul
+  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+
+    errno = 0;
+    return -1;
+
+  }
+
+  strncpy( sun.sun_path, servname, namelen );
+  sun.sun_family = AF_UNIX;
+
+  // client struct ////
+  struct sockaddr_un cun = { 0 }; // this is very important
+  namelen = strnlen( cliname, IGN_SUNNAME_MAXSIZE );
+  // throw error on name with no nul
+  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+
+    errno = 0;
+    return -1;
+
+  }
+
+  strncpy( cun.sun_path, cliname, namelen );
+  cun.sun_family = AF_UNIX;
+
+
+  // socket setup
+  int sockfd = socket( AF_UNIX, SOCK_STREAM, 0 );
+  if( sockfd == -1 )  return -1;
+
+  // connect, handle eintr and we are ready to use it
+  for(;;)  {
+
+    if( connect( sockfd, ( struct sockaddr* ) &sun,
+        sizeof( sun ) ) == -1 )  {
+
+      if( errno == EINTR )  continue;
+      goto sockfail;
+
+    }
+
+    break;
+
+  }
+
+  return sockfd;
+
+  sockfail:
+  close( sockfd );
+  return -1;
+
+}
 

@@ -48,18 +48,18 @@ Bog Ojeciec.
 // -1 on Fail
 // It cleans socket on fail so no open
 // sockfd  on success.
-int ign_unixserv( 
-    const char *const name,
+int ign_unixserv_strm( 
+    const char *const servname,
     const int listen_queue
 )  {
 
   // as for second assert not sure how
   // listen would react with queue passed 0
-  assert( name != NULL );
+  assert( servname != NULL );
   assert( listen_queue != 0 ); 
 
   struct sockaddr_un sun = { 0 }; // this is very important
-  size_t namelen = strnlen( name, IGN_SUNNAME_MAXSIZE );
+  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
 
   // somehow I feel safer to force nul here at end
   if( namelen == IGN_SUNNAME_MAXSIZE )  {
@@ -69,7 +69,7 @@ int ign_unixserv(
 
   }
 
-  strncpy( sun.sun_path, name, namelen );
+  strncpy( sun.sun_path, servname, namelen );
   sun.sun_family = AF_UNIX;
 
   int sockfd = socket( AF_UNIX, SOCK_STREAM, 0 );
@@ -84,6 +84,44 @@ int ign_unixserv(
   // altho we will get on connect error
   // connecting unix socket for you
   if( listen( sockfd, listen_queue ) == -1 )
+    goto sockfail;
+
+  return sockfd;
+
+  sockfail:
+  close( sockfd );
+  return -1;
+
+}
+
+int ign_unixserv_dgrm( 
+    const char *const servname
+)  {
+
+  // as for second assert not sure how
+  // listen would react with queue passed 0
+  assert( servname != NULL );
+
+  struct sockaddr_un sun = { 0 }; // this is very important
+  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
+
+  // somehow I feel safer to force nul here at end
+  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+
+    errno = 0;
+    return -1;
+
+  }
+
+  strncpy( sun.sun_path, servname, namelen );
+  sun.sun_family = AF_UNIX;
+
+  int sockfd = socket( AF_UNIX, SOCK_DGRAM, 0 );
+  if( sockfd == -1 )  return -1;
+
+  // Sizeof is safest thing, beware SUN_LEN
+  if( bind( sockfd, ( struct sockaddr* ) &sun,
+      sizeof( sun ) ) == -1 )
     goto sockfail;
 
   return sockfd;

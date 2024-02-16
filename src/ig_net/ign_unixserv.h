@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021-2024 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,8 +25,8 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGN_SUNSERV_H
-#define IGN_SUNSERV_H
+#ifndef IGN_UNIXSERV_H
+#define IGN_UNIXSERV_H
 
 int ign_unixserv( 
     const char *const name,

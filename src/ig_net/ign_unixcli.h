@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021-2023 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2024 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,17 +25,12 @@ Bog Ojeciec.
 
 */
 
+#ifndef IGN_UNIXCLI_H
+#define IGN_UNIXCLI_H
 
+int ign_unixcli( 
+    const char *const name
+);
 
-
-#ifndef IG_NET_H
-#define IG_NET_H
-
-#include "ign_inetserv.h"
-#include "ign_strtoport.h"
-#include "ign_unixserv.h"
-#include "ign_inetcli.h"
-#include "ign_unixcli.h"
-#include "ign_undef.h"
 
 #endif

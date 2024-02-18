@@ -31,10 +31,10 @@ Bog Ojeciec.
 #ifndef IG_MATH_H
 #define IG_MATH_H
 
-#include "igmath_matrix.h"
-#include "igmath_geopos.h"
-#include "igmath_factorial.h"
-#include "igmath_binomial_coefficient.h"
 #include "igmath_bignum.h"
+#include "igmath_binomial_coefficient.h"
+#include "igmath_factorial.h"
+#include "igmath_geopos.h"
+#include "igmath_matrix.h"
 
 #endif

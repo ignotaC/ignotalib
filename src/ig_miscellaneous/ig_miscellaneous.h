@@ -31,7 +31,7 @@ Bog Ojeciec.
 #ifndef IG_MISCELLANEOUS_H
 #define IG_MISCELLANEOUS_H
 
-#include "igmisc_opts.h"
 #include "igmisc_getans.h"
+#include "igmisc_opts.h"
 
 #endif

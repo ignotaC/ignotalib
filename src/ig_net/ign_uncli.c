@@ -26,7 +26,7 @@ Bog Ojeciec.
 */
 
 #include "ign_unixdef.h"
-#include "ign_unixcli.h"
+#include "ign_uncli.h"
 
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -43,6 +43,8 @@ Bog Ojeciec.
 // TO DO - TIMEOUT VERSIONS
 
 // TODO - MAKE VERSION WITH BIND ALSO
+// TODO - decriptions
+
 
 // REMEMBER - NO RELATIVE PATHS IN POSIX FOR SUN
 // You pass string that is file name we want to open
@@ -51,25 +53,21 @@ Bog Ojeciec.
 // -1 on Fail
 // It tries to cleans socket on fail so no open
 // sockfd  on success.
-int ign_unixcli_strm_anon( 
+int ign_uncli_strm( 
     const char *const servname
 )  {
 
   // assert check
   assert( servname != NULL );
 
-  struct sockaddr_un sun = { 0 }; // this is very important
-  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
-  // throw error on name with no nul
-  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+  // server struct
+  struct sockaddr_un sun = { 0 }; // always init to zero
+  if( ign_unixstruct_set( &sun, servname ) == -1 )  {
 
     errno = 0;
     return -1;
 
   }
-
-  strncpy( sun.sun_path, servname, namelen );
-  sun.sun_family = AF_UNIX;
 
   // socket setup
   int sockfd = socket( AF_UNIX, SOCK_STREAM, 0 );
@@ -79,7 +77,7 @@ int ign_unixcli_strm_anon(
   for(;;)  {
 
     if( connect( sockfd, ( struct sockaddr* ) &sun,
-        sizeof( sun ) ) == -1 )  {
+        sizeof sun ) == -1 )  {
 
       if( errno == EINTR )  continue;
       goto sockfail;
@@ -98,53 +96,47 @@ int ign_unixcli_strm_anon(
 
 }
 
-int ign_unixcli_strm( 
+int ign_uncli_strmid( 
     const char *const servname,
-    const char *const cliname
+    const char *const idname
 )  {
 
   // assert check
   assert( servname != NULL );
-  assert( cliname != NULL );
+  assert( idname != NULL );
 
-  // server struct ////
-  struct sockaddr_un sun = { 0 }; // this is very important
-  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
-  // throw error on name with no nul
-  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+  // server struct
+  struct sockaddr_un sun = { 0 }; // always init to zero
+  if( ign_unixstruct_set( &sun, servname ) == -1 )  {
 
     errno = 0;
     return -1;
 
   }
 
-  strncpy( sun.sun_path, servname, namelen );
-  sun.sun_family = AF_UNIX;
-
-  // client struct ////
-  struct sockaddr_un cun = { 0 }; // this is very important
-  namelen = strnlen( cliname, IGN_SUNNAME_MAXSIZE );
-  // throw error on name with no nul
-  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+  // client id struct
+  struct sockaddr_un idun = { 0 }; // always init to zero
+  if( ign_unixstruct_set( &idun, idname ) == -1 )  {
 
     errno = 0;
     return -1;
 
   }
-
-  strncpy( cun.sun_path, cliname, namelen );
-  cun.sun_family = AF_UNIX;
-
 
   // socket setup
   int sockfd = socket( AF_UNIX, SOCK_STREAM, 0 );
   if( sockfd == -1 )  return -1;
 
+  // set out id so server knows who is sending
+  if( bind( sockfd, ( struct sockaddr* )&idun,
+      sizeof idun ) == -1 )
+    goto sockfail;
+
   // connect, handle eintr and we are ready to use it
   for(;;)  {
 
-    if( connect( sockfd, ( struct sockaddr* ) &sun,
-        sizeof( sun ) ) == -1 )  {
+    if( connect( sockfd, ( struct sockaddr* )&sun,
+        sizeof sun ) == -1 )  {
 
       if( errno == EINTR )  continue;
       goto sockfail;
@@ -164,36 +156,95 @@ int ign_unixcli_strm(
 }
 
 
-
-int ign_unixcli_drgm( 
+int ign_uncli_drgm( 
     const char *const servname
 )  {
 
   // assert check
   assert( servname != NULL );
 
-  struct sockaddr_un sun = { 0 }; // this is very important
-  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
-  // throw error on name with no nul
-  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+  // server struct
+  struct sockaddr_un sun = { 0 }; // always init to zero
+  if( ign_unixstruct_set( &sun, servname ) == -1 )  {
 
     errno = 0;
     return -1;
 
   }
-
-  strncpy( sun.sun_path, servname, namelen );
-  sun.sun_family = AF_UNIX;
 
   // socket setup
   int sockfd = socket( AF_UNIX, SOCK_DGRAM, 0 );
   if( sockfd == -1 )  return -1;
 
-  // connect, handle eintr  - do we need for dgram
+  // connect, handle eintr and we are ready to use it
+  // we connect so we won't need  each time on snd/rcv
+  // pass server structs
   for(;;)  {
 
-    if( connect( sockfd, ( struct sockaddr* ) &sun,
-        sizeof( sun ) ) == -1 )  {
+    if( connect( sockfd, ( struct sockaddr* )&sun,
+        sizeof sun ) == -1 )  {
+
+      if( errno == EINTR )  continue;
+      goto sockfail;
+
+    }
+
+    break;
+
+  }
+
+
+  return sockfd;
+
+  sockfail:
+  close( sockfd );
+  return -1;
+
+}
+
+int ign_uncli_dgrmid( 
+    const char *const servname,
+    const char *const idname
+)  {
+
+  // assert check
+  assert( servname != NULL );
+  assert( idname != NULL );
+
+  // server struct
+  struct sockaddr_un sun = { 0 }; // always init to zero
+  if( ign_unixstruct_set( &sun, servname ) == -1 )  {
+
+    errno = 0;
+    return -1;
+
+  }
+
+  // client id struct
+  struct sockaddr_un idun = { 0 }; // always init to zero
+  if( ign_unixstruct_set( &idun, idname ) == -1 )  {
+
+    errno = 0;
+    return -1;
+
+  }
+
+  // socket setup
+  int sockfd = socket( AF_UNIX, SOCK_DGRAM, 0 );
+  if( sockfd == -1 )  return -1;
+
+  // set our id so server knows who is sending
+  if( bind( sockfd, ( struct sockaddr* )&idun,
+      sizeof idun ) == -1 )
+    goto sockfail;
+
+  // connect, handle eintr and we are ready to use it
+  // we connect so we won't need  each time on snd/rcv
+  // pass server structs
+  for(;;)  {
+
+    if( connect( sockfd, ( struct sockaddr* )&sun,
+        sizeof sun ) == -1 )  {
 
       if( errno == EINTR )  continue;
       goto sockfail;

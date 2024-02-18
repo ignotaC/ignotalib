@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2021-2024 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2024 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,16 +25,26 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGN_UNIXSERV_H
-#define IGN_UNIXSERV_H
+#ifndef IGN_UNCLI_H
+#define IGN_UNCLI_H
 
-int ign_unixserv_strm( 
-    const char *const servname,
-    const int listen_queue
-);
-
-int ign_unixserv_dgrm( 
+int ign_uncli_strm( 
     const char *const servname
 );
+
+int ign_uncli_strmid( 
+    const char *const servname,
+    const char *const idname
+);
+
+int ign_uncli_dgrm( 
+    const char *const servname
+);
+
+int ign_uncli_dgrmid( 
+    const char *const servname,
+    const char *const idname
+);
+
 
 #endif

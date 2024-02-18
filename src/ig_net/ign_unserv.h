@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2024 Piotr Trzpil  p.trzpil@protonmail.com
+Copyright (c) 2021-2024 Piotr Trzpil  p.trzpil@protonmail.com
 
 Permission to use, copy, modify, and distribute 
 this software for any purpose with or without fee
@@ -25,16 +25,16 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGN_UNIXDEF_H
-#define IGN_UNIXDEF_H
+#ifndef IGN_UNSERV_H
+#define IGN_UNSERV_H
 
-// if this ever would be aq problem we 
-// will pass to void* 
-#include <sys/un.h>
+int ign_unixserv_strm( 
+    const char *const servname,
+    const int listen_queue
+);
 
-int ign_unixstruct_set(
-    struct sockaddr_un *const sun,
-    const char *const unixname
+int ign_unixserv_dgrm( 
+    const char *const servname
 );
 
 #endif

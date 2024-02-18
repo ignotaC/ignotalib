@@ -31,7 +31,7 @@ Bog Ojeciec.
 #ifndef IG_MEMORY_H
 #define IG_MEMORY_H
 
-#include "igm_search.h"
 #include "igm_loadfd.h"
+#include "igm_search.h"
 
 #endif

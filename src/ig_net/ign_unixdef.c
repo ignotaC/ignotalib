@@ -25,20 +25,33 @@ Bog Ojeciec.
 
 */
 
-#ifndef IGN_UNIXCLI_H
-#define IGN_UNIXCLI_H
+#include "ign_unixdef.h"
 
-int ign_unixcli_strm_anon( 
-    const char *const servname
-);
+#include <sys/socket.h>
 
-int ign_unixcli_strm( 
-    const char *const servname,
-    const char *const cliname
-);
+#include <assert.h>
+#include <string.h>
 
-int ign_unixcli_dgrm( 
-    const char *const servname
-);
+// it won't set to zeros sun it onlu checks if name fits in
+// and then copies it in, finaly sets family
+int ign_unixstruct_set(
+    struct sockaddr_un *const sun,
+    const char *const unixname
+)  {
 
-#endif
+  assert( sun != NULL );
+  assert( unixname != NULL );
+
+  size_t sunname_maxlen = sizeof sun->sun_path;
+
+  size_t namelen = strnlen( unixname, sunname_maxlen );
+  // If no nul or too long = than this is error
+  if( namelen == sunname_maxlen )  return -1;
+
+  // namelen + 1 since we are sure now there is place for nul
+  strncpy( sun->sun_path, unixname, namelen + 1 );
+  sun->sun_family = AF_UNIX;  // posix family 
+  return 0; 
+
+}
+

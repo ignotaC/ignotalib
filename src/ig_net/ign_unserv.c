@@ -25,7 +25,7 @@ Bog Ojeciec.
 
 */
 
-#include "ign_unixserv.h"
+#include "ign_unserv.h"
 #include "ign_unixdef.h"
 
 #include <sys/socket.h>
@@ -48,7 +48,7 @@ Bog Ojeciec.
 // -1 on Fail
 // It cleans socket on fail so no open
 // sockfd  on success.
-int ign_unixserv_strm( 
+int ign_unserv_strm( 
     const char *const servname,
     const int listen_queue
 )  {
@@ -58,19 +58,14 @@ int ign_unixserv_strm(
   assert( servname != NULL );
   assert( listen_queue != 0 ); 
 
-  struct sockaddr_un sun = { 0 }; // this is very important
-  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
-
-  // somehow I feel safer to force nul here at end
-  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+  // set server struct
+  struct sockaddr_un sun = { 0 }; // always init to zero
+  if( ign_unixstruct_set( &sun, servname ) == -1 )  {
 
     errno = 0;
     return -1;
 
   }
-
-  strncpy( sun.sun_path, servname, namelen );
-  sun.sun_family = AF_UNIX;
 
   int sockfd = socket( AF_UNIX, SOCK_STREAM, 0 );
   if( sockfd == -1 )  return -1;
@@ -94,7 +89,30 @@ int ign_unixserv_strm(
 
 }
 
-int ign_unixserv_dgrm( 
+// TODO async, handle EWOULDBLOCK
+int ign_unserv_strm_accept(
+    const int servfd,
+    struct sockaddr_un *const cli_un,
+    socklen_t *cliun_len 
+)  {
+
+  for( int confd = -1;;)  {
+
+    confd = accept( servfd, ( struct sockadder* )cli_un, cliun_len );
+    if( confd == -1 )  {
+
+      // handle signal interruption
+      if( errno == EINTR )  continue;
+
+    }
+
+    return confd; // either -1 on more serious fail or working socket
+
+  }
+
+}
+
+int ign_unserv_dgrm( 
     const char *const servname
 )  {
 
@@ -102,19 +120,14 @@ int ign_unixserv_dgrm(
   // listen would react with queue passed 0
   assert( servname != NULL );
 
-  struct sockaddr_un sun = { 0 }; // this is very important
-  size_t namelen = strnlen( servname, IGN_SUNNAME_MAXSIZE );
-
-  // somehow I feel safer to force nul here at end
-  if( namelen == IGN_SUNNAME_MAXSIZE )  {
+  // set server struct
+  struct sockaddr_un sun = { 0 }; // always init to zero
+  if( ign_unixstruct_set( &sun, servname ) == -1 )  {
 
     errno = 0;
     return -1;
 
   }
-
-  strncpy( sun.sun_path, servname, namelen );
-  sun.sun_family = AF_UNIX;
 
   int sockfd = socket( AF_UNIX, SOCK_DGRAM, 0 );
   if( sockfd == -1 )  return -1;
